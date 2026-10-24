@@ -5,8 +5,11 @@ import {
   FaUsers,
   FaShieldAlt,
   FaChartLine,
+  FaCog,
+  FaPhoneAlt,
 } from 'react-icons/fa'
 import { FaSprayCanSparkles } from 'react-icons/fa6'
+import { globalSiteSettings } from '#/utils/site_settings'
 
 export const Route = createFileRoute('/')({ component: Home })
 
@@ -21,6 +24,9 @@ interface GridMenuItem {
 }
 
 function Home() {
+  const { siteSettings } = globalSiteSettings()
+  console.log("siteSettings", siteSettings);
+
   const currentDate = new Date().toLocaleDateString('gu-IN', {
     weekday: 'long',
     day: 'numeric',
@@ -47,49 +53,15 @@ function Home() {
       gradient: 'from-blue-600 to-cyan-600',
       badge: 'બધા જુઓ'
     },
-    // --- 5 New Advanced & Premium Cards Below ---
-    // {
-    //   title: 'ઓર્ડરની યાદી',
-    //   subtitle: 'Active & Pending Orders',
-    //   icon: <FaClipboardList size={26} className="text-white" />,
-    //   link: PAGE_PATH_KEYS.LIST || '/customer-list/',
-    //   gradient: 'from-amber-500 to-orange-600',
-    //   badge: 'ટ્રૅક કરો'
-    // },
-    // {
-    //   title: 'હિસાબ કીતાબ',
-    //   subtitle: 'Accounts & Ledger Bills',
-    //   icon: <FaCalculator size={26} className="text-white" />,
-    //   link: PAGE_PATH_KEYS.LIST || '/customer-list/',
-    //   gradient: 'from-emerald-600 to-teal-600',
-    //   badge: 'નાણાકીય'
-    // },
-    // {
-    //   title: 'વ્હોટ્સએપ રિમાઇન્ડર',
-    //   subtitle: 'Send Payment / Trial Alerts',
-    //   icon: <FaWhatsapp size={26} className="text-white" />,
-    //   link: PAGE_PATH_KEYS.LIST || '/customer-list/',
-    //   gradient: 'from-green-500 to-emerald-700',
-    //   badge: 'ઝડપી'
-    // },
-    // {
-    //   title: 'કારીગર મેનેજમેન્ટ',
-    //   subtitle: 'Tailor & Staff Tracking',
-    //   icon: <FaUserTie size={26} className="text-white" />,
-    //   link: PAGE_PATH_KEYS.LIST || '/customer-list/',
-    //   gradient: 'from-rose-500 to-pink-600',
-    //   badge: 'સ્ટાફ'
-    // },
-    // {
-    //   title: 'સેટિંગ્સ',
-    //   subtitle: 'Settings',
-    //   icon: <FaCog size={26} className="text-white" />,
-    //   link: PAGE_PATH_KEYS.LIST || '/customer-list/',
-    //   gradient: 'from-slate-700 to-slate-900',
-    //   badge: 'પસંદગી'
-    // },
+    {
+      title: 'સેટિંગ્સ',
+      subtitle: 'Settings',
+      icon: <FaCog size={26} className="text-white" />,
+      link: PAGE_PATH_KEYS.SETTINGS,
+      gradient: 'from-slate-700 to-slate-900',
+      badge: 'પસંદગી'
+    },
   ]
-
   return (
     <div className="min-h-screen bg-slate-50/50 pb-24 pt-4 md:pt-8 px-4 sm:px-6 relative overflow-hidden">
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl pointer-events-none" />
@@ -97,16 +69,24 @@ function Home() {
       <div className="max-w-5xl mx-auto space-y-8 relative z-10">
         <div className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-purple-950 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-purple-950/10 border border-purple-500/20">
           <div className="absolute right-0 bottom-0 translate-x-8 translate-y-8 w-64 h-64 bg-purple-500/10 rounded-full blur-2xl pointer-events-none" />
-          <div className="relative z-10 flex flex-col items-start gap-1.5">
+          <div className="relative z-10 flex flex-col items-start gap-1.5 w-full">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-purple-300 text-xs font-medium mb-1">
               <FaSprayCanSparkles size={12} /> Tailoring Management System
             </div>
             <span className="text-xs font-semibold text-purple-300/80 tracking-wide uppercase">
               Dev: Keval Makvana
             </span>
-            <h1 className="text-2xl font-black tracking-tight text-white mt-0.5">
-              Dinesh Chauhan
-            </h1>
+
+            <div className="flex flex-wrap items-center justify-between w-full gap-x-4 gap-y-1 mt-0.5">
+              <div className="text-2xl font-black tracking-tight text-white">
+                {siteSettings?.owner_name || ''}
+              </div>
+              <div className="text-xs text-slate-300 font-medium leading-relaxed flex items-center gap-1">
+                <FaPhoneAlt className="text-purple-300" size={11} />:
+                <span>{siteSettings?.owner_phone || ''}</span>
+              </div>
+            </div>
+
             <p className="text-xs text-slate-300 mb-3 font-medium leading-relaxed max-w-2xl">
               તમારા ગ્રાહકોના માપ અને હિસાબ સરળતાથી સંચાલિત કરો.
             </p>

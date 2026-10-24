@@ -3,4 +3,5 @@ export const PAGE_PATH_KEYS = {
     LOGIN: "/login",
     CUSTOMER: "/customer",
     LIST: "/cutomer-list",
+    SETTINGS: "/settings/"
 }

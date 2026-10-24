@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CustomerIndexRouteImport } from './routes/customer/index'
 import { Route as CutomerListIndexRouteImport } from './routes/cutomer-list/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsIndexRoute = SettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/customer/': typeof CustomerIndexRoute
   '/cutomer-list/': typeof CutomerListIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/settings/': typeof SettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/customer': typeof CustomerIndexRoute
   '/cutomer-list': typeof CutomerListIndexRoute
   '/login': typeof LoginIndexRoute
+  '/settings': typeof SettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,20 @@ export interface FileRoutesById {
   '/customer/': typeof CustomerIndexRoute
   '/cutomer-list/': typeof CutomerListIndexRoute
   '/login/': typeof LoginIndexRoute
+  '/settings/': typeof SettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/customer/' | '/cutomer-list/' | '/login/'
+  fullPaths: '/' | '/customer/' | '/cutomer-list/' | '/login/' | '/settings/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/customer' | '/cutomer-list' | '/login'
-  id: '__root__' | '/' | '/customer/' | '/cutomer-list/' | '/login/'
+  to: '/' | '/customer' | '/cutomer-list' | '/login' | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/customer/'
+    | '/cutomer-list/'
+    | '/login/'
+    | '/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +82,7 @@ export interface RootRouteChildren {
   CustomerIndexRoute: typeof CustomerIndexRoute
   CutomerListIndexRoute: typeof CutomerListIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
+  SettingsIndexRoute: typeof SettingsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof SettingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +130,7 @@ const rootRouteChildren: RootRouteChildren = {
   CustomerIndexRoute: CustomerIndexRoute,
   CutomerListIndexRoute: CutomerListIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
+  SettingsIndexRoute: SettingsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
