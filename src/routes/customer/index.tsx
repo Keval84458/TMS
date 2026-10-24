@@ -19,6 +19,9 @@ import {
 import { GiArmoredPants, GiLargeDress, GiSleevelessTop } from 'react-icons/gi'
 import { toast } from 'react-toastify'
 import { useAuth } from '#/utils/auth'
+import MeasurementsDetails from './_layouts/MeasurementsDetails'
+import PaymentDetails from './_layouts/PaymentDetails'
+import CustomerDetails from './_layouts/CustomerDetails'
 
 export const Route = createFileRoute('/customer/')({
     validateSearch: (search: Record<string, unknown>) => ({
@@ -70,7 +73,6 @@ function RouteComponent() {
     const pendingNum = Math.max(totalNum - advanceNum, 0)
     const advanceTooHigh = totalNum > 0 && advanceNum > totalNum
 
-    // Fetch existing details if updateMode is active
     useEffect(() => {
         const fetchCustomerDetails = async () => {
             if (!isUpdateMode || !id) {
@@ -228,7 +230,6 @@ function RouteComponent() {
             />
             <div className="max-w-2xl mx-auto p-4 sm:p-6">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-7 space-y-6">
-
                     <div className="border-b border-gray-100 pb-4">
                         <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-purple-600" />
@@ -238,261 +239,25 @@ function RouteComponent() {
                             {isUpdateMode ? "ગ્રાહકની વિગતો અને માપ બદલો" : "ગ્રાહકની વિગતો ભરો અને જરૂરિયાત મુજબ માપના બોક્સનો ઉપયોગ કરો"}
                         </p>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                                <FaUser className="text-purple-600" /> ગ્રાહકનું નામ *
-                            </label>
-                            <ThemeInput
-                                type="text"
-                                placeholder="દા.ત. કેવલ મકવાણા"
-                                className="w-full h-[44px] px-3.5 border-gray-200 focus:border-purple-600 rounded-xl"
-                                value={formData.customer_name}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCustomerChange('customer_name', e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                                <FaPhone className="text-purple-600" /> ફોન નંબર *
-                            </label>
-                            <ThemeInput
-                                type="tel"
-                                placeholder="દા.ત. 1234567890"
-                                className="w-full h-[44px] px-3.5 border-gray-200 focus:border-purple-600 rounded-xl"
-                                value={formData.phone}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCustomerChange('phone', e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                                <FaMapMarkerAlt className="text-purple-600" /> ગામ / શહેર *
-                            </label>
-                            <ThemeInput
-                                type="text"
-                                placeholder="દા.ત. અમદાવાદ"
-                                className="w-full h-[44px] px-3.5 border-gray-200 focus:border-purple-600 rounded-xl"
-                                value={formData.city}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCustomerChange('city', e.target.value)}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                                <FaVenusMars className="text-purple-600" /> ગ્રાહકનો પ્રકાર (Gender) *
-                            </label>
-                            <div className="flex gap-4 h-[44px] items-center px-2 border border-gray-200 rounded-xl bg-slate-50">
-                                <label className="flex items-center gap-2 text-xs font-medium cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="gender"
-                                        value="male"
-                                        checked={formData.gender === 'male'}
-                                        onChange={(e) => onCustomerChange('gender', e.target.value)}
-                                        className="text-purple-600 focus:ring-purple-500"
-                                    />
-                                    પુરુષ (Male)
-                                </label>
-                                <label className="flex items-center gap-2 text-xs font-medium cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="gender"
-                                        value="female"
-                                        checked={formData.gender === 'female'}
-                                        onChange={(e) => onCustomerChange('gender', e.target.value)}
-                                        className="text-purple-600 focus:ring-purple-500"
-                                    />
-                                    સ્ત્રી (Female)
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="pt-4 border-t border-gray-100">
-                        <button
-                            type="button"
-                            onClick={() => setIsMeasurementOpen(!isMeasurementOpen)}
-                            className="w-full flex items-center justify-between text-left focus:outline-none group py-1"
-                        >
-                            <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center gap-1.5">
-                                <RulerIcon /> માપની વિગતો (Measurements Textareas)
-                            </h3>
-                            <FaChevronDown
-                                className={`text-purple-600 transition-transform duration-300 ${isMeasurementOpen ? 'rotate-180' : ''}`}
-                                size={14}
-                            />
-                        </button>
-
-                        <div
-                            className={`grid transition-all duration-300 ease-in-out overflow-hidden ${isMeasurementOpen ? 'grid-rows-[1fr] opacity-100 mt-4 space-y-4' : 'grid-rows-[0fr] opacity-0 mt-0 space-y-0'
-                                }`}
-                        >
-                            <div className="overflow-hidden space-y-4">
-                                {formData.gender === 'male' && (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                                <FaTshirt className="text-purple-600" /> શર્ટ માપ (Shirt)
-                                            </label>
-                                            <ThemeTextarea
-                                                placeholder="લંબાઈ, છાતી, શોલ્ડર, હાથ વગેરે..."
-                                                className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                                value={measurements.shirt}
-                                                onChange={(e) => onMeasurementChange('shirt', e.target.value)}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                                <GiArmoredPants className="text-purple-600" /> પેન્ટ માપ (Pant)
-                                            </label>
-                                            <ThemeTextarea
-                                                placeholder="લંબાઈ, કમર, સીટ, મોરી વગેરે..."
-                                                className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                                value={measurements.pant}
-                                                onChange={(e) => onMeasurementChange('pant', e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-
-                                {formData.gender === 'female' && (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                                <FaTshirt className="text-purple-600" /> બ્લાઉઝ માપ (Blouse)
-                                            </label>
-                                            <ThemeTextarea
-                                                placeholder="લંબાઈ, છાતી, ગળું, ટક્સ વગેરે..."
-                                                className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                                value={measurements.blouse}
-                                                onChange={(e) => onMeasurementChange('blouse', e.target.value)}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                                <GiLargeDress className="text-purple-600" /> ડ્રેસ માપ (Dress)
-                                            </label>
-                                            <ThemeTextarea
-                                                placeholder="લંબાઈ, છાતી, કમર, ઘેરાવો વગેરે..."
-                                                className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                                value={measurements.dress}
-                                                onChange={(e) => onMeasurementChange('dress', e.target.value)}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                                <GiSleevelessTop className="text-purple-600" /> કુરતી માપ (Kurti)
-                                            </label>
-                                            <ThemeTextarea
-                                                placeholder="લંબાઈ, છાતી, ચાક, સ્લીવ વગેરે..."
-                                                className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                                value={measurements.kurti}
-                                                onChange={(e) => onMeasurementChange('kurti', e.target.value)}
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                                <GiArmoredPants className="text-purple-600" /> પેન્ટ માપ (Pant)
-                                            </label>
-                                            <ThemeTextarea
-                                                placeholder="લંબાઈ, કમર, સીટ, મોરી વગેરે..."
-                                                className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                                value={measurements.ladiesPant}
-                                                onChange={(e) => onMeasurementChange('ladiesPant', e.target.value)}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                                <GiArmoredPants className="text-purple-600" /> શલવાર (Shalwar)
-                                            </label>
-                                            <ThemeTextarea
-                                                placeholder="લંબાઈ, કમર, સીટ, મોરી વગેરે..."
-                                                className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                                value={measurements.shalwar}
-                                                onChange={(e) => onMeasurementChange('shalwar', e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-
-                                <div>
-                                    <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                                        <FaRulerCombined className="text-purple-600" /> અન્ય માપ અથવા નોંધ (Other / Notes)
-                                    </label>
-                                    <ThemeTextarea
-                                        placeholder="કોઈપણ વધારાની નોંધ અથવા અન્ય કપડાંનું માપ અહીં લખો..."
-                                        className="w-full h-[80px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
-                                        value={measurements.other}
-                                        onChange={(e) => onMeasurementChange('other', e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-gray-100">
-                        <button
-                            type="button"
-                            onClick={() => setIsPaymentOpen(!isPaymentOpen)}
-                            className="w-full flex items-center justify-between text-left focus:outline-none group py-1"
-                        >
-                            <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center gap-1.5">
-                                <FaRupeeSign className="text-purple-600" /> ચુકવણીની વિગતો (Payment)
-                            </h3>
-                            <FaChevronDown
-                                className={`text-purple-600 transition-transform duration-300 ${isPaymentOpen ? 'rotate-180' : ''}`}
-                                size={14}
-                            />
-                        </button>
-
-                        <div
-                            className={`grid transition-all duration-300 ease-in-out overflow-hidden ${isPaymentOpen ? 'grid-rows-[1fr] opacity-100 mt-4 space-y-4' : 'grid-rows-[0fr] opacity-0 mt-0 space-y-0'
-                                }`}
-                        >
-                            <div className="overflow-hidden space-y-4">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                                            <FaRupeeSign className="text-purple-600" /> કુલ રકમ (Total) *
-                                        </label>
-                                        <ThemeInput
-                                            type="text"
-                                            inputMode="decimal"
-                                            placeholder="દા.ત. 1500"
-                                            className="w-full h-[44px] px-3.5 border-gray-200 focus:border-purple-600 rounded-xl"
-                                            value={payment.total}
-                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onPaymentChange('total', e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                                            <FaRupeeSign className="text-purple-600" /> અગાઉથી ચુકવણી (Advance)
-                                        </label>
-                                        <ThemeInput
-                                            type="text"
-                                            inputMode="decimal"
-                                            placeholder="દા.ત. 500"
-                                            className={`w-full h-[44px] px-3.5 rounded-xl ${advanceTooHigh ? 'border-red-400 focus:border-red-500' : 'border-gray-200 focus:border-purple-600'}`}
-                                            value={payment.advance}
-                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onPaymentChange('advance', e.target.value)}
-                                        />
-                                        {advanceTooHigh && (
-                                            <p className="mt-1 text-[11px] text-red-500">
-                                                અગાઉથી ચુકવણી કુલ રકમ કરતાં વધારે ન હોઈ શકે.
-                                            </p>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center justify-between rounded-xl bg-purple-50 border border-purple-200 px-4 h-[48px]">
-                                    <span className="text-xs font-semibold text-purple-900">બાકી (Pending)</span>
-                                    <span className={`text-base font-black ${pendingNum > 0 ? 'text-red-600' : 'text-green-600'}`}>
-                                        ₹ {pendingNum.toLocaleString('en-IN')}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <CustomerDetails
+                        formData={formData}
+                        onCustomerChange={onCustomerChange}
+                    />
+                    <MeasurementsDetails
+                        formData={formData}
+                        isMeasurementOpen={isMeasurementOpen}
+                        setIsMeasurementOpen={setIsMeasurementOpen}
+                        measurements={measurements}
+                        onMeasurementChange={onMeasurementChange}
+                    />
+                    <PaymentDetails
+                        isPaymentOpen={isPaymentOpen}
+                        setIsPaymentOpen={setIsPaymentOpen}
+                        payment={payment}
+                        onPaymentChange={onPaymentChange}
+                        advanceTooHigh={advanceTooHigh}
+                        pendingNum={pendingNum}
+                    />
                     <div className="pt-2">
                         <button
                             type="button"
@@ -520,6 +285,3 @@ function RouteComponent() {
     )
 }
 
-function RulerIcon() {
-    return <FaRulerCombined className="text-purple-600" />
-}

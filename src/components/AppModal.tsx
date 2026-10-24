@@ -41,10 +41,8 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                 }
 
                 const rawValue = item.slice(separatorIndex + 1).trim()
-
-                // Split by comma, space, or both so individual numbers get separated cleanly
                 const formattedValues = rawValue
-                    .split(/[\s,]+/) // Splits by any whitespace or comma
+                    .split(/[\s,]+/)
                     .map((val) => val.trim())
                     .filter(Boolean)
                     .join(' | ')
@@ -66,7 +64,6 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                 className="relative flex max-h-[90vh] w-full max-w-md flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Header */}
                 <div className="flex flex-shrink-0 items-center justify-between border-b border-gray-100 pb-3">
                     <div className="flex items-center gap-2 text-base font-bold text-purple-700">
                         <FaRulerCombined />
@@ -81,10 +78,7 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                         <FaTimes size={16} />
                     </button>
                 </div>
-
-                {/* Content */}
                 <div className="my-4 space-y-4 overflow-y-auto pr-1">
-                    {/* Customer Name */}
                     <div className="flex items-center gap-3 rounded-2xl border border-purple-100 bg-purple-50/70 p-3.5">
                         <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-purple-600 font-bold text-white shadow-md shadow-purple-600/20">
                             <FaUser size={16} />
@@ -99,8 +93,6 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                             </h3>
                         </div>
                     </div>
-
-                    {/* Measurements */}
                     <div>
                         <label className="mb-3 block text-xs font-semibold uppercase tracking-wider text-gray-500">
                             માપ (Measurement Details):

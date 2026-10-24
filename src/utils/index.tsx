@@ -59,3 +59,13 @@ export const ThemeButton = ({
         </button>
     );
 };
+
+export const defaultSiteData = {
+    site_title: 'TailorHub2211',
+    subtitle: 'Tailoring Management System',
+    owner_name: 'Keval Makvana',
+    owner_phone: '1234567890',
+    owner_email: 'abc123@gmail.com',
+    site_address: 'abc, america',
+    city: 'Wembley',
+}
