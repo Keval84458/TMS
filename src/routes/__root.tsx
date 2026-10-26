@@ -7,54 +7,60 @@ import {
 } from '@tanstack/react-router'
 
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import { ToastContainer } from 'react-toastify'
+
 import '../styles.css'
 
 import Header from '#/components/Header'
 import { PAGE_PATH_KEYS } from '#/utils/constant'
-import { ToastContainer } from 'react-toastify'
+import { useAuth } from '#/utils/auth'
+import { TanStackDevtools } from '@tanstack/react-devtools'
+
 
 type AuthCredentials = {
   id: string
   token: string
 }
 
+const COOKIE_NAME = 'authData'
+
 function getAuthToken(): AuthCredentials | null {
   if (typeof document === 'undefined') return null
 
   const cookie = document.cookie
     .split('; ')
-    .find((item) => item.startsWith('authData='))
+    .find((item) => item.startsWith(`${COOKIE_NAME}=`))
 
   if (!cookie) return null
 
-  const value = cookie.substring('authData='.length)
-
   try {
-    let parsed: AuthCredentials
+    const value = decodeURIComponent(
+      cookie.substring(COOKIE_NAME.length + 1),
+    )
 
-    try {
-      parsed = JSON.parse(decodeURIComponent(value))
-    } catch {
-      parsed = JSON.parse(value)
-    }
+    const parsed = JSON.parse(value)
 
     if (
-      typeof parsed.id !== 'string' ||
-      typeof parsed.token !== 'string' ||
+      typeof parsed?.id !== 'string' ||
+      typeof parsed?.token !== 'string' ||
       !parsed.id ||
       !parsed.token
     ) {
       return null
     }
 
-    return parsed
+    return {
+      id: parsed.id,
+      token: parsed.token,
+    }
   } catch {
     return null
   }
 }
 
 function RootComponent() {
+  // const { auth, logout } = useAuth()
+
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
@@ -65,6 +71,7 @@ function RootComponent() {
     <>
       {!isLoginPage && <Header />}
 
+      {/* Example: pass logout to Header if required */}
       <Outlet />
 
       <ToastContainer />
@@ -85,7 +92,11 @@ function RootComponent() {
 export const Route = createRootRoute({
   beforeLoad: ({ location }) => {
     const authData = getAuthToken()
-    const isAuthenticated = Boolean(authData?.id && authData?.token)
+
+    const isAuthenticated = Boolean(
+      authData?.id && authData?.token,
+    )
+
     const isLoginPage =
       location.pathname === PAGE_PATH_KEYS.LOGIN
 

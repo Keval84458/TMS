@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 import { RiLogoutBoxLine } from "react-icons/ri";
 
 const Header = () => {
-    const { logout } = useAuth();
+    const { logout } = useAuth()
     const { siteSettings } = useGlobalSiteSettings();
 
     return (
