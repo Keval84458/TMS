@@ -3,13 +3,7 @@ import PageHeader from '#/components/PageHeader'
 import { ThemeInput } from '#/utils'
 import { PAGE_PATH_KEYS } from '#/utils/constant'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import {
-    FaUserPlus,
-    FaSortAlphaDown,
-    FaCalendarAlt,
-    FaRupeeSign,
-    FaExclamationTriangle
-} from 'react-icons/fa'
+import { FaUserPlus } from 'react-icons/fa'
 import { supabase } from '#/lib/supabaseClient'
 import MeasurementModal from '#/components/AppModal'
 import { toast } from 'react-toastify'
@@ -21,13 +15,16 @@ export const Route = createFileRoute('/cutomer-list/')({
     component: RouteComponent,
 })
 
+type MeasurementMap = Record<string, string>
+
 interface Customer {
     id: string | number
     customer_name: string
     phone: string
     city?: string
     gender?: string
-    measurements?: Record<string, string> | string
+    male_measurements?: MeasurementMap | null
+    female_measurements?: MeasurementMap | null
     created_at?: string
     total_amount?: number | null
     advance_amount?: number | null
@@ -61,7 +58,11 @@ function RouteComponent() {
     const fetchCustomers = async () => {
         setIsLoading(true)
         try {
-            let queryBuilder = supabase.from('customers').select('*')
+            let queryBuilder = supabase
+                .from('customers')
+                .select(
+                    'id, customer_name, phone, city, gender, male_measurements, female_measurements, created_at, total_amount, advance_amount, pending_amount'
+                )
 
             if (sortType === 'az') {
                 queryBuilder = queryBuilder.order('customer_name', { ascending: true })
@@ -73,7 +74,7 @@ function RouteComponent() {
 
             const { data, error } = await queryBuilder
             if (error) {
-                toast.error('Error fetching customers:')
+                toast.error('Error fetching customers')
             } else if (data) {
                 setCustomers(data as Customer[])
             }
@@ -136,20 +137,11 @@ function RouteComponent() {
         }
 
         setCustomers((prev) => prev.filter((c) => c.id !== id))
-        toast.success("ગ્રાહકની માહિતી સફળતાપૂર્વક દૂર કરવામાં આવી છે.")
+        toast.success('ગ્રાહકની માહિતી સફળતાપૂર્વક દૂર કરવામાં આવી છે.')
         setDeleteModalConfig({ isOpen: false, id: null, name: '' })
     }
 
     const activeCustomer = customers.find((c) => c.id === selectedCustomerId)
-
-    const getFormattedMeasurementString = (meas: Customer['measurements']) => {
-        if (!meas) return 'માપ ઉપલબ્ધ નથી'
-        if (typeof meas === 'string') return meas
-
-        return Object.entries(meas)
-            .map(([key, val]) => `${key.toUpperCase()}: ${val}`)
-            .join(' | ')
-    }
 
     const sortBtnClass = (active: boolean) =>
         `px-3 py-1.5 rounded-lg font-medium transition-all whitespace-nowrap flex items-center gap-1 ${active
@@ -162,6 +154,7 @@ function RouteComponent() {
             <PageHeader
                 title="ગ્રાહકોની યાદી"
                 onBack={PAGE_PATH_KEYS.HOME}
+                visible
             />
 
             <div className="p-4 bg-white border-b border-gray-100 sticky top-0 shadow-sm space-y-3 z-10">
@@ -214,7 +207,9 @@ function RouteComponent() {
                     isOpen={Boolean(selectedCustomerId)}
                     onClose={() => setSelectedCustomerId(null)}
                     customerName={activeCustomer.customer_name}
-                    measurement={getFormattedMeasurementString(activeCustomer.measurements)}
+                    gender={activeCustomer.gender}
+                    maleMeasurements={activeCustomer.male_measurements}
+                    femaleMeasurements={activeCustomer.female_measurements}
                 />
             )}
 

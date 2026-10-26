@@ -9,7 +9,8 @@ import {
   FaPhoneAlt,
 } from 'react-icons/fa'
 import { FaSprayCanSparkles } from 'react-icons/fa6'
-import { globalSiteSettings } from '#/utils/site_settings'
+import { useGlobalSiteSettings } from '#/utils/site_settings'
+
 
 export const Route = createFileRoute('/')({ component: Home })
 
@@ -24,8 +25,7 @@ interface GridMenuItem {
 }
 
 function Home() {
-  const { siteSettings } = globalSiteSettings()
-  console.log("siteSettings", siteSettings);
+  const { siteSettings } = useGlobalSiteSettings()
 
   const currentDate = new Date().toLocaleDateString('gu-IN', {
     weekday: 'long',
