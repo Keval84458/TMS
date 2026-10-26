@@ -1,7 +1,6 @@
 
-import { useRouterState, useNavigate } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { PAGE_PATH_KEYS } from '@/utils/constant'
+import { useNavigate } from '@tanstack/react-router'
+import { useCallback, useState } from 'react'
 
 type AuthCredentials = {
     id: string
@@ -16,6 +15,8 @@ type AuthState = {
 const COOKIE_NAME = 'authData'
 
 const getAuthData = (): AuthCredentials | null => {
+    if (typeof document === 'undefined') return null
+
     const cookie = document.cookie
         .split('; ')
         .find((item) => item.startsWith(`${COOKIE_NAME}=`))
@@ -23,28 +24,29 @@ const getAuthData = (): AuthCredentials | null => {
     if (!cookie) return null
 
     try {
-        const value = cookie.substring(COOKIE_NAME.length + 1)
+        const value = decodeURIComponent(
+            cookie.substring(COOKIE_NAME.length + 1),
+        )
         const parsed = JSON.parse(value)
 
         if (
-            typeof parsed.id !== 'string' ||
-            typeof parsed.token !== 'string' ||
+            typeof parsed?.id !== 'string' ||
+            typeof parsed?.token !== 'string' ||
             !parsed.id ||
             !parsed.token
         ) {
             return null
         }
 
-        return {
-            id: parsed.id,
-            token: parsed.token,
-        }
+        return { id: parsed.id, token: parsed.token }
     } catch {
         return null
     }
 }
 
 export const useAuth = () => {
+    const navigate = useNavigate()
+
     const [auth, setAuth] = useState<AuthState>(() => {
         const authData = getAuthData()
 
@@ -54,46 +56,40 @@ export const useAuth = () => {
         }
     })
 
-    const navigate = useNavigate()
+    const setAuthCred = useCallback(
+        (authData: AuthCredentials) => {
+            document.cookie =
+                `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(authData))}; Path=/; SameSite=Lax`
 
-    const pathname = useRouterState({
-        select: (state) => state.location.pathname,
-    })
-
-    useEffect(() => {
-        const isLoginPage =
-            pathname === PAGE_PATH_KEYS.LOGIN
-
-        if (!auth.isLogin && !isLoginPage) {
-            void navigate({
-                to: PAGE_PATH_KEYS.LOGIN,
-                replace: true,
+            setAuth({
+                authData,
+                isLogin: Boolean(authData.id && authData.token),
             })
-        } else if (auth.isLogin && isLoginPage) {
-            void navigate({
-                to: PAGE_PATH_KEYS.HOME,
-                replace: true,
-            })
-        }
-    }, [pathname, auth.isLogin, navigate])
+        },
+        [],
+    )
 
-    const logout = () => {
+    const logout = useCallback(() => {
+        // Clear authentication first.
         document.cookie =
-            `${COOKIE_NAME}=; max-age=0; path=/; SameSite=Lax`
+            `${COOKIE_NAME}=; Max-Age=0; Path=/; SameSite=Lax`
 
+        // Update this hook's state immediately.
         setAuth({
             authData: null,
             isLogin: false,
         })
 
+        // Navigate without reloading the whole website.
         void navigate({
-            to: PAGE_PATH_KEYS.LOGIN,
+            to: '/login',
             replace: true,
         })
-    }
+    }, [navigate])
 
     return {
         auth,
+        setAuthCred,
         logout,
     }
 }
