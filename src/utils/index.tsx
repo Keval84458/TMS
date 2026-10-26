@@ -69,3 +69,10 @@ export const defaultSiteData = {
     site_address: 'abc, america',
     city: 'Wembley',
 }
+
+export const objIsNotEmpty = (obj: any): boolean => {
+    if (obj === null || typeof obj !== 'object') {
+        return false
+    }
+    return Object.keys(obj).length !== 0
+}

@@ -2,21 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
-import { ThemeInput, ThemeTextarea } from '#/utils'
 import { PAGE_PATH_KEYS } from '#/utils/constant'
-import {
-    FaUser,
-    FaPhone,
-    FaMapMarkerAlt,
-    FaRulerCombined,
-    FaSave,
-    FaSpinner,
-    FaVenusMars,
-    FaTshirt,
-    FaRupeeSign,
-    FaChevronDown
-} from 'react-icons/fa'
-import { GiArmoredPants, GiLargeDress, GiSleevelessTop } from 'react-icons/gi'
+import { FaSave, FaSpinner } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { useAuth } from '#/utils/auth'
 import MeasurementsDetails from './_layouts/MeasurementsDetails'
@@ -31,8 +18,21 @@ export const Route = createFileRoute('/customer/')({
     component: RouteComponent,
 })
 
+type Gender = 'male' | 'female'
+type MeasurementMap = Record<string, string>
+
 const sanitizeAmount = (value: string) =>
     value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
+
+// DB mathi aavela jsonb ne safe {key: string} object ma fervo
+const toMeasurementMap = (value: unknown): MeasurementMap => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
+    const result: MeasurementMap = {}
+    Object.entries(value as Record<string, unknown>).forEach(([k, v]) => {
+        result[k] = v == null ? '' : String(v)
+    })
+    return result
+}
 
 function RouteComponent() {
     const navigate = useNavigate()
@@ -43,6 +43,7 @@ function RouteComponent() {
     const [isMeasurementOpen, setIsMeasurementOpen] = useState(false)
     const [isPaymentOpen, setIsPaymentOpen] = useState(false)
     const [isFetching, setIsFetching] = useState(isUpdateMode)
+    const [isLoading, setIsLoading] = useState(false)
 
     const [formData, setFormData] = useState({
         customer_name: '',
@@ -50,15 +51,11 @@ function RouteComponent() {
         city: '',
         gender: 'male',
     })
-    const [measurements, setMeasurements] = useState({
-        shirt: '',
-        pant: '',
-        blouse: '',
-        dress: '',
-        kurti: '',
-        ladiesPant: '',
-        shalwar: '',
-        other: ''
+
+    // Male ane female na values alag rakhya chhe
+    const [measurements, setMeasurements] = useState<Record<Gender, MeasurementMap>>({
+        male: {},
+        female: {},
     })
 
     const [payment, setPayment] = useState({
@@ -66,7 +63,7 @@ function RouteComponent() {
         advance: '',
     })
 
-    const [isLoading, setIsLoading] = useState(false)
+    const currentGender: Gender = formData.gender === 'female' ? 'female' : 'male'
 
     const totalNum = parseFloat(payment.total) || 0
     const advanceNum = parseFloat(payment.advance) || 0
@@ -102,20 +99,10 @@ function RouteComponent() {
                         advance: data.advance_amount ? String(data.advance_amount) : '',
                     })
 
-                    if (data.measurements && typeof data.measurements === 'object') {
-                        setMeasurements({
-                            shirt: data.measurements.shirt || '',
-                            pant: data.measurements.pant || '',
-                            blouse: data.measurements.blouse || '',
-                            dress: data.measurements.dress || '',
-                            kurti: data.measurements.kurti || '',
-                            ladiesPant: data.measurements.ladiesPant || '',
-                            shalwar: data.measurements.shalwar || '',
-                            other: data.measurements.other || '',
-                        })
-                    } else if (typeof data.measurement === 'string') {
-                        setMeasurements((prev) => ({ ...prev, other: data.measurement }))
-                    }
+                    setMeasurements({
+                        male: toMeasurementMap(data.male_measurements),
+                        female: toMeasurementMap(data.female_measurements),
+                    })
                 }
             } catch (err) {
                 toast.error('Unexpected error')
@@ -131,8 +118,12 @@ function RouteComponent() {
         setFormData((prev) => ({ ...prev, [key]: value }))
     }
 
+    // Current gender na object ma j key: value save thase
     const onMeasurementChange = (key: string, value: string) => {
-        setMeasurements((prev) => ({ ...prev, [key]: value }))
+        setMeasurements((prev) => ({
+            ...prev,
+            [currentGender]: { ...prev[currentGender], [key]: value },
+        }))
     }
 
     const onPaymentChange = (key: 'total' | 'advance', value: string) => {
@@ -149,8 +140,7 @@ function RouteComponent() {
         } else if (!formData.city.trim()) {
             toast.warn("કૃપા કરીને ગામનું નામ ભરો.")
             return
-        }
-        else if (totalNum < 0 || advanceNum < 0) {
+        } else if (totalNum < 0 || advanceNum < 0) {
             toast.warn("રકમ 0 અથવા તેનાથી વધુ હોવી જોઈએ.")
             return
         } else if (advanceTooHigh) {
@@ -160,8 +150,9 @@ function RouteComponent() {
 
         setIsLoading(true)
         try {
-            const filteredMeasurements: Record<string, string> = {}
-            Object.entries(measurements).forEach(([key, val]) => {
+            // Khali values kadhi nakho, fakat current gender na save karo
+            const filteredMeasurements: MeasurementMap = {}
+            Object.entries(measurements[currentGender]).forEach(([key, val]) => {
                 if (val.trim() !== '') {
                     filteredMeasurements[key] = val.trim()
                 }
@@ -172,7 +163,8 @@ function RouteComponent() {
                 phone: formData.phone.trim(),
                 city: formData.city.trim(),
                 gender: formData.gender,
-                measurements: filteredMeasurements,
+                male_measurements: currentGender === 'male' ? filteredMeasurements : {},
+                female_measurements: currentGender === 'female' ? filteredMeasurements : {},
                 total_amount: totalNum,
                 advance_amount: advanceNum,
                 pending_amount: pendingNum,
@@ -197,7 +189,6 @@ function RouteComponent() {
                     .insert([payload])
 
                 if (error) {
-                    console.error(error)
                     toast.error("ભૂલ!")
                     return
                 }
@@ -227,6 +218,7 @@ function RouteComponent() {
             <PageHeader
                 title={isUpdateMode ? "ગ્રાહક વિગતો અપડેટ કરો" : "નવું માપ અને ગ્રાહક"}
                 onBack={PAGE_PATH_KEYS.LIST || PAGE_PATH_KEYS.HOME}
+                visible
             />
             <div className="max-w-2xl mx-auto p-4 sm:p-6">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-7 space-y-6">
@@ -247,7 +239,7 @@ function RouteComponent() {
                         formData={formData}
                         isMeasurementOpen={isMeasurementOpen}
                         setIsMeasurementOpen={setIsMeasurementOpen}
-                        measurements={measurements}
+                        measurements={measurements[currentGender]}
                         onMeasurementChange={onMeasurementChange}
                     />
                     <PaymentDetails
@@ -284,4 +276,3 @@ function RouteComponent() {
         </div>
     )
 }
-

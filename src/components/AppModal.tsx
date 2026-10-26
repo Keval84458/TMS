@@ -1,59 +1,66 @@
-import React, { useEffect } from 'react'
-import { FaTimes, FaUser, FaRulerCombined } from 'react-icons/fa'
+import React, { useEffect, useMemo } from 'react'
+import { FaTimes, FaUser, FaRulerCombined, FaMale, FaFemale } from 'react-icons/fa'
+
+type MeasurementMap = Record<string, unknown> | null | undefined
+type Gender = 'male' | 'female'
 
 interface MeasurementModalProps {
     isOpen: boolean
     onClose: () => void
     customerName: string
-    measurement?: string
+    gender?: string
+    maleMeasurements?: MeasurementMap
+    femaleMeasurements?: MeasurementMap
+}
+
+const OTHER_KEY = 'other'
+const toItems = (value: MeasurementMap): { key: string; value: string }[] => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return []
+
+    const items = Object.entries(value)
+        .map(([key, val]) => ({
+            key: key.trim(),
+            value: val == null ? '' : String(val).trim(),
+        }))
+        .filter((item) => item.key && item.value)
+
+    return [
+        ...items.filter((i) => i.key.toLowerCase() !== OTHER_KEY),
+        ...items.filter((i) => i.key.toLowerCase() === OTHER_KEY),
+    ]
+}
+
+const SECTION_META: Record<Gender, { title: string; subtitle: string; Icon: React.ElementType }> = {
+    male: { title: 'પુરુષ માપ', subtitle: 'Male Measurements', Icon: FaMale },
+    female: { title: 'સ્ત્રી માપ', subtitle: 'Female Measurements', Icon: FaFemale },
 }
 
 const MeasurementModal: React.FC<MeasurementModalProps> = ({
     isOpen,
     onClose,
     customerName,
-    measurement,
+    gender,
+    maleMeasurements,
+    femaleMeasurements,
 }) => {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && isOpen) {
-                onClose()
-            }
+            if (e.key === 'Escape' && isOpen) onClose()
         }
-
         window.addEventListener('keydown', handleKeyDown)
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown)
-        }
+        return () => window.removeEventListener('keydown', handleKeyDown)
     }, [isOpen, onClose])
 
+    const sections = useMemo(() => {
+        const list: { gender: Gender; items: { key: string; value: string }[] }[] = [
+            { gender: 'male', items: toItems(maleMeasurements) },
+            { gender: 'female', items: toItems(femaleMeasurements) },
+        ]
+        if (gender === 'female') list.reverse()
+        return list.filter((s) => s.items.length > 0)
+    }, [maleMeasurements, femaleMeasurements, gender])
+
     if (!isOpen) return null
-
-    const measurements = measurement
-        ? measurement
-            .split('|')
-            .map((item) => {
-                const separatorIndex = item.indexOf(':')
-
-                if (separatorIndex === -1) {
-                    return { key: item.trim(), value: '' }
-                }
-
-                const rawValue = item.slice(separatorIndex + 1).trim()
-                const formattedValues = rawValue
-                    .split(/[\s,]+/)
-                    .map((val) => val.trim())
-                    .filter(Boolean)
-                    .join(' | ')
-
-                return {
-                    key: item.slice(0, separatorIndex).trim(),
-                    value: formattedValues,
-                }
-            })
-            .filter((item) => item.key)
-        : []
 
     return (
         <div
@@ -71,6 +78,7 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                     </div>
 
                     <button
+                        type="button"
                         onClick={onClose}
                         className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700"
                         aria-label="Close"
@@ -78,12 +86,12 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                         <FaTimes size={16} />
                     </button>
                 </div>
-                <div className="my-4 space-y-4 overflow-y-auto pr-1">
+
+                <div className="my-4 space-y-5 overflow-y-auto pr-1">
                     <div className="flex items-center gap-3 rounded-2xl border border-purple-100 bg-purple-50/70 p-3.5">
                         <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-purple-600 font-bold text-white shadow-md shadow-purple-600/20">
                             <FaUser size={16} />
                         </div>
-
                         <div>
                             <span className="block text-[11px] font-semibold uppercase tracking-wider text-purple-600">
                                 ગ્રાહકનું નામ:
@@ -93,37 +101,45 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                             </h3>
                         </div>
                     </div>
-                    <div>
-                        <label className="mb-3 block text-xs font-semibold uppercase tracking-wider text-gray-500">
-                            માપ (Measurement Details):
-                        </label>
 
-                        {measurements.length > 0 ? (
-                            <div className="grid grid-cols-1 gap-3">
-                                {measurements.map((item, index) => (
-                                    <div
-                                        key={`${item.key}-${index}`}
-                                        className="rounded-xl border border-purple-100 bg-purple-50 p-3"
-                                    >
-                                        <p className="mb-1 break-words text-xs font-semibold text-purple-600">
-                                            {item.key}
-                                        </p>
-
-                                        <p className="break-words text-base font-bold text-gray-900">
-                                            {item.value || '-'}
-                                        </p>
+                    {sections.length > 0 ? (
+                        sections.map(({ gender: g, items }) => {
+                            const { title, subtitle, Icon } = SECTION_META[g]
+                            return (
+                                <div key={g}>
+                                    <div className="mb-3 flex items-center gap-2">
+                                        <Icon className="text-purple-600" />
+                                        <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                            {title} ({subtitle})
+                                        </label>
                                     </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="rounded-2xl border border-gray-200 bg-slate-50 px-4 py-6 text-center text-sm text-gray-500">
-                                કોઈ માપ ઉપલબ્ધ નથી
-                                <p className="mt-1 text-xs">
-                                    No measurements recorded
-                                </p>
-                            </div>
-                        )}
-                    </div>
+
+                                    <div className="grid grid-cols-1 gap-3">
+                                        {items.map((item) => (
+                                            <div
+                                                key={`${g}-${item.key}`}
+                                                className="rounded-xl border border-purple-100 bg-purple-50 p-3"
+                                            >
+                                                <p className="mb-1 break-words text-xs font-semibold text-purple-600">
+                                                    {item.key.toLowerCase() === OTHER_KEY
+                                                        ? 'અન્ય નોંધ (Other)'
+                                                        : item.key}
+                                                </p>
+                                                <p className="whitespace-pre-wrap break-words text-base font-bold text-gray-900">
+                                                    {item.value}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        })
+                    ) : (
+                        <div className="rounded-2xl border border-gray-200 bg-slate-50 px-4 py-6 text-center text-sm text-gray-500">
+                            કોઈ માપ ઉપલબ્ધ નથી
+                            <p className="mt-1 text-xs">No measurements recorded</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

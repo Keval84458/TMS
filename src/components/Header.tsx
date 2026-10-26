@@ -1,12 +1,12 @@
 import { useAuth } from "#/utils/auth";
 import { PAGE_PATH_KEYS } from "#/utils/constant";
-import { globalSiteSettings } from "#/utils/site_settings";
+import { useGlobalSiteSettings } from "#/utils/site_settings";
 import { Link } from "@tanstack/react-router";
 import { RiLogoutBoxLine } from "react-icons/ri";
 
 const Header = () => {
     const { logout } = useAuth();
-    const { siteSettings } = globalSiteSettings();
+    const { siteSettings } = useGlobalSiteSettings();
 
     return (
         <header className="sticky top-0 z-50 w-full bg-slate-900/95 backdrop-blur-md border-b border-slate-800/80 shadow-md">
@@ -23,10 +23,10 @@ const Header = () => {
 
                     <div className="flex flex-col">
                         <h1 className="text-lg sm:text-2xl font-bold tracking-wider text-white uppercase font-sans leading-tight">
-                            {siteSettings.site_title || ''}
+                            {siteSettings.site_title ?? ""}
                         </h1>
                         <span className="text-[9px] sm:text-[10px] tracking-widest text-slate-400 uppercase">
-                            {siteSettings.subtitle || ''}
+                            {siteSettings.subtitle ?? ""}
                         </span>
                     </div>
                 </Link>

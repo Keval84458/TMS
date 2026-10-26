@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NotFoundRouteImport } from './routes/not-found'
 import { Route as CustomerIndexRouteImport } from './routes/customer/index'
 import { Route as CutomerListIndexRouteImport } from './routes/cutomer-list/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
@@ -18,6 +19,11 @@ import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotFoundRoute = NotFoundRouteImport.update({
+  id: '/not-found',
+  path: '/not-found',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CustomerIndexRoute = CustomerIndexRouteImport.update({
@@ -43,6 +49,7 @@ const SettingsIndexRoute = SettingsIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/not-found': typeof NotFoundRoute
   '/customer/': typeof CustomerIndexRoute
   '/cutomer-list/': typeof CutomerListIndexRoute
   '/login/': typeof LoginIndexRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/not-found': typeof NotFoundRoute
   '/customer': typeof CustomerIndexRoute
   '/cutomer-list': typeof CutomerListIndexRoute
   '/login': typeof LoginIndexRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/not-found': typeof NotFoundRoute
   '/customer/': typeof CustomerIndexRoute
   '/cutomer-list/': typeof CutomerListIndexRoute
   '/login/': typeof LoginIndexRoute
@@ -65,12 +74,20 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/customer/' | '/cutomer-list/' | '/login/' | '/settings/'
+  fullPaths:
+    | '/'
+    | '/not-found'
+    | '/customer/'
+    | '/cutomer-list/'
+    | '/login/'
+    | '/settings/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/customer' | '/cutomer-list' | '/login' | '/settings'
+  to:
+    '/' | '/not-found' | '/customer' | '/cutomer-list' | '/login' | '/settings'
   id:
     | '__root__'
     | '/'
+    | '/not-found'
     | '/customer/'
     | '/cutomer-list/'
     | '/login/'
@@ -79,6 +96,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  NotFoundRoute: typeof NotFoundRoute
   CustomerIndexRoute: typeof CustomerIndexRoute
   CutomerListIndexRoute: typeof CutomerListIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
@@ -92,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/not-found': {
+      id: '/not-found'
+      path: '/not-found'
+      fullPath: '/not-found'
+      preLoaderRoute: typeof NotFoundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/customer/': {
@@ -127,6 +152,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  NotFoundRoute: NotFoundRoute,
   CustomerIndexRoute: CustomerIndexRoute,
   CutomerListIndexRoute: CutomerListIndexRoute,
   LoginIndexRoute: LoginIndexRoute,

@@ -22,7 +22,7 @@ import {
 } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { useAuth } from '#/utils/auth'
-import { globalSiteSettings, refetchSiteSettings } from '#/utils/site_settings'
+import { refetchSiteSettings, useGlobalSiteSettings } from '#/utils/site_settings'
 
 export const Route = createFileRoute('/settings/')({
     component: RouteComponent,
@@ -31,20 +31,16 @@ export const Route = createFileRoute('/settings/')({
 function RouteComponent() {
     const navigate = useNavigate()
     const { auth } = useAuth()
-    const { fetchSettingsData } = globalSiteSettings()
+    const { fetchSettingsData } = useGlobalSiteSettings()
 
     const [isFetching, setIsFetching] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [existingSettingId, setExistingSettingId] = useState<number | null>(null)
 
-    // Accordion open/close state for both parts
     const [isGeneralOpen, setIsGeneralOpen] = useState(false)
     const [isMeasurementOpen, setIsMeasurementOpen] = useState(false)
-
-    // Active tab for Male/Female measurement configuration view
     const [activeGenderTab, setActiveGenderTab] = useState<'male' | 'female'>('male')
 
-    // Local state for dynamic product keys
     const [maleProductsInput, setMaleProductsInput] = useState('')
     const [femaleProductsInput, setFemaleProductsInput] = useState('')
 
@@ -57,7 +53,6 @@ function RouteComponent() {
         female_measurements: 'Blouse, Dress, Kurti',
     })
 
-    // Store original database snapshot to check for changes
     const [initialData, setInitialData] = useState({
         site_title: '',
         subtitle: '',
@@ -158,7 +153,6 @@ function RouteComponent() {
         }
     }
 
-    // Check if any value has been modified compared to fetched/initial data
     const hasChanges =
         formData.site_title !== initialData.site_title ||
         formData.subtitle !== initialData.subtitle ||
@@ -228,7 +222,6 @@ function RouteComponent() {
             refetchSiteSettings()
             await fetchSettingsData()
 
-            // Update initial snapshot so button hides again after save
             setInitialData(formData)
 
             toast.success("સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ ગઈ છે.")
@@ -252,12 +245,12 @@ function RouteComponent() {
     return (
         <div className="min-h-screen bg-slate-50 pb-12 mt-[3.4rem]">
             <PageHeader
-                title="સાઈટ સેટિંગ્સ (Site Settings)"
+                title="Settings"
                 onBack={PAGE_PATH_KEYS.HOME}
             />
             <div className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
 
-                {/* 1. General Settings Collapsible Card */}
+
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-7 space-y-6">
                     <button
                         type="button"
@@ -377,7 +370,6 @@ function RouteComponent() {
                     </div>
                 </div>
 
-                {/* 2. Measurement Categories Collapsible Card */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-7 space-y-6">
                     <button
                         type="button"
@@ -501,7 +493,6 @@ function RouteComponent() {
                     </div>
                 </div>
 
-                {/* Submit Button - Shown ONLY when changes are made */}
                 {hasChanges && (
                     <div className="pt-2 animate-fadeIn">
                         <button
@@ -524,7 +515,6 @@ function RouteComponent() {
                         </button>
                     </div>
                 )}
-
             </div>
         </div>
     )
