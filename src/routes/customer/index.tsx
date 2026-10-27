@@ -24,7 +24,6 @@ type MeasurementMap = Record<string, string>
 const sanitizeAmount = (value: string) =>
     value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
 
-// DB mathi aavela jsonb ne safe {key: string} object ma fervo
 const toMeasurementMap = (value: unknown): MeasurementMap => {
     if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
     const result: MeasurementMap = {}
@@ -52,7 +51,6 @@ function RouteComponent() {
         gender: 'male',
     })
 
-    // Male ane female na values alag rakhya chhe
     const [measurements, setMeasurements] = useState<Record<Gender, MeasurementMap>>({
         male: {},
         female: {},
@@ -118,7 +116,6 @@ function RouteComponent() {
         setFormData((prev) => ({ ...prev, [key]: value }))
     }
 
-    // Current gender na object ma j key: value save thase
     const onMeasurementChange = (key: string, value: string) => {
         setMeasurements((prev) => ({
             ...prev,
@@ -150,7 +147,6 @@ function RouteComponent() {
 
         setIsLoading(true)
         try {
-            // Khali values kadhi nakho, fakat current gender na save karo
             const filteredMeasurements: MeasurementMap = {}
             Object.entries(measurements[currentGender]).forEach(([key, val]) => {
                 if (val.trim() !== '') {
@@ -270,7 +266,6 @@ function RouteComponent() {
                             )}
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>

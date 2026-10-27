@@ -1,17 +1,26 @@
+import { useMemo, useState } from "react"
 import { FaCalendarAlt, FaRupeeSign, FaSortAlphaDown } from "react-icons/fa"
 
+type SortType = 'newest' | 'oldest' | 'az'
 const AllSearchFilters = ({
-    setSortType,
-    sortBtnClass,
-    sortType,
-    setOnlyPending,
     pendingCustomersCount,
     filteredCustomers,
     formatRupee,
-    totalPending,
     searchQuery,
-    onlyPending
 }: any) => {
+    const [sortType, setSortType] = useState<SortType>('newest')
+    const [onlyPending, setOnlyPending] = useState(false)
+
+    const totalPending = useMemo(
+        () => filteredCustomers.reduce((sum: any, c: any) => sum + (Number(c.pending_amount) || 0), 0),
+        [filteredCustomers]
+    )
+
+    const sortBtnClass = (active: boolean) =>
+        `px-3 py-1.5 rounded-lg font-medium transition-all whitespace-nowrap flex items-center gap-1 ${active
+            ? 'bg-purple-600 text-white shadow-sm'
+            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+        }`
     return (
         <>
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 overflow-x-auto pb-1">

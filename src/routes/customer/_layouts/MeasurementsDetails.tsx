@@ -4,7 +4,6 @@ import { FaChevronDown, FaRulerCombined, FaStickyNote } from 'react-icons/fa'
 
 const OTHER_KEY = 'other'
 
-// "Pant, Shirt" -> ["Pant", "Shirt"]  (duplicate, khali ane "other" kadhi nakhe)
 const parseKeys = (value: unknown): string[] => {
     if (typeof value !== 'string') return []
     return [
@@ -56,7 +55,6 @@ const MeasurementsDetails = ({
                     }`}
             >
                 <div className="overflow-hidden space-y-4">
-                    {/* Dynamic boxes (settings mathi) */}
                     {keys.length > 0 && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {keys.map((key) => (

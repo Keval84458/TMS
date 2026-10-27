@@ -5,11 +5,11 @@ import { PAGE_PATH_KEYS } from '#/utils/constant'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FaUserPlus } from 'react-icons/fa'
 import { supabase } from '#/lib/supabaseClient'
-import MeasurementModal from '#/components/AppModal'
 import { toast } from 'react-toastify'
 import CustomerGrid from './_layouts/CustomerGrid'
 import ConfirmModal from './_layouts/ConfirmModal'
 import AllSearchFilters from './_layouts/AllSearchFilters'
+import MeasurementModal from '#/components/MeasurementModal'
 
 export const Route = createFileRoute('/cutomer-list/')({
     component: RouteComponent,
@@ -55,30 +55,79 @@ function RouteComponent() {
         name: '',
     })
 
+
     const fetchCustomers = async () => {
         setIsLoading(true)
+
         try {
+            const cookie = document.cookie
+                .split('; ')
+                .find((item) => item.startsWith('authData='))
+
+            if (!cookie) {
+                setCustomers([])
+                toast.error('Please login to view customers.')
+                return
+            }
+
+            let authData: { id: string; token: string }
+
+            try {
+                const cookieValue = cookie.substring('authData='.length)
+
+                try {
+                    authData = JSON.parse(decodeURIComponent(cookieValue))
+                } catch {
+                    authData = JSON.parse(cookieValue)
+                }
+            } catch {
+                setCustomers([])
+                toast.error('Invalid login session. Please login again.')
+                return
+            }
+
+            const userId = authData?.id
+
+            if (!userId || typeof userId !== 'string') {
+                setCustomers([])
+                toast.error('User ID not found. Please login again.')
+                return
+            }
+
             let queryBuilder = supabase
                 .from('customers')
                 .select(
-                    'id, customer_name, phone, city, gender, male_measurements, female_measurements, created_at, total_amount, advance_amount, pending_amount'
+                    'id, user_id, customer_name, phone, city, gender, male_measurements, female_measurements, created_at, total_amount, advance_amount, pending_amount'
                 )
+                .eq('user_id', userId)
 
             if (sortType === 'az') {
-                queryBuilder = queryBuilder.order('customer_name', { ascending: true })
+                queryBuilder = queryBuilder.order('customer_name', {
+                    ascending: true,
+                })
             } else if (sortType === 'oldest') {
-                queryBuilder = queryBuilder.order('created_at', { ascending: true })
+                queryBuilder = queryBuilder.order('created_at', {
+                    ascending: true,
+                })
             } else {
-                queryBuilder = queryBuilder.order('created_at', { ascending: false })
+                queryBuilder = queryBuilder.order('created_at', {
+                    ascending: false,
+                })
             }
 
             const { data, error } = await queryBuilder
+
             if (error) {
+                console.error('Error fetching customers:', error.message)
+                setCustomers([])
                 toast.error('Error fetching customers')
-            } else if (data) {
-                setCustomers(data as Customer[])
+                return
             }
+
+            setCustomers((data ?? []) as Customer[])
         } catch (error) {
+            console.error('Unexpected error fetching customers:', error)
+            setCustomers([])
             toast.error('Error fetching customers')
         } finally {
             setIsLoading(false)
