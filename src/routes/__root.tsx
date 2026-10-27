@@ -13,7 +13,6 @@ import '../styles.css'
 
 import Header from '#/components/Header'
 import { PAGE_PATH_KEYS } from '#/utils/constant'
-import { useAuth } from '#/utils/auth'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
 
@@ -59,7 +58,6 @@ function getAuthToken(): AuthCredentials | null {
 }
 
 function RootComponent() {
-  // const { auth, logout } = useAuth()
 
   const pathname = useRouterState({
     select: (state) => state.location.pathname,

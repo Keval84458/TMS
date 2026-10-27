@@ -1,20 +1,6 @@
-import { ThemeTextarea } from '#/utils'
+import { OTHER_KEY, parseKeys, ThemeTextarea } from '#/utils'
 import { useGlobalSiteSettings } from '#/utils/site_settings'
 import { FaChevronDown, FaRulerCombined, FaStickyNote } from 'react-icons/fa'
-
-const OTHER_KEY = 'other'
-
-const parseKeys = (value: unknown): string[] => {
-    if (typeof value !== 'string') return []
-    return [
-        ...new Set(
-            value
-                .split(',')
-                .map((k) => k.trim())
-                .filter((k) => k && k.toLowerCase() !== OTHER_KEY)
-        ),
-    ]
-}
 
 const MeasurementsDetails = ({
     formData,

@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { toast } from "react-toastify";
 import { useAuth } from "./auth";
 import { objIsNotEmpty } from ".";
+import { SITE_MESSAGES } from "./constant";
 
 const LS_PREFIX = "site_settings_v1:";
 
@@ -67,7 +68,6 @@ export const useGlobalSiteSettings = () => {
     const userId: string | undefined = auth.authData?.id;
     const key = userId ?? "default";
 
-    // Start from cache so the UI doesn't wait on the network
     const [siteSettings, setSiteSettings] = useState<any>(() => getCached(key));
     const [isFetching, setIsFetching] = useState(() => getCached(key) === null);
 
@@ -76,14 +76,13 @@ export const useGlobalSiteSettings = () => {
             const data = await loadSettings(userId);
             setSiteSettings(data);
         } catch (error) {
-            toast.error("સેટિંગ્સ લોડ કરવામાં ભૂલ થઈ.");
+            toast.error(SITE_MESSAGES.DO_NOT_LOAD_SETTING_MISTAKE);
         } finally {
             setIsFetching(false);
         }
     }, [userId]);
 
     useEffect(() => {
-        // When the user changes, show that user's cached value immediately
         const cached = getCached(key);
         if (cached !== null) {
             setSiteSettings(cached);
@@ -91,7 +90,7 @@ export const useGlobalSiteSettings = () => {
         } else {
             setIsFetching(true);
         }
-        fetchSettingsData(); // refresh in the background
+        fetchSettingsData();
     }, [key, fetchSettingsData]);
 
     useEffect(() => {

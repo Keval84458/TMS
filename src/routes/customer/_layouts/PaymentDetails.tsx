@@ -9,6 +9,7 @@ const PaymentDetails = ({
     advanceTooHigh,
     pendingNum
 }: any) => {
+
     return (
         <div className="pt-4 border-t border-gray-100">
             <button

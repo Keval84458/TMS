@@ -2,46 +2,51 @@ import { useAuth } from "#/utils/auth";
 import { PAGE_PATH_KEYS } from "#/utils/constant";
 import { useGlobalSiteSettings } from "#/utils/site_settings";
 import { Link } from "@tanstack/react-router";
-import { RiLogoutBoxLine } from "react-icons/ri";
+import { TbLogout2 } from "react-icons/tb";
 
 const Header = () => {
-    const { logout } = useAuth()
+    const { logout } = useAuth();
     const { siteSettings } = useGlobalSiteSettings();
+    const siteTitle = siteSettings?.site_title?.trim() || 'K';
+    const siteSubtitle = siteSettings?.subtitle?.trim() || '';
+
+    // Truncate title if it exceeds 15 characters
+    const displayTitle = siteTitle.length > 15
+        ? `${siteTitle.slice(0, 15)}...`
+        : siteTitle;
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-slate-900/95 backdrop-blur-md border-b border-slate-800/80 shadow-md">
-            <div className="h-0.5 bg-gradient-to-r from-purple-600 via-indigo-500 to-purple-600" />
-
-            <div className="mx-auto px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-4">
-                <Link
-                    to={PAGE_PATH_KEYS.HOME}
-                    className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none"
-                >
-                    <div className="w-10 h-10 sm:w-11 sm:h-11 bg-gradient-to-tr from-purple-700 to-indigo-600 text-white font-serif text-xl sm:text-2xl font-black flex items-center justify-center rounded-xl shadow-lg shadow-purple-600/30 group-hover:scale-105 transition-transform duration-200">
-                        {siteSettings.site_title?.trim().charAt(0).toUpperCase() || 'K'}
+        <header className="sticky top-0 z-50 w-full bg-slate-950/95 backdrop-blur-md border-b border-purple-500/20 shadow-[0_4px_20px_rgba(168,85,247,0.1)]">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
+                <Link to={PAGE_PATH_KEYS.HOME} className="flex items-center gap-3">
+                    <div className="relative">
+                        <div className="w-10 h-10 rounded-xl bg-purple-600 text-white font-extrabold text-xl flex items-center justify-center shadow-lg shadow-purple-600/40">
+                            {siteTitle.charAt(0).toUpperCase()}
+                        </div>
+                        <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full" />
                     </div>
-
-                    <div className="flex flex-col">
-                        <h1 className="text-lg sm:text-2xl font-bold tracking-wider text-white uppercase font-sans leading-tight">
-                            {(siteSettings.site_title ?? "").length > 15
-                                ? `${siteSettings.site_title.slice(0, 15)}...`
-                                : siteSettings.site_title ?? ""}
+                    <div>
+                        <h1
+                            className="text-base font-extrabold text-white uppercase tracking-wider"
+                            title={siteTitle} // Shows full title on hover
+                        >
+                            {displayTitle}
                         </h1>
-                        <span className="text-[9px] sm:text-[10px] tracking-widest text-slate-400 uppercase">
-                            {siteSettings.subtitle ?? ""}
-                        </span>
+                        {siteSubtitle && (
+                            <span className="text-[9px] font-bold text-purple-400 uppercase tracking-widest block">
+                                {siteSubtitle}
+                            </span>
+                        )}
                     </div>
                 </Link>
 
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={logout}
-                        title="Logout"
-                        className="w-10 h-9 bg-gradient-to-tr from-purple-700 to-indigo-600 text-white flex items-center justify-center rounded-xl shadow-lg shadow-purple-600/30 hover:scale-105 transition-transform duration-200"
-                    >
-                        <RiLogoutBoxLine size={16} />
-                    </button>
-                </div>
+                <button
+                    onClick={logout}
+                    className="p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/30 text-purple-300 hover:bg-purple-600 hover:text-white transition-all duration-200"
+                    title="Logout"
+                >
+                    <TbLogout2 size={18} />
+                </button>
             </div>
         </header>
     );

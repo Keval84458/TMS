@@ -32,8 +32,6 @@ const PageHeader = ({ title, onBack, visible }: PageHeaderProps) => {
                         <span>Settings</span>
                     </Link>
                     }
-
-
                 </div>
             </div>
         </div>

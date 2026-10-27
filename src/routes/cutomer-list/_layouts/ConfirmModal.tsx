@@ -1,3 +1,4 @@
+import { SITE_MESSAGES } from "#/utils/constant"
 import { FaExclamationTriangle } from "react-icons/fa"
 
 const ConfirmModal = ({ deleteModalConfig, setDeleteModalConfig, handleDelete }: any) => {
@@ -12,7 +13,7 @@ const ConfirmModal = ({ deleteModalConfig, setDeleteModalConfig, handleDelete }:
                         શું તમે "{deleteModalConfig.name}" ને ડિલીટ કરવા માંગો છો?
                     </h3>
                     <p className="mt-1 text-xs text-gray-500">
-                        આ ક્રિયા પાછી ખેંચી શકાતી નથી!
+                        {SITE_MESSAGES.DO_NOT_REVERCE_ACTION}
                     </p>
                 </div>
                 <div className="flex gap-3 pt-2">

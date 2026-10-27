@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { ThemeInput } from '#/utils'
-import { PAGE_PATH_KEYS } from '#/utils/constant'
+import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FaUserPlus } from 'react-icons/fa'
 import { supabase } from '#/lib/supabaseClient'
@@ -45,6 +45,7 @@ function RouteComponent() {
     const [selectedCustomerId, setSelectedCustomerId] = useState<string | number | null>(null)
     const [updateKey, setUpdateKey] = useState<number>(1)
 
+
     const [deleteModalConfig, setDeleteModalConfig] = useState<{
         isOpen: boolean
         id: string | number | null
@@ -66,7 +67,7 @@ function RouteComponent() {
 
             if (!cookie) {
                 setCustomers([])
-                toast.error('Please login to view customers.')
+                toast.error(SITE_MESSAGES.LOGIN_TO_VIEW_CUSTOMER)
                 return
             }
 
@@ -82,7 +83,7 @@ function RouteComponent() {
                 }
             } catch {
                 setCustomers([])
-                toast.error('Invalid login session. Please login again.')
+                toast.error(SITE_MESSAGES.LOGIN_AGAIN)
                 return
             }
 
@@ -90,7 +91,7 @@ function RouteComponent() {
 
             if (!userId || typeof userId !== 'string') {
                 setCustomers([])
-                toast.error('User ID not found. Please login again.')
+                toast.error(SITE_MESSAGES.USER_ID_NOT_FOUND)
                 return
             }
 
@@ -118,17 +119,17 @@ function RouteComponent() {
             const { data, error } = await queryBuilder
 
             if (error) {
-                console.error('Error fetching customers:', error.message)
+                console.error(SITE_MESSAGES.ERROR_FETCHING_CUSTOMER, error.message)
                 setCustomers([])
-                toast.error('Error fetching customers')
+                toast.error(SITE_MESSAGES.ERROR_FETCHING_CUSTOMER)
                 return
             }
 
             setCustomers((data ?? []) as Customer[])
         } catch (error) {
-            console.error('Unexpected error fetching customers:', error)
+            console.error(SITE_MESSAGES.UNEXPECTED_ERROR_FETCHING_CUSTOMER, error)
             setCustomers([])
-            toast.error('Error fetching customers')
+            toast.error(SITE_MESSAGES.ERROR_FETCHING_CUSTOMER)
         } finally {
             setIsLoading(false)
         }
@@ -142,23 +143,22 @@ function RouteComponent() {
         let list = customers
 
         if (onlyPending) {
-            list = list.filter((c) => Number(c.pending_amount) > 0)
+            list = list.filter(
+                (customer) => Number(customer.pending_amount) > 0
+            )
         }
 
         if (!searchQuery.trim()) return list
+
         const query = searchQuery.toLowerCase()
+
         return list.filter(
-            (c) =>
-                c.customer_name?.toLowerCase().includes(query) ||
-                c.phone?.includes(query) ||
-                (c.city && c.city.toLowerCase().includes(query))
+            (customer) =>
+                customer.customer_name?.toLowerCase().includes(query) ||
+                customer.phone?.includes(query) ||
+                customer.city?.toLowerCase().includes(query)
         )
     }, [searchQuery, customers, onlyPending])
-
-    const totalPending = useMemo(
-        () => filteredCustomers.reduce((sum, c) => sum + (Number(c.pending_amount) || 0), 0),
-        [filteredCustomers]
-    )
 
     const pendingCustomersCount = useMemo(
         () => customers.filter((c) => Number(c.pending_amount) > 0).length,
@@ -186,17 +186,11 @@ function RouteComponent() {
         }
 
         setCustomers((prev) => prev.filter((c) => c.id !== id))
-        toast.success('ગ્રાહકની માહિતી સફળતાપૂર્વક દૂર કરવામાં આવી છે.')
+        toast.success(SITE_MESSAGES.CUSTOMER_REMOVE_DETAILS_SUCCESS)
         setDeleteModalConfig({ isOpen: false, id: null, name: '' })
     }
 
     const activeCustomer = customers.find((c) => c.id === selectedCustomerId)
-
-    const sortBtnClass = (active: boolean) =>
-        `px-3 py-1.5 rounded-lg font-medium transition-all whitespace-nowrap flex items-center gap-1 ${active
-            ? 'bg-purple-600 text-white shadow-sm'
-            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-        }`
 
     return (
         <div className="min-h-screen bg-slate-50 pb-20 mt-[3.4rem]">
@@ -219,14 +213,12 @@ function RouteComponent() {
                 </div>
                 <AllSearchFilters
                     setSortType={setSortType}
-                    sortBtnClass={sortBtnClass}
                     sortType={sortType}
                     setOnlyPending={setOnlyPending}
                     onlyPending={onlyPending}
                     pendingCustomersCount={pendingCustomersCount}
                     filteredCustomers={filteredCustomers}
                     searchQuery={searchQuery}
-                    totalPending={totalPending}
                     formatRupee={formatRupee}
                 />
             </div>

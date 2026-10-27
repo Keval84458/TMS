@@ -70,9 +70,34 @@ export const defaultSiteData = {
     city: 'Wembley',
 }
 
+export const OTHER_KEY = 'other'
+
 export const objIsNotEmpty = (obj: any): boolean => {
     if (obj === null || typeof obj !== 'object') {
         return false
     }
     return Object.keys(obj).length !== 0
 }
+
+export const parseKeys = (value: unknown): string[] => {
+    if (typeof value !== 'string') return []
+    return [
+        ...new Set(
+            value
+                .split(',')
+                .map((k) => k.trim())
+                .filter((k) => k && k.toLowerCase() !== OTHER_KEY)
+        ),
+    ]
+}
+
+
+export const sanitizeAmount = (value: string) =>
+    value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
+
+export const currentDate = new Date().toLocaleDateString('gu-IN', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+})

@@ -116,7 +116,6 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
 
                                     <div className="grid grid-cols-1 gap-3">
                                         {items.map((item) => {
-                                            // Format the value to separate parts with ' | '
                                             const formattedValue = item.value
                                                 .split(/\s+/)
                                                 .filter(Boolean)

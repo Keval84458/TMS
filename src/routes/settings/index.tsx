@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
 import { defaultSiteData } from '#/utils'
-import { PAGE_PATH_KEYS } from '#/utils/constant'
+import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { useAuth } from '#/utils/auth'
@@ -66,7 +66,7 @@ function RouteComponent() {
                     .maybeSingle()
 
                 if (error) {
-                    toast.error('સેટિંગ્સ લોડ કરવામાં ભૂલ થઈ.')
+                    toast.error(SITE_MESSAGES.DO_NOT_LOAD_SETTING_MISTAKE)
                 } else if (data) {
                     setExistingSettingId(data.id)
                     const mList = data.male_measurements || 'Shirt, Pant'
@@ -91,7 +91,7 @@ function RouteComponent() {
                     setFemaleProducts(fList.split(',').map((s: string) => s.trim()).filter(Boolean))
                 }
             } catch (err) {
-                toast.error('અણધારી ભૂલ આવી.')
+                toast.error(SITE_MESSAGES.UNKNOWN_MISTAKE)
             } finally {
                 setIsFetching(false)
             }
@@ -151,13 +151,13 @@ function RouteComponent() {
 
     const HandleSubmit = async () => {
         if (!formData.site_title.trim()) {
-            toast.warn("કૃપા કરીને સાઈટનું નામ ભરો.")
+            toast.warn(SITE_MESSAGES.SITE_NAME)
             return
         } else if (!formData.owner_name.trim()) {
-            toast.warn("કૃપા કરીને માલિકનું નામ ભરો.")
+            toast.warn(SITE_MESSAGES.OWNER_NAME)
             return
         } else if (!formData.owner_phone.trim()) {
-            toast.warn("કૃપા કરીને ફોન નંબર ભરો.")
+            toast.warn(SITE_MESSAGES.PHONE)
             return
         }
 
@@ -209,11 +209,11 @@ function RouteComponent() {
 
             setInitialData(formData)
 
-            toast.success("સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ ગઈ છે.")
+            toast.success(SITE_MESSAGES.SAVE_SETTINGS_DETAILS_SUCCESSFULLY)
             navigate({ to: PAGE_PATH_KEYS.HOME })
 
         } catch {
-            toast.error("કંઈક ખોટું થયું. ફરીથી પ્રયાસ કરો.")
+            toast.error(SITE_MESSAGES.TRY_AGAIN)
         } finally {
             setIsLoading(false)
         }
