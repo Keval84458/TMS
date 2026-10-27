@@ -9,7 +9,7 @@ interface PageHeaderProps {
     visible?: boolean
 }
 
-const PageHeader = ({ title, onBack, visible = true }: PageHeaderProps) => {
+const PageHeader = ({ title, onBack, visible }: PageHeaderProps) => {
     return (
         <div className="bg-white border-b border-gray-100 py-3 px-4 shadow-sm w-full fixed top-[3.9rem] left-0 z-10">
             <div className="max-w-7xl mx-auto flex items-center relative justify-between">
@@ -24,13 +24,16 @@ const PageHeader = ({ title, onBack, visible = true }: PageHeaderProps) => {
                         {title}
                     </h1>
 
-                    <Link
+                    {visible && <Link
                         to={PAGE_PATH_KEYS.SETTINGS}
                         className="flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold text-purple-600 hover:text-purple-700 bg-purple-50 hover:bg-purple-100 rounded-xl transition-colors shrink-0"
                     >
                         <FaCog className="animate-spin-slow" />
                         <span>Settings</span>
                     </Link>
+                    }
+
+
                 </div>
             </div>
         </div>

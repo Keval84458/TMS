@@ -18,12 +18,14 @@ const Header = () => {
                     className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none"
                 >
                     <div className="w-10 h-10 sm:w-11 sm:h-11 bg-gradient-to-tr from-purple-700 to-indigo-600 text-white font-serif text-xl sm:text-2xl font-black flex items-center justify-center rounded-xl shadow-lg shadow-purple-600/30 group-hover:scale-105 transition-transform duration-200">
-                        S
+                        {siteSettings.site_title?.trim().charAt(0).toUpperCase() || 'K'}
                     </div>
 
                     <div className="flex flex-col">
                         <h1 className="text-lg sm:text-2xl font-bold tracking-wider text-white uppercase font-sans leading-tight">
-                            {siteSettings.site_title ?? ""}
+                            {(siteSettings.site_title ?? "").length > 15
+                                ? `${siteSettings.site_title.slice(0, 15)}...`
+                                : siteSettings.site_title ?? ""}
                         </h1>
                         <span className="text-[9px] sm:text-[10px] tracking-widest text-slate-400 uppercase">
                             {siteSettings.subtitle ?? ""}

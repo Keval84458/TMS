@@ -115,21 +115,29 @@ const MeasurementModal: React.FC<MeasurementModalProps> = ({
                                     </div>
 
                                     <div className="grid grid-cols-1 gap-3">
-                                        {items.map((item) => (
-                                            <div
-                                                key={`${g}-${item.key}`}
-                                                className="rounded-xl border border-purple-100 bg-purple-50 p-3"
-                                            >
-                                                <p className="mb-1 break-words text-xs font-semibold text-purple-600">
-                                                    {item.key.toLowerCase() === OTHER_KEY
-                                                        ? 'અન્ય નોંધ (Other)'
-                                                        : item.key}
-                                                </p>
-                                                <p className="whitespace-pre-wrap break-words text-base font-bold text-gray-900">
-                                                    {item.value}
-                                                </p>
-                                            </div>
-                                        ))}
+                                        {items.map((item) => {
+                                            // Format the value to separate parts with ' | '
+                                            const formattedValue = item.value
+                                                .split(/\s+/)
+                                                .filter(Boolean)
+                                                .join(' | ')
+
+                                            return (
+                                                <div
+                                                    key={`${g}-${item.key}`}
+                                                    className="rounded-xl border border-purple-100 bg-purple-50 p-3"
+                                                >
+                                                    <p className="mb-1 break-words text-xs font-semibold text-purple-600">
+                                                        {item.key.toLowerCase() === OTHER_KEY
+                                                            ? 'અન્ય નોંધ (Other)'
+                                                            : item.key}
+                                                    </p>
+                                                    <p className="whitespace-pre-wrap break-words text-base font-bold text-gray-900">
+                                                        {formattedValue}
+                                                    </p>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                 </div>
                             )
