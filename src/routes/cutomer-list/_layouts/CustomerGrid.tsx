@@ -1,7 +1,6 @@
 import { PAGE_PATH_KEYS } from "#/utils/constant"
 import { Link } from "@tanstack/react-router"
 import { FaCalendarAlt, FaCheckCircle, FaEdit, FaPhone, FaRulerCombined, FaTrash } from "react-icons/fa"
-import { FaLocationDot } from "react-icons/fa6";
 import { TiLocation } from "react-icons/ti";
 
 const CustomerGrid = ({

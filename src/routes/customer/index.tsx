@@ -2,13 +2,14 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
-import { PAGE_PATH_KEYS } from '#/utils/constant'
+import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { useAuth } from '#/utils/auth'
 import MeasurementsDetails from './_layouts/MeasurementsDetails'
 import PaymentDetails from './_layouts/PaymentDetails'
 import CustomerDetails from './_layouts/CustomerDetails'
+import { sanitizeAmount } from '#/utils'
 
 export const Route = createFileRoute('/customer/')({
     validateSearch: (search: Record<string, unknown>) => ({
@@ -21,8 +22,6 @@ export const Route = createFileRoute('/customer/')({
 type Gender = 'male' | 'female'
 type MeasurementMap = Record<string, string>
 
-const sanitizeAmount = (value: string) =>
-    value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
 
 const toMeasurementMap = (value: unknown): MeasurementMap => {
     if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
@@ -83,7 +82,7 @@ function RouteComponent() {
                     .single()
 
                 if (error) {
-                    toast.error('ગ્રાહકની માહિતી મળી શકી નથી.')
+                    toast.error(SITE_MESSAGES.RECORD_NOT_FOUND_FOR_CUSTOMER)
                 } else if (data) {
                     setFormData({
                         customer_name: data.customer_name || '',
@@ -103,7 +102,7 @@ function RouteComponent() {
                     })
                 }
             } catch (err) {
-                toast.error('Unexpected error')
+                toast.error(SITE_MESSAGES.UNKNOWN_MISTAKE)
             } finally {
                 setIsFetching(false)
             }
@@ -129,19 +128,19 @@ function RouteComponent() {
 
     const HandleSubmit = async () => {
         if (!formData.customer_name.trim()) {
-            toast.warn("કૃપા કરીને ગ્રાહકનું નામ ભરો.")
+            toast.warn(SITE_MESSAGES.CUSTOMER_NAME)
             return
         } else if (!formData.phone.trim()) {
-            toast.warn("કૃપા કરીને ફોન નંબર ભરો.")
+            toast.warn(SITE_MESSAGES.PHONE)
             return
         } else if (!formData.city.trim()) {
-            toast.warn("કૃપા કરીને ગામનું નામ ભરો.")
+            toast.warn(SITE_MESSAGES.CITY)
             return
         } else if (totalNum < 0 || advanceNum < 0) {
-            toast.warn("રકમ 0 અથવા તેનાથી વધુ હોવી જોઈએ.")
+            toast.warn(SITE_MESSAGES.INVALID_AMOUNT)
             return
         } else if (advanceTooHigh) {
-            toast.warn("અગાઉથી ચુકવણી કુલ રકમ કરતાં વધારે ન હોઈ શકે.")
+            toast.warn(SITE_MESSAGES.ADVANCE_TOO_HIGH)
             return
         }
 
@@ -178,7 +177,7 @@ function RouteComponent() {
                     return
                 }
 
-                toast.success("ગ્રાહકની વિગતો સફળતાપૂર્વક અપડેટ થઈ ગઈ છે.")
+                toast.success(SITE_MESSAGES.CUSTOMER_DETAILS_UPDATE_SUCCESSFUL)
             } else {
                 const { error } = await supabase
                     .from('customers')
@@ -189,13 +188,13 @@ function RouteComponent() {
                     return
                 }
 
-                toast.success("ગ્રાહકની વિગતો સફળતાપૂર્વક સેવ થઈ ગઈ છે.")
+                toast.success(SITE_MESSAGES.CUSTOMER_DETAILS_SAVE_SUCCESSFUL)
             }
 
             navigate({ to: PAGE_PATH_KEYS.LIST || '/customer-list' })
 
         } catch {
-            toast.error("કંઈક ખોટું થયું. ફરીથી પ્રયાસ કરો.")
+            toast.error(SITE_MESSAGES.TRY_AGAIN)
         } finally {
             setIsLoading(false)
         }

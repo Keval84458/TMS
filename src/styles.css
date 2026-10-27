@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-  /* 1. Pink Theme */
   --color-pink-50: #fdf2f8;
   --color-pink-100: #fce7f3;
   --color-pink-200: #fbcfe8;
@@ -13,7 +12,6 @@
   --color-pink-800: #9d174d;
   --color-pink-900: #831843;
 
-  /* 2. Red Theme */
   --color-red-50: #fef2f2;
   --color-red-100: #fee2e2;
   --color-red-200: #fecaca;
@@ -25,7 +23,6 @@
   --color-red-800: #991b1b;
   --color-red-900: #7f1d1d;
 
-  /* 3. Purple Theme */
   --color-purple-50: #faf5ff;
   --color-purple-100: #f3e8ff;
   --color-purple-200: #e9d5ff;
@@ -37,7 +34,6 @@
   --color-purple-800: #6b21a8;
   --color-purple-900: #581c87;
 
-  /* 4. Blue Theme */
   --color-blue-50: #eff6ff;
   --color-blue-100: #dbeafe;
   --color-blue-200: #bfdbfe;
@@ -49,7 +45,6 @@
   --color-blue-800: #1e40af;
   --color-blue-900: #1e3a8a;
 
-  /* 5. Green Theme */
   --color-green-50: #f0fdf4;
   --color-green-100: #dcfce7;
   --color-green-200: #bbf7d0;
@@ -61,7 +56,6 @@
   --color-green-800: #166534;
   --color-green-900: #14532d;
 
-  /* 6. Yellow Theme */
   --color-yellow-50: #fefce8;
   --color-yellow-100: #fef9c3;
   --color-yellow-200: #fef08a;
@@ -73,7 +67,6 @@
   --color-yellow-800: #854d0e;
   --color-yellow-900: #713f12;
 
-  /* 7. Orange Theme */
   --color-orange-50: #fff7ed;
   --color-orange-100: #ffedd5;
   --color-orange-200: #fed7aa;
@@ -85,7 +78,6 @@
   --color-orange-800: #9a3412;
   --color-orange-900: #7c2d12;
 
-  /* 8. Teal Theme */
   --color-teal-50: #f0fdfa;
   --color-teal-100: #ccfbf1;
   --color-teal-200: #99f6e4;
@@ -97,7 +89,6 @@
   --color-teal-800: #115e59;
   --color-teal-900: #134e4a;
 
-  /* 9. Indigo Theme */
   --color-indigo-50: #eef2ff;
   --color-indigo-100: #e0e7ff;
   --color-indigo-200: #c7d2fe;
@@ -109,7 +100,6 @@
   --color-indigo-800: #3730a3;
   --color-indigo-900: #312e81;
 
-  /* 10. Rose Theme */
   --color-rose-50: #fff1f2;
   --color-rose-100: #ffe4e6;
   --color-rose-200: #fecdd3;
@@ -121,7 +111,6 @@
   --color-rose-800: #9f1239;
   --color-rose-900: #881337;
 
-  /* 11. Neutral Theme */
   --color-neutral-50: #fafafa;
   --color-neutral-100: #f5f5f5;
   --color-neutral-200: #e5e5e5;
@@ -133,7 +122,6 @@
   --color-neutral-800: #262626;
   --color-neutral-900: #171717;
 
-  /* 12. Emerald Theme */
   --color-emerald-50: #ecfdf5;
   --color-emerald-100: #d1fae5;
   --color-emerald-200: #a7f3d0;
@@ -145,27 +133,22 @@
   --color-emerald-800: #065f46;
   --color-emerald-900: #064e3b;
 
-  /* Brand Accent */
   --color-gold: #d4af37;
   --color-gold-light: #fef3c7;
   --color-gold-dark: #92400e;
 
-  /* Background Colors */
   --color-background: #ffffff;
   --color-background-light: #f9fafb;
   --color-background-dark: #18181b;
   --color-surface: #f8fafc;
 
-  /* Text Colors */
   --color-text: #1f2937;
   --color-text-muted: #6b7280;
   --color-text-light: #ffffff;
 
-  /* Border Colors */
   --color-border: #e5e7eb;
   --color-border-dark: #374151;
 
-  /* Status Colors */
   --color-success: #16a34a;
   --color-warning: #f59e0b;
   --color-error: #dc2626;

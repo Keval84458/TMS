@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { supabase } from '#/lib/supabaseClient'
 import { ThemeInput } from '#/utils'
-import { PAGE_PATH_KEYS } from '#/utils/constant'
+import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
 import { useNavigate } from '@tanstack/react-router'
 import {
     FaEnvelope,
@@ -40,10 +40,10 @@ function RouteComponent() {
 
     const HandleSubmit = async () => {
         if (!formData.email.trim()) {
-            toast.warning("કૃપા કરીને ઇમેઇલ ભરો.")
+            toast.warning(SITE_MESSAGES.FILL_EMAIL)
             return
         } else if (!formData.password.trim()) {
-            toast.warning("કૃપા કરીને પાસવર્ડ ભરો.")
+            toast.warning(SITE_MESSAGES.FILL_PASSWORD)
             return
         }
         setIsLoading(true)
@@ -55,10 +55,9 @@ function RouteComponent() {
             })
 
             if (error) {
-                toast.error(error.message || 'અમાન્ય ઇમેઇલ અથવા પાસવર્ડ.')
+                toast.error(error.message || SITE_MESSAGES.INVALID_CREDENTIALS)
                 return
             }
-
 
             if (data.session) {
                 const authDetails = {
@@ -68,14 +67,14 @@ function RouteComponent() {
 
                 document.cookie = `authData=${JSON.stringify(authDetails)}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`
 
-                toast.success("સફળતાપૂર્વક લોગિન થયું!")
+                toast.success(SITE_MESSAGES.LOGIN_SUCCESSFULLY)
                 setFormData(initialData)
 
                 navigate({ to: PAGE_PATH_KEYS.HOME || "/" })
             }
 
         } catch {
-            toast.error("કંઈક ખોટું થયું. ફરીથી પ્રયાસ કરો.")
+            toast.error(SITE_MESSAGES.TRY_AGAIN)
         } finally {
             setIsLoading(false)
         }

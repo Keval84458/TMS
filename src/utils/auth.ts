@@ -70,17 +70,14 @@ export const useAuth = () => {
     )
 
     const logout = useCallback(() => {
-        // Clear authentication first.
         document.cookie =
             `${COOKIE_NAME}=; Max-Age=0; Path=/; SameSite=Lax`
 
-        // Update this hook's state immediately.
         setAuth({
             authData: null,
             isLogin: false,
         })
 
-        // Navigate without reloading the whole website.
         void navigate({
             to: '/login',
             replace: true,
