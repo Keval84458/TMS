@@ -5,11 +5,11 @@ import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FaUserPlus } from 'react-icons/fa'
 import { supabase } from '#/lib/supabaseClient'
-import { toast } from 'react-toastify'
-import CustomerGrid from './_layouts/CustomerGrid'
-import ConfirmModal from './_layouts/ConfirmModal'
-import AllSearchFilters from './_layouts/AllSearchFilters'
+import CustomerGrid from './layouts/CustomerGrid'
+import ConfirmModal from './layouts/ConfirmModal'
+import AllSearchFilters from './layouts/AllSearchFilters'
 import MeasurementModal from '#/components/MeasurementModal'
+import { useGlobalToast } from '#/components/CustomeToast'
 
 export const Route = createFileRoute('/cutomer-list/')({
     component: RouteComponent,
@@ -44,6 +44,7 @@ function RouteComponent() {
     const [onlyPending, setOnlyPending] = useState(false)
     const [selectedCustomerId, setSelectedCustomerId] = useState<string | number | null>(null)
     const [updateKey, setUpdateKey] = useState<number>(1)
+    const [, setToastState] = useGlobalToast()
 
 
     const [deleteModalConfig, setDeleteModalConfig] = useState<{
@@ -67,7 +68,11 @@ function RouteComponent() {
 
             if (!cookie) {
                 setCustomers([])
-                toast.error(SITE_MESSAGES.LOGIN_TO_VIEW_CUSTOMER)
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: SITE_MESSAGES.LOGIN_TO_VIEW_CUSTOMER,
+                })
                 return
             }
 
@@ -83,7 +88,11 @@ function RouteComponent() {
                 }
             } catch {
                 setCustomers([])
-                toast.error(SITE_MESSAGES.LOGIN_AGAIN)
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: SITE_MESSAGES.LOGIN_AGAIN,
+                })
                 return
             }
 
@@ -91,7 +100,11 @@ function RouteComponent() {
 
             if (!userId || typeof userId !== 'string') {
                 setCustomers([])
-                toast.error(SITE_MESSAGES.USER_ID_NOT_FOUND)
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: SITE_MESSAGES.USER_ID_NOT_FOUND,
+                })
                 return
             }
 
@@ -119,9 +132,12 @@ function RouteComponent() {
             const { data, error } = await queryBuilder
 
             if (error) {
-                console.error(SITE_MESSAGES.ERROR_FETCHING_CUSTOMER, error.message)
                 setCustomers([])
-                toast.error(SITE_MESSAGES.ERROR_FETCHING_CUSTOMER)
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: SITE_MESSAGES.ERROR_FETCHING_CUSTOMER,
+                })
                 return
             }
 
@@ -129,7 +145,11 @@ function RouteComponent() {
         } catch (error) {
             console.error(SITE_MESSAGES.UNEXPECTED_ERROR_FETCHING_CUSTOMER, error)
             setCustomers([])
-            toast.error(SITE_MESSAGES.ERROR_FETCHING_CUSTOMER)
+            setToastState({
+                show: true,
+                type: 'E',
+                msg: SITE_MESSAGES.ERROR_FETCHING_CUSTOMER,
+            })
         } finally {
             setIsLoading(false)
         }
@@ -180,13 +200,21 @@ function RouteComponent() {
         const { error } = await supabase.from('customers').delete().eq('id', id)
 
         if (error) {
-            toast.error(error.message)
+            setToastState({
+                show: true,
+                type: 'E',
+                msg: error.message,
+            })
             setDeleteModalConfig({ isOpen: false, id: null, name: '' })
             return
         }
 
         setCustomers((prev) => prev.filter((c) => c.id !== id))
-        toast.success(SITE_MESSAGES.CUSTOMER_REMOVE_DETAILS_SUCCESS)
+        setToastState({
+            show: true,
+            type: 'S',
+            msg: SITE_MESSAGES.CUSTOMER_REMOVE_DETAILS_SUCCESS,
+        })
         setDeleteModalConfig({ isOpen: false, id: null, name: '' })
     }
 

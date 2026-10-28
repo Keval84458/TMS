@@ -4,12 +4,12 @@ import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
 import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
-import { toast } from 'react-toastify'
 import { useAuth } from '#/utils/auth'
-import MeasurementsDetails from './_layouts/MeasurementsDetails'
-import PaymentDetails from './_layouts/PaymentDetails'
-import CustomerDetails from './_layouts/CustomerDetails'
+import MeasurementsDetails from './layouts/MeasurementsDetails'
+import PaymentDetails from './layouts/PaymentDetails'
+import CustomerDetails from './layouts/CustomerDetails'
 import { sanitizeAmount } from '#/utils'
+import { useGlobalToast } from '#/components/CustomeToast'
 
 export const Route = createFileRoute('/customer/')({
     validateSearch: (search: Record<string, unknown>) => ({
@@ -42,6 +42,7 @@ function RouteComponent() {
     const [isPaymentOpen, setIsPaymentOpen] = useState(false)
     const [isFetching, setIsFetching] = useState(isUpdateMode)
     const [isLoading, setIsLoading] = useState(false)
+    const [, setToastState] = useGlobalToast()
 
     const [formData, setFormData] = useState({
         customer_name: '',
@@ -82,7 +83,11 @@ function RouteComponent() {
                     .single()
 
                 if (error) {
-                    toast.error(SITE_MESSAGES.RECORD_NOT_FOUND_FOR_CUSTOMER)
+                    setToastState({
+                        show: true,
+                        type: 'E',
+                        msg: SITE_MESSAGES.RECORD_NOT_FOUND_FOR_CUSTOMER,
+                    })
                 } else if (data) {
                     setFormData({
                         customer_name: data.customer_name || '',
@@ -102,7 +107,11 @@ function RouteComponent() {
                     })
                 }
             } catch (err) {
-                toast.error(SITE_MESSAGES.UNKNOWN_MISTAKE)
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: SITE_MESSAGES.UNKNOWN_MISTAKE,
+                })
             } finally {
                 setIsFetching(false)
             }
@@ -128,19 +137,39 @@ function RouteComponent() {
 
     const HandleSubmit = async () => {
         if (!formData.customer_name.trim()) {
-            toast.warn(SITE_MESSAGES.CUSTOMER_NAME)
+            setToastState({
+                show: true,
+                type: 'W',
+                msg: SITE_MESSAGES.CUSTOMER_NAME,
+            })
             return
         } else if (!formData.phone.trim()) {
-            toast.warn(SITE_MESSAGES.PHONE)
+            setToastState({
+                show: true,
+                type: 'W',
+                msg: SITE_MESSAGES.PHONE,
+            })
             return
         } else if (!formData.city.trim()) {
-            toast.warn(SITE_MESSAGES.CITY)
+            setToastState({
+                show: true,
+                type: 'W',
+                msg: SITE_MESSAGES.CITY,
+            })
             return
         } else if (totalNum < 0 || advanceNum < 0) {
-            toast.warn(SITE_MESSAGES.INVALID_AMOUNT)
+            setToastState({
+                show: true,
+                type: 'W',
+                msg: SITE_MESSAGES.INVALID_AMOUNT
+            })
             return
         } else if (advanceTooHigh) {
-            toast.warn(SITE_MESSAGES.ADVANCE_TOO_HIGH)
+            setToastState({
+                show: true,
+                type: 'W',
+                msg: SITE_MESSAGES.ADVANCE_TOO_HIGH,
+            })
             return
         }
 
@@ -173,28 +202,48 @@ function RouteComponent() {
                     .eq('id', id)
 
                 if (error) {
-                    toast.error(error.message)
+                    setToastState({
+                        show: true,
+                        type: 'E',
+                        msg: error.message,
+                    })
                     return
                 }
 
-                toast.success(SITE_MESSAGES.CUSTOMER_DETAILS_UPDATE_SUCCESSFUL)
+                setToastState({
+                    show: true,
+                    type: 'S',
+                    msg: SITE_MESSAGES.CUSTOMER_DETAILS_UPDATE_SUCCESSFUL,
+                })
             } else {
                 const { error } = await supabase
                     .from('customers')
                     .insert([payload])
 
                 if (error) {
-                    toast.error("ભૂલ!")
+                    setToastState({
+                        show: true,
+                        type: 'E',
+                        msg: "ભૂલ!",
+                    })
                     return
                 }
 
-                toast.success(SITE_MESSAGES.CUSTOMER_DETAILS_SAVE_SUCCESSFUL)
+                setToastState({
+                    show: true,
+                    type: 'S',
+                    msg: SITE_MESSAGES.CUSTOMER_DETAILS_SAVE_SUCCESSFUL,
+                })
             }
 
             navigate({ to: PAGE_PATH_KEYS.LIST || '/customer-list' })
 
         } catch {
-            toast.error(SITE_MESSAGES.TRY_AGAIN)
+            setToastState({
+                show: true,
+                type: 'E',
+                msg: SITE_MESSAGES.TRY_AGAIN,
+            })
         } finally {
             setIsLoading(false)
         }

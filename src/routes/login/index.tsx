@@ -16,7 +16,7 @@ import {
 } from 'react-icons/fa'
 import { IoShirtSharp } from "react-icons/io5";
 import { GiSewingMachine } from "react-icons/gi";
-import { toast } from 'react-toastify'
+import { useGlobalToast } from '#/components/CustomeToast'
 
 export const Route = createFileRoute('/login/')({
     component: RouteComponent,
@@ -33,6 +33,7 @@ function RouteComponent() {
     const [formData, setFormData] = useState(initialData)
     const [isLoading, setIsLoading] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
+    const [, setToastState] = useGlobalToast()
 
     const onChange = (key: string, value: string) => {
         setFormData((prev) => ({ ...prev, [key]: value }))
@@ -40,10 +41,18 @@ function RouteComponent() {
 
     const HandleSubmit = async () => {
         if (!formData.email.trim()) {
-            toast.warning(SITE_MESSAGES.FILL_EMAIL)
+            setToastState({
+                show: true,
+                type: 'W',
+                msg: SITE_MESSAGES.FILL_EMAIL,
+            })
             return
         } else if (!formData.password.trim()) {
-            toast.warning(SITE_MESSAGES.FILL_PASSWORD)
+            setToastState({
+                show: true,
+                type: 'W',
+                msg: SITE_MESSAGES.FILL_PASSWORD,
+            })
             return
         }
         setIsLoading(true)
@@ -55,7 +64,11 @@ function RouteComponent() {
             })
 
             if (error) {
-                toast.error(error.message || SITE_MESSAGES.INVALID_CREDENTIALS)
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: error.message || SITE_MESSAGES.INVALID_CREDENTIALS,
+                })
                 return
             }
 
@@ -67,14 +80,22 @@ function RouteComponent() {
 
                 document.cookie = `authData=${JSON.stringify(authDetails)}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`
 
-                toast.success(SITE_MESSAGES.LOGIN_SUCCESSFULLY)
+                setToastState({
+                    show: true,
+                    type: 'S',
+                    msg: SITE_MESSAGES.LOGIN_SUCCESSFULLY,
+                })
                 setFormData(initialData)
 
-                navigate({ to: PAGE_PATH_KEYS.HOME || "/" })
+                navigate({ to: PAGE_PATH_KEYS.HOME })
             }
 
         } catch {
-            toast.error(SITE_MESSAGES.TRY_AGAIN)
+            setToastState({
+                show: true,
+                type: 'E',
+                msg: SITE_MESSAGES.TRY_AGAIN,
+            })
         } finally {
             setIsLoading(false)
         }
