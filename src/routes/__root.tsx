@@ -7,7 +7,6 @@ import {
 } from '@tanstack/react-router'
 
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { ToastContainer } from 'react-toastify'
 
 import '../styles.css'
 
@@ -70,8 +69,6 @@ function RootComponent() {
       {!isLoginPage && <Header />}
 
       <Outlet />
-
-      <ToastContainer />
       <CustomToast autoCloseTime={4000} />
 
       <TanStackDevtools
