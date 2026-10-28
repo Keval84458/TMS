@@ -3,6 +3,7 @@ import { PAGE_PATH_KEYS } from "#/utils/constant";
 import { useGlobalSiteSettings } from "#/utils/site_settings";
 import { Link } from "@tanstack/react-router";
 import { TbLogout2 } from "react-icons/tb";
+import InstallApp from "./InstallApp";
 
 const Header = () => {
     const { logout } = useAuth();
@@ -37,15 +38,18 @@ const Header = () => {
                             </span>
                         )}
                     </div>
+
                 </Link>
 
-                <button
+                <InstallApp />
+
+                {/* <button
                     onClick={logout}
                     className="p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/30 text-purple-300 hover:bg-purple-600 hover:text-white transition-all duration-200"
                     title="Logout"
                 >
                     <TbLogout2 size={18} />
-                </button>
+                </button> */}
             </div>
         </header>
     );
