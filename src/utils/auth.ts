@@ -1,6 +1,7 @@
 
 import { useNavigate } from '@tanstack/react-router'
 import { useCallback, useState } from 'react'
+import { PAGE_PATH_KEYS } from './constant'
 
 type AuthCredentials = {
     id: string
@@ -79,7 +80,7 @@ export const useAuth = () => {
         })
 
         void navigate({
-            to: '/login',
+            to: PAGE_PATH_KEYS.LOGIN,
             replace: true,
         })
     }, [navigate])

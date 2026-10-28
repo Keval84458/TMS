@@ -10,7 +10,6 @@ const Header = () => {
     const siteTitle = siteSettings?.site_title?.trim() || 'K';
     const siteSubtitle = siteSettings?.subtitle?.trim() || '';
 
-    // Truncate title if it exceeds 15 characters
     const displayTitle = siteTitle.length > 15
         ? `${siteTitle.slice(0, 15)}...`
         : siteTitle;
@@ -23,12 +22,12 @@ const Header = () => {
                         <div className="w-10 h-10 rounded-xl bg-purple-600 text-white font-extrabold text-xl flex items-center justify-center shadow-lg shadow-purple-600/40">
                             {siteTitle.charAt(0).toUpperCase()}
                         </div>
-                        <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full" />
+                        <span className="absolute animate-ping -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full" />
                     </div>
                     <div>
                         <h1
                             className="text-base font-extrabold text-white uppercase tracking-wider"
-                            title={siteTitle} // Shows full title on hover
+                            title={siteTitle}
                         >
                             {displayTitle}
                         </h1>
