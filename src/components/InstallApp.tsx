@@ -86,10 +86,9 @@ const InstallApp = () => {
         <button
             type="button"
             onClick={handleInstall}
-            className="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-purple-700 active:scale-95"
+            className="hidden md:inline-flex p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/30 text-purple-300 hover:bg-purple-600 hover:text-white transition-all duration-200"
         >
             <FaDownload />
-            Install App
         </button>
     )
 }

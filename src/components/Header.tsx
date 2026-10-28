@@ -41,15 +41,19 @@ const Header = () => {
 
                 </Link>
 
-                <InstallApp />
+                <div className="flex items-center gap-2">
+                    <InstallApp />
 
-                {/* <button
-                    onClick={logout}
-                    className="p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/30 text-purple-300 hover:bg-purple-600 hover:text-white transition-all duration-200"
-                    title="Logout"
-                >
-                    <TbLogout2 size={18} />
-                </button> */}
+                    <button
+                        onClick={logout}
+                        className="p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/30 text-purple-300 hover:bg-purple-600 hover:text-white transition-all duration-200"
+                        title="Logout"
+                    >
+                        <TbLogout2 size={18} />
+                    </button>
+                </div>
+
+
             </div>
         </header>
     );

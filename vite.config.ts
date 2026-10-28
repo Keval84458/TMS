@@ -22,15 +22,10 @@ const config = defineConfig({
 
     VitePWA({
       registerType: 'autoUpdate',
-
-      // Enable PWA while testing locally
       devOptions: {
         enabled: true,
       },
-
       includeAssets: ['favicon.ico'],
-
-
       manifest: {
         id: '/',
         name: 'Tailoring Management System',
