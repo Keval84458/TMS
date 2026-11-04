@@ -1,3 +1,4 @@
+import { supabase } from "#/lib/supabaseClient";
 import type { InputHTMLAttributes } from "react";
 import type { TextareaHTMLAttributes } from "react";
 import type { ButtonHTMLAttributes } from "react";
@@ -101,3 +102,18 @@ export const currentDate = new Date().toLocaleDateString('gu-IN', {
     month: 'long',
     year: 'numeric',
 })
+
+export const fetchCustomersByUser = async (userId: string | number) => {
+    if (!userId) {
+        return { data: null, error: new Error('User ID is required') }
+    }
+
+    const response = await supabase
+        .from('customers')
+        .select(
+            'id, user_id, customer_name, phone, city, gender, male_measurements, female_measurements, created_at, total_amount, advance_amount, pending_amount'
+        )
+        .eq('user_id', userId)
+
+    return response
+}

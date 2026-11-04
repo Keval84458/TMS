@@ -1,4 +1,3 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
@@ -9,11 +8,28 @@ import { useAuth } from '#/utils/auth'
 import { refetchSiteSettings, useGlobalSiteSettings } from '#/utils/site_settings'
 import GeneralSettings from './layouts/GeneralSettings'
 import MeasurementSettings from './layouts/MeasurementSettings'
+
 import { useGlobalToast } from '#/components/CustomeToast'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import ConfirmModal from '../../components/ConfirmModal'
 
 export const Route = createFileRoute('/settings/')({
     component: RouteComponent,
 })
+
+interface SiteSettings {
+    site_title: string;
+    subtitle: string;
+    owner_name: string;
+    owner_phone: string;
+    owner_email: string;
+    site_address: string;
+    city: string;
+    male_measurements: string;
+    female_measurements: string;
+    is_male_enabled: boolean;
+    is_female_enabled: boolean;
+}
 
 function RouteComponent() {
     const navigate = useNavigate()
@@ -24,6 +40,7 @@ function RouteComponent() {
     const [isFetching, setIsFetching] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [existingSettingId, setExistingSettingId] = useState<number | null>(null)
+    const [showUnsavedModal, setShowUnsavedModal] = useState(false)
 
     const [activeGenderTab, setActiveGenderTab] = useState<'male' | 'female'>('male')
 
@@ -33,13 +50,15 @@ function RouteComponent() {
     const [maleProducts, setMaleProducts] = useState<string[]>(['Shirt', 'Pant'])
     const [femaleProducts, setFemaleProducts] = useState<string[]>(['Blouse', 'Dress', 'Kurti'])
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<SiteSettings>({
         ...defaultSiteData,
         male_measurements: 'Shirt, Pant',
         female_measurements: 'Blouse, Dress, Kurti',
+        is_male_enabled: true,
+        is_female_enabled: false,
     })
 
-    const [initialData, setInitialData] = useState({
+    const [initialData, setInitialData] = useState<SiteSettings>({
         site_title: '',
         subtitle: '',
         owner_name: '',
@@ -49,6 +68,8 @@ function RouteComponent() {
         city: '',
         male_measurements: 'Shirt, Pant',
         female_measurements: 'Blouse, Dress, Kurti',
+        is_male_enabled: true,
+        is_female_enabled: false,
     })
 
     useEffect(() => {
@@ -77,7 +98,7 @@ function RouteComponent() {
                     const mList = data.male_measurements || 'Shirt, Pant'
                     const fList = data.female_measurements || 'Blouse, Dress, Kurti'
 
-                    const loadedData = {
+                    const loadedData: SiteSettings = {
                         site_title: data.site_title || '',
                         subtitle: data.subtitle || '',
                         owner_name: data.owner_name || '',
@@ -87,6 +108,8 @@ function RouteComponent() {
                         city: data.city || '',
                         male_measurements: mList,
                         female_measurements: fList,
+                        is_male_enabled: data.is_male_enabled ?? true,
+                        is_female_enabled: data.is_female_enabled ?? false,
                     }
 
                     setFormData(loadedData)
@@ -109,7 +132,7 @@ function RouteComponent() {
         fetchSettings()
     }, [auth.authData?.id])
 
-    const onChange = (key: string, value: string) => {
+    const onChange = (key: string, value: string | boolean) => {
         setFormData((prev) => ({ ...prev, [key]: value }))
     }
 
@@ -148,15 +171,25 @@ function RouteComponent() {
     }
 
     const hasChanges =
-        formData.site_title !== initialData.site_title ||
-        formData.subtitle !== initialData.subtitle ||
-        formData.owner_name !== initialData.owner_name ||
-        formData.owner_phone !== initialData.owner_phone ||
-        formData.owner_email !== initialData.owner_email ||
-        formData.site_address !== initialData.site_address ||
-        formData.city !== initialData.city ||
-        formData.male_measurements !== initialData.male_measurements ||
-        formData.female_measurements !== initialData.female_measurements
+        formData?.site_title !== initialData?.site_title ||
+        formData?.subtitle !== initialData?.subtitle ||
+        formData?.owner_name !== initialData?.owner_name ||
+        formData?.owner_phone !== initialData?.owner_phone ||
+        formData?.owner_email !== initialData?.owner_email ||
+        formData?.site_address !== initialData?.site_address ||
+        formData?.city !== initialData?.city ||
+        formData?.male_measurements !== initialData?.male_measurements ||
+        formData?.female_measurements !== initialData?.female_measurements ||
+        formData?.is_male_enabled !== initialData?.is_male_enabled ||
+        formData?.is_female_enabled !== initialData?.is_female_enabled;
+
+    const handleBackClick = () => {
+        if (hasChanges) {
+            setShowUnsavedModal(true)
+        } else {
+            navigate({ to: PAGE_PATH_KEYS.HOME })
+        }
+    };
 
     const HandleSubmit = async () => {
         if (!formData.site_title.trim()) {
@@ -196,6 +229,8 @@ function RouteComponent() {
                 city: formData.city.trim(),
                 male_measurements: maleProducts.join(', '),
                 female_measurements: femaleProducts.join(', '),
+                is_male_enabled: formData.is_male_enabled,
+                is_female_enabled: formData.is_female_enabled,
                 user_id: currentUserId,
                 updated_at: new Date().toISOString(),
             }
@@ -264,10 +299,38 @@ function RouteComponent() {
         <div className="min-h-screen bg-slate-50 pb-12 mt-[3.4rem]">
             <PageHeader
                 title="Settings"
-                onBack={PAGE_PATH_KEYS.HOME}
+                onBack={handleBackClick}
             />
 
             <div className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
+                <GeneralSettings
+                    formData={formData}
+                    onChange={onChange}
+                    setIsMaleEnabled={(val: boolean | ((prev: boolean) => boolean)) => {
+                        const newVal = typeof val === 'function' ? val(formData.is_male_enabled) : val;
+                        onChange('is_male_enabled', newVal);
+                    }}
+                    setIsFemaleEnabled={(val: boolean | ((prev: boolean) => boolean)) => {
+                        const newVal = typeof val === 'function' ? val(formData.is_female_enabled) : val;
+                        onChange('is_female_enabled', newVal);
+                    }}
+                    isMaleEnabled={formData.is_male_enabled}
+                    isFemaleEnabled={formData.is_female_enabled}
+                />
+                <MeasurementSettings
+                    activeGenderTab={activeGenderTab}
+                    setActiveGenderTab={setActiveGenderTab}
+                    setMaleProductsInput={setMaleProductsInput}
+                    setFemaleProductsInput={setFemaleProductsInput}
+                    handleAddProduct={handleAddProduct}
+                    maleProductsInput={maleProductsInput}
+                    femaleProductsInput={femaleProductsInput}
+                    maleProducts={maleProducts}
+                    handleRemoveProduct={handleRemoveProduct}
+                    femaleProducts={femaleProducts}
+                    formData={formData}
+                />
+
                 {hasChanges && (
                     <div className="pt-2 animate-fadeIn">
                         <button
@@ -290,25 +353,20 @@ function RouteComponent() {
                         </button>
                     </div>
                 )}
-
-                <GeneralSettings
-                    formData={formData}
-                    onChange={onChange}
-                />
-                <MeasurementSettings
-                    activeGenderTab={activeGenderTab}
-                    setActiveGenderTab={setActiveGenderTab}
-                    setMaleProductsInput={setMaleProductsInput}
-                    setFemaleProductsInput={setFemaleProductsInput}
-                    handleAddProduct={handleAddProduct}
-                    maleProductsInput={maleProductsInput}
-                    femaleProductsInput={femaleProductsInput}
-                    maleProducts={maleProducts}
-                    handleRemoveProduct={handleRemoveProduct}
-                    femaleProducts={femaleProducts}
-                    formData
-                />
             </div>
+            <ConfirmModal
+                isOpen={showUnsavedModal}
+                onClose={() => setShowUnsavedModal(false)}
+                onConfirm={() => {
+                    setShowUnsavedModal(false)
+                    navigate({ to: PAGE_PATH_KEYS.HOME })
+                }}
+                title="અસુરક્ષિત ફેરફારો (Unsaved Changes)"
+                message="તમે સેવ કર્યા વગર બહાર જવા માંગો છો? તમારા ફેરફારો ગુણાઈ જશે."
+                confirmText="હા, બહાર જાઓ"
+                cancelText="ના (Stay)"
+                variant="W"
+            />
         </div>
     )
 }

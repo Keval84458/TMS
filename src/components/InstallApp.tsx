@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from 'react'
 import { FaDownload } from 'react-icons/fa'
+import { useGlobalToast } from './CustomeToast'
+import { SITE_MESSAGES } from '#/utils/constant'
 
 interface BeforeInstallPromptEvent extends Event {
     prompt: () => Promise<void>
@@ -15,6 +17,7 @@ const InstallApp = () => {
         useState<BeforeInstallPromptEvent | null>(null)
 
     const [isInstalled, setIsInstalled] = useState(false)
+    const [, setToastState] = useGlobalToast()
 
     useEffect(() => {
         const standaloneQuery = window.matchMedia(
@@ -70,16 +73,21 @@ const InstallApp = () => {
                     setInstallPrompt(null)
                 }
             } catch (error) {
-                console.error('Installation failed:', error)
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: 'Installation failed:',
+                })
             }
-
             return
         }
 
-        // No native install prompt available
-        console.warn('The browser install prompt is not available.')
+        setToastState({
+            show: true,
+            type: 'E',
+            msg: SITE_MESSAGES.INSTALL_PROPMT_NOT_AVAILABLE,
+        })
     }
-
     if (isInstalled) return null
 
     return (

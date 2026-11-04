@@ -1,6 +1,6 @@
 import { ThemeInput } from "#/utils"
 import { useState } from "react"
-import { FaChevronDown, FaPlus, FaRulerCombined, FaTrash, FaVenusMars } from "react-icons/fa"
+import { FaChevronDown, FaPlus, FaRulerCombined, FaSortDown, FaTrash, FaVenusMars } from "react-icons/fa"
 
 const MeasurementSettings = ({
   setMaleProductsInput,
@@ -19,11 +19,11 @@ const MeasurementSettings = ({
 
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-7 space-y-6">
+    <div className="bg-white rounded-2xl shadow-sm px-4  py-2 space-y-6">
       <button
         type="button"
         onClick={() => setIsMeasurementOpen(!isMeasurementOpen)}
-        className="w-full flex items-center justify-between text-left focus:outline-none group py-1 border-b border-gray-100 pb-4"
+        className="w-full flex items-center justify-between text-left focus:outline-none group py-1  mb-0"
       >
         <div>
           <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
@@ -34,9 +34,10 @@ const MeasurementSettings = ({
             પુરુષ અને સ્ત્રી વિભાગ માટે માપના વિકલ્પો મેનેજ કરો
           </p>
         </div>
-        <FaChevronDown
-          className={`text-purple-600 transition-transform duration-300 ${isMeasurementOpen ? 'rotate-180' : ''}`}
-          size={16}
+        <FaSortDown
+          className={`text-purple-600 transition-transform duration-300 ${isMeasurementOpen ? 'rotate-180' : 'rotate-0'
+            }`}
+          size={20}
         />
       </button>
 

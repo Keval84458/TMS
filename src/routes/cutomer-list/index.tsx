@@ -6,7 +6,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FaUserPlus } from 'react-icons/fa'
 import { supabase } from '#/lib/supabaseClient'
 import CustomerGrid from './layouts/CustomerGrid'
-import ConfirmModal from './layouts/ConfirmModal'
+import ConfirmModal from '../../components/ConfirmModal'
 import AllSearchFilters from './layouts/AllSearchFilters'
 import MeasurementModal from '#/components/MeasurementModal'
 import { useGlobalToast } from '#/components/CustomeToast'
@@ -40,12 +40,12 @@ function RouteComponent() {
     const [searchQuery, setSearchQuery] = useState('')
     const [customers, setCustomers] = useState<Customer[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [isDeleting, setIsDeleting] = useState(false) // Added loading state for deletion
     const [sortType, setSortType] = useState<SortType>('newest')
     const [onlyPending, setOnlyPending] = useState(false)
     const [selectedCustomerId, setSelectedCustomerId] = useState<string | number | null>(null)
     const [updateKey, setUpdateKey] = useState<number>(1)
     const [, setToastState] = useGlobalToast()
-
 
     const [deleteModalConfig, setDeleteModalConfig] = useState<{
         isOpen: boolean
@@ -56,7 +56,6 @@ function RouteComponent() {
         id: null,
         name: '',
     })
-
 
     const fetchCustomers = async () => {
         setIsLoading(true)
@@ -143,7 +142,6 @@ function RouteComponent() {
 
             setCustomers((data ?? []) as Customer[])
         } catch (error) {
-            console.error(SITE_MESSAGES.UNEXPECTED_ERROR_FETCHING_CUSTOMER, error)
             setCustomers([])
             setToastState({
                 show: true,
@@ -197,25 +195,35 @@ function RouteComponent() {
         const { id } = deleteModalConfig
         if (!id) return
 
-        const { error } = await supabase.from('customers').delete().eq('id', id)
+        try {
+            setIsDeleting(true)
+            const { error } = await supabase.from('customers').delete().eq('id', id)
 
-        if (error) {
+            if (error) {
+                setToastState({
+                    show: true,
+                    type: 'E',
+                    msg: error.message,
+                })
+                return
+            }
+
+            setCustomers((prev) => prev.filter((c) => c.id !== id))
+            setToastState({
+                show: true,
+                type: 'S',
+                msg: SITE_MESSAGES.CUSTOMER_REMOVE_DETAILS_SUCCESS,
+            })
+            setDeleteModalConfig({ isOpen: false, id: null, name: '' })
+        } catch (err) {
             setToastState({
                 show: true,
                 type: 'E',
-                msg: error.message,
+                msg: err,
             })
-            setDeleteModalConfig({ isOpen: false, id: null, name: '' })
-            return
+        } finally {
+            setIsDeleting(false)
         }
-
-        setCustomers((prev) => prev.filter((c) => c.id !== id))
-        setToastState({
-            show: true,
-            type: 'S',
-            msg: SITE_MESSAGES.CUSTOMER_REMOVE_DETAILS_SUCCESS,
-        })
-        setDeleteModalConfig({ isOpen: false, id: null, name: '' })
     }
 
     const activeCustomer = customers.find((c) => c.id === selectedCustomerId)
@@ -282,13 +290,17 @@ function RouteComponent() {
                 />
             )}
 
-            {deleteModalConfig.isOpen && (
-                <ConfirmModal
-                    deleteModalConfig={deleteModalConfig}
-                    setDeleteModalConfig={setDeleteModalConfig}
-                    handleDelete={handleDelete}
-                />
-            )}
+            <ConfirmModal
+                isOpen={deleteModalConfig.isOpen}
+                onClose={() => setDeleteModalConfig({ isOpen: false, id: null, name: '' })}
+                onConfirm={handleDelete}
+                isLoading={isDeleting}
+                title={`શું તમે "${deleteModalConfig.name}" ને ડિલીટ કરવા માંગો છો?`}
+                message={SITE_MESSAGES.DO_NOT_REVERCE_ACTION}
+                confirmText="હા, ડિલીટ કરો"
+                cancelText="ના (Cancel)"
+                variant="D"
+            />
 
             <button
                 onClick={() => navigate({ to: PAGE_PATH_KEYS.CUSTOMER })}
