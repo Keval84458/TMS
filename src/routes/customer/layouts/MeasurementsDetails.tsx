@@ -1,4 +1,5 @@
-import { OTHER_KEY, parseKeys, ThemeTextarea } from '#/utils'
+import { OTHER_KEY, ThemeTextarea } from '#/utils'
+import { parseKeys } from '#/utils/reusableFunctions'
 import { useGlobalSiteSettings } from '#/utils/site_settings'
 import { FaChevronDown, FaRulerCombined, FaStickyNote } from 'react-icons/fa'
 
@@ -16,7 +17,6 @@ const MeasurementsDetails = ({
             ? siteSettings.female_measurements
             : siteSettings.male_measurements
     )
-
     return (
         <div className="pt-4 border-t border-gray-100">
             <button

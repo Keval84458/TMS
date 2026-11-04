@@ -1,7 +1,7 @@
 import { ThemeInput, ThemeTextarea } from "#/utils";
 import { useState } from "react";
-import { BsToggleOff, BsToggleOn } from "react-icons/bs";
-import { FaChevronDown, FaCity, FaEnvelope, FaFemale, FaGlobe, FaHeading, FaMale, FaMapMarkerAlt, FaPhone, FaSortDown, FaSortUp, FaUser } from "react-icons/fa";
+import { BsToggle2Off, BsToggle2On } from "react-icons/bs";
+import { FaCity, FaEnvelope, FaGlobe, FaHeading, FaMapMarkerAlt, FaPhone, FaSortDown, FaUser } from "react-icons/fa";
 
 const GeneralSettings = ({
     formData,
@@ -30,15 +30,13 @@ const GeneralSettings = ({
                     </p>
                 </div>
                 <FaSortDown
-                    className={`text-purple-600 transition-transform duration-300 ${isGeneralOpen ? 'rotate-180' : 'rotate-0'
-                        }`}
+                    className={`text-purple-600 transition-transform duration-300 ${isGeneralOpen ? 'rotate-180' : 'rotate-0'}`}
                     size={20}
                 />
             </button>
 
             <div
-                className={`grid transition-all duration-300 ease-in-out overflow-hidden ${isGeneralOpen ? 'grid-rows-[1fr] opacity-100 space-y-4' : 'grid-rows-[0fr] opacity-0 space-y-0'
-                    }`}
+                className={`grid transition-all duration-300 ease-in-out overflow-hidden ${isGeneralOpen ? 'grid-rows-[1fr] opacity-100 space-y-4' : 'grid-rows-[0fr] opacity-0 space-y-0'}`}
             >
                 <div className="overflow-hidden space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3 border-t border-gray-200 pt-4">
@@ -140,9 +138,9 @@ const GeneralSettings = ({
                                     aria-label="Toggle Male Category"
                                 >
                                     {isMaleEnabled ? (
-                                        <BsToggleOn className="text-green-600" />
+                                        <BsToggle2On className="text-green-600" />
                                     ) : (
-                                        <BsToggleOff className="text-gray-400" />
+                                        <BsToggle2Off className="text-gray-400" />
                                     )}
                                 </button>
                                 <label className="text-xs font-semibold text-gray-700 cursor-pointer">Male (પુરુષ)</label>
@@ -156,9 +154,9 @@ const GeneralSettings = ({
                                     aria-label="Toggle Female Category"
                                 >
                                     {isFemaleEnabled ? (
-                                        <BsToggleOn className="text-green-600" />
+                                        <BsToggle2On className="text-green-600" />
                                     ) : (
-                                        <BsToggleOff className="text-gray-400" />
+                                        <BsToggle2Off className="text-gray-400" />
                                     )}
                                 </button>
                                 <label className="text-xs font-semibold text-gray-700 cursor-pointer">Female (સ્ત્રી)</label>

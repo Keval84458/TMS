@@ -34,3 +34,13 @@ export const SITE_MESSAGES = {
     SAVE_SETTINGS_DETAILS_SUCCESSFULLY: "સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ ગઈ છે.",
     INSTALL_PROPMT_NOT_AVAILABLE: "The browser install prompt is not available.",
 }
+
+export const defaultSiteData = {
+    site_title: 'TailorHub2211',
+    subtitle: 'Tailoring Management System',
+    owner_name: 'Keval Makvana',
+    owner_phone: '1234567890',
+    owner_email: 'abc123@gmail.com',
+    site_address: 'abc, america',
+    city: 'Wembley',
+}

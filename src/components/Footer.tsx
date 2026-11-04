@@ -1,3 +1,4 @@
+import { currentDate } from "#/utils/reusableFunctions"
 import { FaChartLine, FaHeart, FaShieldAlt } from "react-icons/fa"
 
 const Footer = () => {
@@ -24,6 +25,9 @@ const Footer = () => {
                     </a>
                 </div>
 
+                <div className="inline-flex items-center px-3.5 py-2 rounded-xl bg-purple-500 border border-purple-500/20 text-xs font-semibold text-white">
+                    {currentDate}
+                </div>
             </div>
         </footer>
     )

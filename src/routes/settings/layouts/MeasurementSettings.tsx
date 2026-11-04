@@ -1,6 +1,6 @@
 import { ThemeInput } from "#/utils"
 import { useState } from "react"
-import { FaChevronDown, FaPlus, FaRulerCombined, FaSortDown, FaTrash, FaVenusMars } from "react-icons/fa"
+import { FaPlus, FaRulerCombined, FaSortDown, FaTrash, FaVenusMars } from "react-icons/fa"
 
 const MeasurementSettings = ({
   setMaleProductsInput,

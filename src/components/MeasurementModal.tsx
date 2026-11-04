@@ -1,3 +1,5 @@
+import { OTHER_KEY } from '#/utils'
+import { toItems } from '#/utils/reusableFunctions'
 import React, { useEffect, useMemo } from 'react'
 import { FaTimes, FaUser, FaRulerCombined, FaMale, FaFemale } from 'react-icons/fa'
 
@@ -11,23 +13,6 @@ interface MeasurementModalProps {
     gender?: string
     maleMeasurements?: MeasurementMap
     femaleMeasurements?: MeasurementMap
-}
-
-const OTHER_KEY = 'other'
-const toItems = (value: MeasurementMap): { key: string; value: string }[] => {
-    if (!value || typeof value !== 'object' || Array.isArray(value)) return []
-
-    const items = Object.entries(value)
-        .map(([key, val]) => ({
-            key: key.trim(),
-            value: val == null ? '' : String(val).trim(),
-        }))
-        .filter((item) => item.key && item.value)
-
-    return [
-        ...items.filter((i) => i.key.toLowerCase() !== OTHER_KEY),
-        ...items.filter((i) => i.key.toLowerCase() === OTHER_KEY),
-    ]
 }
 
 const SECTION_META: Record<Gender, { title: string; subtitle: string; Icon: React.ElementType }> = {
