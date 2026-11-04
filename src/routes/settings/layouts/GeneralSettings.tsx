@@ -1,19 +1,24 @@
 import { ThemeInput, ThemeTextarea } from "#/utils";
 import { useState } from "react";
-import { FaChevronDown, FaCity, FaEnvelope, FaGlobe, FaHeading, FaMapMarkerAlt, FaPhone, FaUser } from "react-icons/fa";
+import { BsToggleOff, BsToggleOn } from "react-icons/bs";
+import { FaChevronDown, FaCity, FaEnvelope, FaFemale, FaGlobe, FaHeading, FaMale, FaMapMarkerAlt, FaPhone, FaSortDown, FaSortUp, FaUser } from "react-icons/fa";
 
 const GeneralSettings = ({
     formData,
-    onChange
+    onChange,
+    setIsMaleEnabled,
+    setIsFemaleEnabled,
+    isMaleEnabled,
+    isFemaleEnabled,
 }: any) => {
     const [isGeneralOpen, setIsGeneralOpen] = useState(false)
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-7 space-y-6">
+        <div className="bg-white rounded-2xl shadow-sm px-4  py-2 space-y-6">
             <button
                 type="button"
                 onClick={() => setIsGeneralOpen(!isGeneralOpen)}
-                className="w-full flex items-center justify-between text-left focus:outline-none group py-1 border-b border-gray-100 pb-4"
+                className="w-full flex items-center justify-between text-left focus:outline-none group py-1  mb-0"
             >
                 <div>
                     <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
@@ -24,9 +29,10 @@ const GeneralSettings = ({
                         તમારી દુકાન અને સાઈટની સામાન્ય વિગતો અહીં અપડેટ કરો
                     </p>
                 </div>
-                <FaChevronDown
-                    className={`text-purple-600 transition-transform duration-300 ${isGeneralOpen ? 'rotate-180' : ''}`}
-                    size={16}
+                <FaSortDown
+                    className={`text-purple-600 transition-transform duration-300 ${isGeneralOpen ? 'rotate-180' : 'rotate-0'
+                        }`}
+                    size={20}
                 />
             </button>
 
@@ -35,7 +41,7 @@ const GeneralSettings = ({
                     }`}
             >
                 <div className="overflow-hidden space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3 border-t border-gray-200 pt-4">
                         <div>
                             <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
                                 <FaGlobe className="text-purple-600" /> સાઈટનું શીર્ષક (Site Title) *
@@ -122,6 +128,41 @@ const GeneralSettings = ({
                                 value={formData.site_address}
                                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange('site_address', e.target.value)}
                             />
+                        </div>
+
+
+                        <div className="bg-white flex items-center justify-between">
+                            <div className="flex items-center justify-between gap-1 p-2 rounded-md hover:bg-gray-50">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsMaleEnabled((prev: any) => !prev)}
+                                    className="focus:outline-none text-2xl transition-colors duration-200"
+                                    aria-label="Toggle Male Category"
+                                >
+                                    {isMaleEnabled ? (
+                                        <BsToggleOn className="text-green-600" />
+                                    ) : (
+                                        <BsToggleOff className="text-gray-400" />
+                                    )}
+                                </button>
+                                <label className="text-xs font-semibold text-gray-700 cursor-pointer">Male (પુરુષ)</label>
+                            </div>
+
+                            <div className="flex items-center justify-between gap-1 p-2 hover:bg-gray-50">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsFemaleEnabled((prev: any) => !prev)}
+                                    className="focus:outline-none text-2xl transition-colors duration-200"
+                                    aria-label="Toggle Female Category"
+                                >
+                                    {isFemaleEnabled ? (
+                                        <BsToggleOn className="text-green-600" />
+                                    ) : (
+                                        <BsToggleOff className="text-gray-400" />
+                                    )}
+                                </button>
+                                <label className="text-xs font-semibold text-gray-700 cursor-pointer">Female (સ્ત્રી)</label>
+                            </div>
                         </div>
                     </div>
                 </div>

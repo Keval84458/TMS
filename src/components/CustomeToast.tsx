@@ -10,7 +10,7 @@ type ToastType = 'S' | 'E' | 'W' | 'info'
 interface ToastState {
     show: boolean
     type: ToastType
-    msg: string
+    msg: any
 }
 
 interface CustomToastProps {

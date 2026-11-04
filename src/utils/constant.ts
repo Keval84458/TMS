@@ -31,5 +31,6 @@ export const SITE_MESSAGES = {
     FILL_PASSWORD: "કૃપા કરીને પાસવર્ડ ભરો.",
     INVALID_CREDENTIALS: "અમાન્ય ઇમેઇલ અથવા પાસવર્ડ.",
     LOGIN_SUCCESSFULLY: "સફળતાપૂર્વક લોગિન થયું!",
-    SAVE_SETTINGS_DETAILS_SUCCESSFULLY: "સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ ગઈ છે."
+    SAVE_SETTINGS_DETAILS_SUCCESSFULLY: "સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ ગઈ છે.",
+    INSTALL_PROPMT_NOT_AVAILABLE: "The browser install prompt is not available.",
 }

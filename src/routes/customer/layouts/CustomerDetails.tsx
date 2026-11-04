@@ -1,7 +1,9 @@
 import { ThemeInput } from "#/utils"
+import { useGlobalSiteSettings } from "#/utils/site_settings";
 import { FaMapMarkerAlt, FaPhone, FaUser, FaVenusMars } from "react-icons/fa"
 
 const CustomerDetails = ({ formData, onCustomerChange }: any) => {
+  const { siteSettings } = useGlobalSiteSettings();
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div>
@@ -46,28 +48,38 @@ const CustomerDetails = ({ formData, onCustomerChange }: any) => {
           <FaVenusMars className="text-purple-600" /> ગ્રાહકનો પ્રકાર (Gender) *
         </label>
         <div className="flex gap-4 h-[44px] items-center px-2 border border-gray-200 rounded-xl bg-slate-50">
-          <label className="flex items-center gap-2 text-xs font-medium cursor-pointer">
-            <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={formData.gender === 'male'}
-              onChange={(e) => onCustomerChange('gender', e.target.value)}
-              className="text-purple-600 focus:ring-purple-500"
-            />
-            પુરુષ (Male)
-          </label>
-          <label className="flex items-center gap-2 text-xs font-medium cursor-pointer">
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={formData.gender === 'female'}
-              onChange={(e) => onCustomerChange('gender', e.target.value)}
-              className="text-purple-600 focus:ring-purple-500"
-            />
-            સ્ત્રી (Female)
-          </label>
+          {siteSettings.is_male_enabled && (
+            <div>
+              <label className="flex items-center gap-2 text-xs font-medium cursor-pointer">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === 'male'}
+                  onChange={(e) => onCustomerChange('gender', e.target.value)}
+                  className="text-purple-600 focus:ring-purple-500"
+                />
+                પુરુષ (Male)
+              </label>
+            </div>
+          )}
+
+          {siteSettings.is_female_enabled && (
+            <div>
+              <label className="flex items-center gap-2 text-xs font-medium cursor-pointer">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === 'female'}
+                  onChange={(e) => onCustomerChange('gender', e.target.value)}
+                  className="text-purple-600 focus:ring-purple-500"
+                />
+                સ્ત્રી (Female)
+              </label>
+            </div>
+          )}
+
         </div>
       </div>
     </div>)
