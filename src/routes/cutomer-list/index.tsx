@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { ThemeInput } from '#/utils'
-import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
+import { SITE_MESSAGES, PAGE_PATH_KEYS, API_KEY } from '#/utils/constant'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FaUserPlus } from 'react-icons/fa'
 import { supabase } from '#/lib/supabaseClient'
@@ -10,6 +10,7 @@ import ConfirmModal from '../../components/ConfirmModal'
 import AllSearchFilters from './layouts/AllSearchFilters'
 import MeasurementModal from '#/components/MeasurementModal'
 import { useGlobalToast } from '#/components/CustomeToast'
+import { useAuth } from '#/utils/auth'
 
 export const Route = createFileRoute('/cutomer-list/')({
     component: RouteComponent,
@@ -46,6 +47,7 @@ function RouteComponent() {
     const [selectedCustomerId, setSelectedCustomerId] = useState<string | number | null>(null)
     const [updateKey, setUpdateKey] = useState<number>(1)
     const [, setToastState] = useGlobalToast()
+    const { auth } = useAuth()
 
     const [deleteModalConfig, setDeleteModalConfig] = useState<{
         isOpen: boolean
@@ -57,15 +59,11 @@ function RouteComponent() {
         name: '',
     })
 
-    const fetchCustomers = async () => {
+    const fetchCustomers = useCallback(async () => {
         setIsLoading(true)
 
         try {
-            const cookie = document.cookie
-                .split('; ')
-                .find((item) => item.startsWith('authData='))
-
-            if (!cookie) {
+            if (!auth) {
                 setCustomers([])
                 setToastState({
                     show: true,
@@ -75,27 +73,7 @@ function RouteComponent() {
                 return
             }
 
-            let authData: { id: string; token: string }
-
-            try {
-                const cookieValue = cookie.substring('authData='.length)
-
-                try {
-                    authData = JSON.parse(decodeURIComponent(cookieValue))
-                } catch {
-                    authData = JSON.parse(cookieValue)
-                }
-            } catch {
-                setCustomers([])
-                setToastState({
-                    show: true,
-                    type: 'E',
-                    msg: SITE_MESSAGES.LOGIN_AGAIN,
-                })
-                return
-            }
-
-            const userId = authData?.id
+            const userId = auth?.authData?.id ?? null
 
             if (!userId || typeof userId !== 'string') {
                 setCustomers([])
@@ -108,7 +86,7 @@ function RouteComponent() {
             }
 
             let queryBuilder = supabase
-                .from('customers')
+                .from(API_KEY.CUSTOMERS)
                 .select(
                     'id, user_id, customer_name, phone, city, gender, male_measurements, female_measurements, created_at, total_amount, advance_amount, pending_amount'
                 )
@@ -151,7 +129,7 @@ function RouteComponent() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [auth, sortType, setToastState])
 
     useEffect(() => {
         fetchCustomers()
@@ -197,7 +175,7 @@ function RouteComponent() {
 
         try {
             setIsDeleting(true)
-            const { error } = await supabase.from('customers').delete().eq('id', id)
+            const { error } = await supabase.from(API_KEY.CUSTOMERS).delete().eq('id', id)
 
             if (error) {
                 setToastState({

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
 
-import { SITE_MESSAGES, PAGE_PATH_KEYS, defaultSiteData } from '#/utils/constant'
+import { SITE_MESSAGES, PAGE_PATH_KEYS, defaultSiteData, API_KEY } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
 import { useAuth } from '#/utils/auth'
 import { refetchSiteSettings, useGlobalSiteSettings } from '#/utils/site_settings'
@@ -82,7 +82,7 @@ function RouteComponent() {
 
             try {
                 const { data, error } = await supabase
-                    .from('site_settings')
+                    .from(API_KEY.SITE_SETTINGS)
                     .select('*')
                     .eq('user_id', currentUserId)
                     .maybeSingle()
@@ -239,13 +239,13 @@ function RouteComponent() {
 
             if (existingSettingId) {
                 const response = await supabase
-                    .from('site_settings')
+                    .from(API_KEY.SITE_SETTINGS)
                     .update(payload)
                     .eq('id', existingSettingId)
                 error = response.error
             } else {
                 const response = await supabase
-                    .from('site_settings')
+                    .from(API_KEY.SITE_SETTINGS)
                     .insert([payload])
                     .select()
                     .single()

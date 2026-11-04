@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
-import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
+import { SITE_MESSAGES, PAGE_PATH_KEYS, API_KEY } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
 import { useAuth } from '#/utils/auth'
 import MeasurementsDetails from './layouts/MeasurementsDetails'
@@ -76,7 +76,7 @@ function RouteComponent() {
 
             try {
                 const { data, error } = await supabase
-                    .from('customers')
+                    .from(API_KEY.CUSTOMERS)
                     .select('*')
                     .eq('id', id)
                     .single()
@@ -196,7 +196,7 @@ function RouteComponent() {
 
             if (isUpdateMode) {
                 const { error } = await supabase
-                    .from('customers')
+                    .from(API_KEY.CUSTOMERS)
                     .update(payload)
                     .eq('id', id)
 
@@ -216,7 +216,7 @@ function RouteComponent() {
                 })
             } else {
                 const { error } = await supabase
-                    .from('customers')
+                    .from(API_KEY.CUSTOMERS)
                     .insert([payload])
 
                 if (error) {
@@ -234,7 +234,6 @@ function RouteComponent() {
                     msg: SITE_MESSAGES.CUSTOMER_DETAILS_SAVE_SUCCESSFUL,
                 })
             }
-
             navigate({ to: PAGE_PATH_KEYS.LIST || '/customer-list' })
 
         } catch {
