@@ -4,7 +4,6 @@ import { IoCloseCircle, IoInformationCircle } from 'react-icons/io5'
 import { MdWarning } from 'react-icons/md'
 import { createGlobalState } from 'react-use'
 
-
 type ToastType = 'S' | 'E' | 'W' | 'info'
 
 interface ToastState {

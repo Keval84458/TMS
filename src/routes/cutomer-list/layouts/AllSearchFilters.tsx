@@ -29,7 +29,6 @@ const AllSearchFilters = ({
     onlyPending,
     setOnlyPending,
 }: AllSearchFiltersProps) => {
-
     const totalPending = useMemo(
         () =>
             filteredCustomers.reduce(

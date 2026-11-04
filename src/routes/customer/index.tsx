@@ -8,8 +8,8 @@ import { useAuth } from '#/utils/auth'
 import MeasurementsDetails from './layouts/MeasurementsDetails'
 import PaymentDetails from './layouts/PaymentDetails'
 import CustomerDetails from './layouts/CustomerDetails'
-import { sanitizeAmount } from '#/utils'
 import { useGlobalToast } from '#/components/CustomeToast'
+import { sanitizeAmount } from '#/utils/reusableFunctions'
 
 export const Route = createFileRoute('/customer/')({
     validateSearch: (search: Record<string, unknown>) => ({
@@ -37,7 +37,6 @@ function RouteComponent() {
     const { id, updateKey } = Route.useSearch()
     const { auth } = useAuth()
     const isUpdateMode = updateKey === 1
-
     const [isMeasurementOpen, setIsMeasurementOpen] = useState(false)
     const [isPaymentOpen, setIsPaymentOpen] = useState(false)
     const [isFetching, setIsFetching] = useState(isUpdateMode)

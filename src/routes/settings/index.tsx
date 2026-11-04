@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
-import { defaultSiteData } from '#/utils'
-import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
+
+import { SITE_MESSAGES, PAGE_PATH_KEYS, defaultSiteData } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
 import { useAuth } from '#/utils/auth'
 import { refetchSiteSettings, useGlobalSiteSettings } from '#/utils/site_settings'
@@ -333,24 +333,26 @@ function RouteComponent() {
 
                 {hasChanges && (
                     <div className="pt-2 animate-fadeIn">
-                        <button
-                            type="button"
-                            disabled={isLoading}
-                            onClick={HandleSubmit}
-                            className="w-full h-[46px] bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-md shadow-purple-600/20 active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none flex items-center justify-center gap-2 text-sm"
-                        >
-                            {isLoading ? (
-                                <>
-                                    <FaSpinner className="animate-spin text-lg" />
-                                    <span>સેવ થઈ રહ્યું છે...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <FaSave className="text-base" />
-                                    <span>સેટિંગ્સ સેવ કરો</span>
-                                </>
-                            )}
-                        </button>
+                        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 backdrop-blur-md border-t border-slate-800/80">
+                            <button
+                                type="button"
+                                disabled={isLoading}
+                                onClick={HandleSubmit}
+                                className="w-full h-12 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 text-white font-semibold rounded-2xl transition-all duration-200 shadow-lg shadow-purple-600/30 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none flex items-center justify-center gap-2 text-sm"
+                            >
+                                {isLoading ? (
+                                    <>
+                                        <FaSpinner className="animate-spin text-lg" />
+                                        <span>Submiting</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FaSave className="text-base" />
+                                        <span>Save</span>
+                                    </>
+                                )}
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>

@@ -61,59 +61,5 @@ export const ThemeButton = ({
     );
 };
 
-export const defaultSiteData = {
-    site_title: 'TailorHub2211',
-    subtitle: 'Tailoring Management System',
-    owner_name: 'Keval Makvana',
-    owner_phone: '1234567890',
-    owner_email: 'abc123@gmail.com',
-    site_address: 'abc, america',
-    city: 'Wembley',
-}
-
 export const OTHER_KEY = 'other'
 
-export const objIsNotEmpty = (obj: any): boolean => {
-    if (obj === null || typeof obj !== 'object') {
-        return false
-    }
-    return Object.keys(obj).length !== 0
-}
-
-export const parseKeys = (value: unknown): string[] => {
-    if (typeof value !== 'string') return []
-    return [
-        ...new Set(
-            value
-                .split(',')
-                .map((k) => k.trim())
-                .filter((k) => k && k.toLowerCase() !== OTHER_KEY)
-        ),
-    ]
-}
-
-
-export const sanitizeAmount = (value: string) =>
-    value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
-
-export const currentDate = new Date().toLocaleDateString('gu-IN', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-})
-
-export const fetchCustomersByUser = async (userId: string | number) => {
-    if (!userId) {
-        return { data: null, error: new Error('User ID is required') }
-    }
-
-    const response = await supabase
-        .from('customers')
-        .select(
-            'id, user_id, customer_name, phone, city, gender, male_measurements, female_measurements, created_at, total_amount, advance_amount, pending_amount'
-        )
-        .eq('user_id', userId)
-
-    return response
-}

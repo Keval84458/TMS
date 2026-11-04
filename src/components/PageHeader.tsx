@@ -5,7 +5,7 @@ import { FaChevronLeft } from "react-icons/fa6";
 
 interface PageHeaderProps {
     title: string;
-    onBack?: string | (() => void); // Can be a route string or a callback function
+    onBack?: string | (() => void);
     visible?: boolean;
 }
 
