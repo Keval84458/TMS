@@ -1,19 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { supabase } from '#/lib/supabaseClient'
-import { ThemeInput } from '#/utils'
 import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
 import { useNavigate } from '@tanstack/react-router'
-import {
-    FaEnvelope,
-    FaLock,
-    FaSignInAlt,
-    FaSpinner,
-    FaEye,
-    FaEyeSlash,
-    FaCut,
-    FaRuler
-} from 'react-icons/fa'
+import { FaCut, FaRuler } from 'react-icons/fa'
 import { IoShirtSharp } from "react-icons/io5";
 import { GiSewingMachine } from "react-icons/gi";
 import { useGlobalToast } from '#/components/CustomeToast'

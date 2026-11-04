@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '#/lib/supabaseClient'
 import { useGlobalToast } from '#/components/CustomeToast'
-import { SITE_MESSAGES } from '#/utils/constant'
+import { API_KEY, SITE_MESSAGES } from '#/utils/constant'
+import { useAuth } from './auth'
 
 export interface Customer {
     id: string
@@ -22,16 +23,13 @@ export const useCustomers = () => {
     const [customers, setCustomers] = useState<Customer[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [, setToastState] = useGlobalToast()
+    const { auth } = useAuth()
 
     const fetchCustomers = useCallback(async () => {
         setIsLoading(true)
 
         try {
-            const cookie = document.cookie
-                .split('; ')
-                .find((item) => item.startsWith('authData='))
-
-            if (!cookie) {
+            if (!auth) {
                 setCustomers([])
                 setToastState({
                     show: true,
@@ -40,27 +38,7 @@ export const useCustomers = () => {
                 })
                 return
             }
-
-            let authData: { id: string; token: string }
-
-            try {
-                const cookieValue = cookie.substring('authData='.length)
-                try {
-                    authData = JSON.parse(decodeURIComponent(cookieValue))
-                } catch {
-                    authData = JSON.parse(cookieValue)
-                }
-            } catch {
-                setCustomers([])
-                setToastState({
-                    show: true,
-                    type: 'E',
-                    msg: SITE_MESSAGES.LOGIN_AGAIN,
-                })
-                return
-            }
-
-            const userId = authData?.id
+            const userId = auth?.authData?.id ?? null
 
             if (!userId || typeof userId !== 'string') {
                 setCustomers([])
@@ -73,7 +51,7 @@ export const useCustomers = () => {
             }
 
             const { data, error } = await supabase
-                .from('customers')
+                .from(API_KEY.CUSTOMERS)
                 .select(
                     'id, user_id, customer_name, phone, city, gender, male_measurements, female_measurements, created_at, total_amount, advance_amount, pending_amount'
                 )
@@ -100,7 +78,7 @@ export const useCustomers = () => {
         } finally {
             setIsLoading(false)
         }
-    }, [setToastState])
+    }, [auth, setToastState])
 
     useEffect(() => {
         fetchCustomers()

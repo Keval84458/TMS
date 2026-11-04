@@ -44,3 +44,9 @@ export const defaultSiteData = {
     site_address: 'abc, america',
     city: 'Wembley',
 }
+
+
+export const API_KEY = {
+    CUSTOMERS: "customers",
+    SITE_SETTINGS: "site_settings",
+}
