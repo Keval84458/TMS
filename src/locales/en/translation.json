@@ -1,4 +1,14 @@
 {
+    "Login": {
+        "LoginTitle": "LOGIN",
+        "SubTitle": "Enter your email and password to log in",
+        "EmailLabelName": "Email Address",
+        "EmailPlaceholder": "Enter your email",
+        "PasswordLabelName": "Password",
+        "PasswordLabelPlaceholder": "Enter your password",
+        "ButtonMessage": "Login",
+        "ButtonLoadingMessage": "Logging in..."
+    },
     "OwnerDashboard": {
         "Subtitle": "Tailor Management System",
         "CustomerCountName": "Customers"
@@ -22,11 +32,8 @@
     },
     "LanguageModal": {
         "selectLanguage": "Select Language",
-        "chooseLanguage": "Choose your preferred language",
         "english": "English",
-        "englishSub": "English",
         "gujarati": "ગુજરાતી",
-        "gujaratiSub": "Gujarati",
         "cancel": "Cancel"
     },
     "NewCustomer": {
@@ -129,5 +136,33 @@
         "BackMessageSbTitle": "You have unsaved changes. Are you sure you want to go back?",
         "CancelMessage": "Cancel",
         "OkMessage": "Discard"
+    },
+    "SITE_MESSAGES_EN": {
+        "CUSTOMER_NAME": "Please enter the customer name.",
+        "PHONE": "Please enter the phone number.",
+        "CITY": "Please enter the city name.",
+        "INVALID_AMOUNT": "The amount must be 0 or greater.",
+        "ADVANCE_TOO_HIGH": "Advance payment cannot exceed the total amount.",
+        "OWNER_NAME": "Please enter the owner name.",
+        "SITE_NAME": "Please enter the site name.",
+        "UNKNOWN_MISTAKE": "An unexpected error occurred.",
+        "DO_NOT_LOAD_SETTING_MISTAKE": "Error loading settings.",
+        "RECORD_NOT_FOUND_FOR_CUSTOMER": "Customer information could not be found.",
+        "CUSTOMER_DETAILS_UPDATE_SUCCESSFUL": "Customer details updated successfully.",
+        "CUSTOMER_DETAILS_SAVE_SUCCESSFUL": "Customer details saved successfully.",
+        "TRY_AGAIN": "Something went wrong. Please try again.",
+        "DO_NOT_REVERCE_ACTION": "This action cannot be undone!",
+        "LOGIN_TO_VIEW_CUSTOMER": "Please login to view customers.",
+        "LOGIN_AGAIN": "Invalid login session. Please login again.",
+        "USER_ID_NOT_FOUND": "User ID not found. Please login again.",
+        "UNEXPECTED_ERROR_FETCHING_CUSTOMER": "Unexpected error fetching customers:",
+        "ERROR_FETCHING_CUSTOMER": "Error fetching customers:",
+        "CUSTOMER_REMOVE_DETAILS_SUCCESS": "Customer information removed successfully.",
+        "FILL_EMAIL": "Please enter your email.",
+        "FILL_PASSWORD": "Please enter your password.",
+        "INVALID_CREDENTIALS": "Invalid email or password.",
+        "LOGIN_SUCCESSFULLY": "Logged in successfully!",
+        "SAVE_SETTINGS_DETAILS_SUCCESSFULLY": "Settings saved successfully.",
+        "INSTALL_PROPMT_NOT_AVAILABLE": "The browser install prompt is not available.",
     }
 }

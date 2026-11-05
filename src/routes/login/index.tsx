@@ -8,6 +8,7 @@ import { IoShirtSharp } from "react-icons/io5";
 import { GiSewingMachine } from "react-icons/gi";
 import { useGlobalToast } from '#/components/CustomeToast'
 import LoginForm from './layouts/login-form'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/login/')({
     component: RouteComponent,
@@ -15,6 +16,7 @@ export const Route = createFileRoute('/login/')({
 
 function RouteComponent() {
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const initialData = {
         email: '',
@@ -68,7 +70,6 @@ function RouteComponent() {
                     id: data.user.id,
                     token: data.session.access_token,
                 }
-
                 document.cookie = `authData=${JSON.stringify(authDetails)}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`
 
                 setToastState({
@@ -76,11 +77,15 @@ function RouteComponent() {
                     type: 'S',
                     msg: SITE_MESSAGES.LOGIN_SUCCESSFULLY,
                 })
+
                 setFormData(initialData)
 
+                // 1. Set flag in localStorage so the Home page knows to open the modal
+                localStorage.setItem('openLanguageModal', 'true')
+
+                // 2. Navigate to Home
                 navigate({ to: PAGE_PATH_KEYS.HOME })
             }
-
         } catch {
             setToastState({
                 show: true,
@@ -105,7 +110,6 @@ function RouteComponent() {
             <div className="absolute bottom-20 right-1/4 text-indigo-600/30 text-5xl animate-[bounce_4s_infinite] pointer-events-none">
                 <FaRuler />
             </div>
-
             <div className="absolute bottom-30 left-[3rem] text-indigo-600/30 text-5xl animate-[bounce_4s_infinite] pointer-events-none">
                 <GiSewingMachine />
             </div>
@@ -124,10 +128,10 @@ function RouteComponent() {
                             <span>Tailor System by Keval Makvana</span>
                         </div>
                         <h2 className="text-3xl font-black text-gray-900 tracking-tight">
-                            LOGIN
+                            {t('Login.LoginTitle', 'LOGIN')}
                         </h2>
                         <p className="text-xs text-gray-500 mt-2 font-medium">
-                            લૉગ ઇન કરવા માટે તમારો ઇમેઇલ અને પાસવર્ડ દાખલ કરો
+                            {t('Login.SubTitle', "Enter Email and Password to Logged In")}
                         </p>
                     </div>
 
