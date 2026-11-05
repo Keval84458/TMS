@@ -11,6 +11,7 @@ import AllSearchFilters from './layouts/AllSearchFilters'
 import MeasurementModal from '#/components/MeasurementModal'
 import { useGlobalToast } from '#/components/CustomeToast'
 import { useAuth } from '#/utils/auth'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/cutomer-list/')({
     component: RouteComponent,
@@ -48,6 +49,7 @@ function RouteComponent() {
     const [updateKey, setUpdateKey] = useState<number>(1)
     const [, setToastState] = useGlobalToast()
     const { auth } = useAuth()
+    const { t } = useTranslation()
 
     const [deleteModalConfig, setDeleteModalConfig] = useState<{
         isOpen: boolean
@@ -209,7 +211,7 @@ function RouteComponent() {
     return (
         <div className="min-h-screen bg-slate-50 pb-20 mt-[3.4rem]">
             <PageHeader
-                title="ગ્રાહકોની યાદી"
+                title={t('CustomerListDashboard.PageTitle', 'Customer List')}
                 onBack={PAGE_PATH_KEYS.HOME}
                 visible
             />
@@ -218,7 +220,7 @@ function RouteComponent() {
                 <div className="max-w-7xl mx-auto">
                     <ThemeInput
                         className="h-[44px] w-full border-gray-200 focus:border-purple-600 focus:ring-purple-200 rounded-xl px-3"
-                        placeholder="ગ્રાહક શોધો (નામ અથવા ફોન નંબર)..."
+                        placeholder={t('CustomerListDashboard.SearchPlaceholder', 'Search by name, phone or city')}
                         value={searchQuery}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             setSearchQuery(e.target.value)
@@ -240,11 +242,13 @@ function RouteComponent() {
             <div className="p-4 max-w-7xl mx-auto">
                 {isLoading ? (
                     <div className="text-center py-12 text-gray-400 text-sm font-medium">
-                        ડેટા લોડ થઈ રહ્યો છે...
+                        {t('CustomerListDashboard.LoadingCustomers', 'Loading customers...')}
                     </div>
                 ) : filteredCustomers.length === 0 ? (
                     <div className="text-center py-12 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                        <p className="text-gray-400 text-sm font-medium">કોઈ ગ્રાહક મળ્યા નથી</p>
+                        <p className="text-gray-400 text-sm font-medium">
+                            {t('CustomerListDashboard.NoCustomersFound', 'No customers found')}
+                        </p>
                     </div>
                 ) : (
                     <CustomerGrid
@@ -273,10 +277,10 @@ function RouteComponent() {
                 onClose={() => setDeleteModalConfig({ isOpen: false, id: null, name: '' })}
                 onConfirm={handleDelete}
                 isLoading={isDeleting}
-                title={`શું તમે "${deleteModalConfig.name}" ને ડિલીટ કરવા માંગો છો?`}
-                message={SITE_MESSAGES.DO_NOT_REVERCE_ACTION}
-                confirmText="હા, ડિલીટ કરો"
-                cancelText="ના (Cancel)"
+                title={t('DeleteModalDetails.DeleteMessage')}
+                // message={t('DeleteModalDetails.DeleteMessageSbTitle')}
+                confirmText={t('DeleteModalDetails.OkMessage')}
+                cancelText={t('DeleteModalDetails.CancelMessage')}
                 variant="D"
             />
 
@@ -285,7 +289,7 @@ function RouteComponent() {
                 className="fixed bottom-5 right-5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 rounded-full shadow-lg shadow-purple-600/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 font-semibold text-sm z-20"
             >
                 <FaUserPlus size={18} />
-                <span className="hidden sm:inline">નવો ગ્રાહક ઉમેરો</span>
+                <span className="hidden sm:inline">{t('NewCustomer.AddNewCustomerPageHeader', 'Add New Customer')}</span>
             </button>
         </div>
     )

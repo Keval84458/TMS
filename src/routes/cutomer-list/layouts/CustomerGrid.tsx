@@ -1,5 +1,6 @@
 import { PAGE_PATH_KEYS } from "#/utils/constant"
 import { Link } from "@tanstack/react-router"
+import { useTranslation } from "react-i18next";
 import { FaCalendarAlt, FaCheckCircle, FaEdit, FaPhone, FaRulerCombined, FaTrash } from "react-icons/fa"
 import { TiLocation } from "react-icons/ti";
 
@@ -10,6 +11,7 @@ const CustomerGrid = ({
     formatRupee,
     setSelectedCustomerId
 }: any) => {
+    const { t } = useTranslation()
     return (
         <div className="grid grid-cols-1 gap-4">
             {filteredCustomers.map((customer: any) => {
@@ -77,11 +79,11 @@ const CustomerGrid = ({
                                 <div className="mb-4">
                                     <div className="grid grid-cols-3 gap-2">
                                         <div className="rounded-xl bg-slate-50 border border-gray-100 px-2 py-[2px] text-center">
-                                            <p className="text-[10px] text-gray-500 font-medium">કુલ</p>
+                                            <p className="text-[10px] text-gray-500 font-medium">{t('CustomerGridDetails.Total', 'Total')}</p>
                                             <p className="text-sm font-bold text-gray-800">{formatRupee(total)}</p>
                                         </div>
                                         <div className="rounded-xl bg-slate-50 border border-gray-100 px-2 py-[2px] text-center">
-                                            <p className="text-[10px] text-gray-500 font-medium">અગાઉથી</p>
+                                            <p className="text-[10px] text-gray-500 font-medium">{t('CustomerGridDetails.Advance', 'Advance')}</p>
                                             <p className="text-sm font-bold text-gray-800">{formatRupee(advance)}</p>
                                         </div>
                                         <div
@@ -91,7 +93,7 @@ const CustomerGrid = ({
                                                 }`}
                                         >
                                             <p className={`text-[10px] font-medium ${pending > 0 ? 'text-red-500' : 'text-green-600'}`}>
-                                                બાકી
+                                                {t('CustomerGridDetails.Pending', 'Pending')}
                                             </p>
                                             <p className={`text-sm font-black ${pending > 0 ? 'text-red-600' : 'text-green-600'}`}>
                                                 {formatRupee(pending)}
@@ -101,7 +103,7 @@ const CustomerGrid = ({
 
                                     {pending <= 0 && (
                                         <p className="mt-2 flex items-center justify-center gap-1 text-[11px] font-semibold text-green-600">
-                                            <FaCheckCircle size={11} /> ચુકવણી પૂર્ણ
+                                            <FaCheckCircle size={11} /> {t('CustomerGridDetails.PaymentComplete', 'Payment Complete')}
                                         </p>
                                     )}
                                 </div>
@@ -114,7 +116,7 @@ const CustomerGrid = ({
                                 className="flex-1 py-2 px-3 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                             >
                                 <FaPhone size={12} />
-                                કોલ કરો
+                                {t('CustomerGridDetails.Call', 'Call')}
                             </a>
 
                             <button
@@ -122,7 +124,7 @@ const CustomerGrid = ({
                                 className="flex-1 py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                             >
                                 <FaRulerCombined size={12} />
-                                માપ જુઓ
+                                {t('CustomerGridDetails.SeeMeasurements', 'Measurements')}
                             </button>
                         </div>
                     </div>

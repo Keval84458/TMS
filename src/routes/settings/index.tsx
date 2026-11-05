@@ -12,6 +12,7 @@ import MeasurementSettings from './layouts/MeasurementSettings'
 import { useGlobalToast } from '#/components/CustomeToast'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import ConfirmModal from '../../components/ConfirmModal'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/settings/')({
     component: RouteComponent,
@@ -36,6 +37,7 @@ function RouteComponent() {
     const { auth } = useAuth()
     const { fetchSettingsData } = useGlobalSiteSettings()
     const [, setToastState] = useGlobalToast()
+    const { t } = useTranslation()
 
     const [isFetching, setIsFetching] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
@@ -158,12 +160,14 @@ function RouteComponent() {
         }
     }
 
+    // REPLACE THIS IN YOUR Index.tsx:
     const handleRemoveProduct = (itemToRemove: string) => {
         if (activeGenderTab === 'male') {
             const updated = maleProducts.filter((item) => item !== itemToRemove)
             setMaleProducts(updated)
             setFormData((prev) => ({ ...prev, male_measurements: updated.join(', ') }))
         } else {
+            // FIX: Correctly handle female products deletion here!
             const updated = femaleProducts.filter((item) => item !== itemToRemove)
             setFemaleProducts(updated)
             setFormData((prev) => ({ ...prev, female_measurements: updated.join(', ') }))
@@ -298,7 +302,7 @@ function RouteComponent() {
     return (
         <div className="min-h-screen bg-slate-50 pb-12 mt-[3.4rem]">
             <PageHeader
-                title="Settings"
+                title={t('Settings.PageHeader')}
                 onBack={handleBackClick}
             />
 
@@ -333,7 +337,7 @@ function RouteComponent() {
 
                 {hasChanges && (
                     <div className="pt-2 animate-fadeIn">
-                        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 backdrop-blur-md border-t border-slate-800/80">
+                        <div className="fixed bottom-0 left-0 right-0 z-40 p-4 backdrop-blur-md border-t border-slate-800/80">
                             <button
                                 type="button"
                                 disabled={isLoading}
@@ -343,12 +347,12 @@ function RouteComponent() {
                                 {isLoading ? (
                                     <>
                                         <FaSpinner className="animate-spin text-lg" />
-                                        <span>Submiting</span>
+                                        <span>{t('Settings.SaveButtonLoading')}</span>
                                     </>
                                 ) : (
                                     <>
                                         <FaSave className="text-base" />
-                                        <span>Save</span>
+                                        <span>{t('Settings.SaveButtonText')}</span>
                                     </>
                                 )}
                             </button>
@@ -363,10 +367,10 @@ function RouteComponent() {
                     setShowUnsavedModal(false)
                     navigate({ to: PAGE_PATH_KEYS.HOME })
                 }}
-                title="અસુરક્ષિત ફેરફારો (Unsaved Changes)"
-                message="તમે સેવ કર્યા વગર બહાર જવા માંગો છો? તમારા ફેરફારો ગુણાઈ જશે."
-                confirmText="હા, બહાર જાઓ"
-                cancelText="ના (Stay)"
+                title={t('SettingWarningBackModal.BackMessage')}
+                message={t('SettingWarningBackModal.BackMessageSbTitle')}
+                confirmText={t('SettingWarningBackModal.OkMessage')}
+                cancelText={t('SettingWarningBackModal.CancelMessage')}
                 variant="W"
             />
         </div>

@@ -1,0 +1,132 @@
+{
+    "OwnerDashboard": {
+        "Subtitle": "ટેલર મેનેજમેન્ટ સિસ્ટમ",
+        "CustomerCountName": "ગ્રાહકો"
+    },
+    "QuickActions": {
+        "Title": "ઝડપી ક્રિયાઓ",
+        "NewCustomer": "ગ્રાહક ઉમેરો",
+        "CustomerList": "ગ્રાહક યાદી",
+        "Settings": "સેટિંગ્સ"
+    },
+    "Footer": {
+        "DataSecured": "ડેટા સુરક્ષિત અને ક્લાઉડ બેક્ડ છે",
+        "AppVersion": "સ્માર્ટ ટેલરિંગ ડેશબોર્ડ v2.0",
+        "DesignedBy": "ડિઝાઇન અને ડેવલપ કરનાર",
+        "Copyright": "© 2026 ટેલર મેનેજમેન્ટ સિસ્ટમ. સર્વાધિકાર સુરક્ષિત."
+    },
+    "MenuItems": {
+        "Language": "ભાષા",
+        "InstallApp": "એપ્લિકેશન ઇન્સ્ટોલ કરો",
+        "Logout": "લોગઆઉટ"
+    },
+    "LanguageModal": {
+        "selectLanguage": "ભાષા પસંદ કરો",
+        "chooseLanguage": "તમારી પસંદગીની ભાષા પસંદ કરો",
+        "english": "English",
+        "englishSub": "English",
+        "gujarati": "ગુજરાતી",
+        "gujaratiSub": "Gujarati",
+        "cancel": "રદ કરો"
+    },
+    "NewCustomer": {
+        "AddNewCustomerPageHeader": "નવા ગ્રાહક",
+        "UpdateCustomerPageHeader": "ગ્રાહક અપડેટ કરો",
+        "AddNewCustomerTitle": "ગ્રાહકની વિગતો",
+        "UpdateCustomerTitle": "ગ્રાહકની વિગતો અપડેટ કરો",
+        "AddNewCustomerSubTitle": "ગ્રાહકની વિગતો ભરો અને જરૂર મુજબ માપના બોક્સનો ઉપયોગ કરો",
+        "UpdateCustomerSubTitle": "જરૂર મુજબ ગ્રાહકની વિગતો અને માપ અપડેટ કરો",
+        "CustomerName": "ગ્રાહકનું નામ",
+        "CustomerNamePlaceholder": "દા.ત. કેવલ મકવાણા",
+        "MobileNumber": "મોબાઈલ નંબર",
+        "MobileNumberPlaceholder": "દા.ત. 9876543210",
+        "City": "શહેર",
+        "CityPlaceholder": "દા.ત. અમદાવાદ",
+        "CustomerGender": "જાતિ",
+        "Male": "પુરુષ",
+        "Female": "સ્ત્રી",
+        "MeasurementsDetails": "માપની વિગતો",
+        "OtherDetailsAndNotes": "અન્ય વિગતો અને નોંધ",
+        "OtherMeasurementsPlaceholder": "દા.ત. કોઈપણ વધારાની નોંધ અથવા અન્ય માપ",
+        "PaymentDetails": "ચુકવણીની વિગતો",
+        "TotalAmount": "કુલ રકમ",
+        "TotalAmountPlaceholder": "દા.ત. 1500",
+        "AdvanceAmount": "એડવાન્સ રકમ",
+        "AdvanceAmountPlaceholder": "દા.ત. 500",
+        "PendingAmount": "બાકી રકમ",
+        "SaveButtonText": "સાચવો",
+        "SaveButtonTextLoading": "સાચવી રહ્યું છે...",
+        "UpdateButtonText": "અપડેટ કરો",
+        "UpdateButtonTextLoading": "અપડેટ થઈ રહ્યું છે..."
+    },
+    "CustomerListDashboard": {
+        "PageHeader": "ગ્રાહક યાદી",
+        "SearchPlaceholder": "નામ, મોબાઈલ નંબર અથવા શહેર દ્વારા શોધો",
+        "NewestCustomers": "સૌથી નવા",
+        "OldestCustomers": "સૌથી જૂના",
+        "AtoZCustomers": "A થી Z",
+        "PendingPayments": "બાકી ચૂકવણી",
+        "TotalCustomers": "કુલ ગ્રાહકો",
+        "TotalPendingPayments": "કુલ બાકી રકમ",
+        "Results": "પરિણામો",
+        "LoadingCustomers": "ગ્રાહકો લોડ થઈ રહ્યા છે...",
+        "NoCustomersFound": "કોઈ ગ્રાહક મળ્યા નથી"
+    },
+    "CustomerGridDetails": {
+        "Total": "કુલ",
+        "Advance": "એડવાન્સ",
+        "Pending": "બાકી",
+        "DoCall": "કોલ કરો",
+        "SeeMeasurements": "માપ જુઓ",
+        "PaymentComplete": "ચૂકવણી પૂર્ણ"
+    },
+    "Settings": {
+        "PageHeader": "સેટિંગ્સ",
+        "SaveButtonText": "સાચવો",
+        "SaveButtonLoading": "સબમિટ થઈ રહ્યું છે...",
+        "Loading": "સેટિંગ્સ લોડ થઈ રહી છે...",
+        "GeneralSettings": {
+            "GeneralSettingsTitle": "સામાન્ય સેટિંગ્સ",
+            "GeneralSettingsSubTitle": "તમારા સામાન્ય સેટિંગ્સનું સંચાલન કરો",
+            "SiteTitleLabel": "સાઇટ શીર્ષક",
+            "SiteTitlePlaceholder": "દા.ત. ટેલર મેનેજમેન્ટ સિસ્ટમ",
+            "SiteSubTitleLabel": "બાહ્ય શીર્ષક (સબટાઈટલ)",
+            "SiteSubTitlePlaceholder": "દા.ત. સ્માર્ટ ટેલરિંગ ડેશબોર્ડ",
+            "OwnerNameLabel": "માલિકનું નામ",
+            "OwnerNamePlaceholder": "દા.ત. કેવલ મકવાણા",
+            "MobileNumberLabel": "મોબાઈલ નંબર",
+            "MobileNumberPlaceholder": "દા.ત. 9876543210",
+            "EmailLabel": "ઇમેઇલ",
+            "EmailPlaceholder": "દા.ત. abc@example.com",
+            "CityLabel": "શહેર",
+            "CityPlaceholder": "દા.ત. અમદાવાદ",
+            "AddressLabel": "સરનામું",
+            "AddressPlaceholder": "દા.ત. 123 મેઈન સ્ટ્રીટ, અમદાવાદ",
+            "Male": "પુરુષ",
+            "Female": "સ્ત્રી"
+        },
+        "MeasurementsSettings": {
+            "MeasurementsSettingsTitle": "માપ સેટિંગ્સ",
+            "MeasurementsSettingsSubTitle": "પુરુષ અને સ્ત્રી કેટેગરી માટે માપના વિકલ્પોનું સંચાલન કરો",
+            "GenderCategoryLabel": "કેટેગરી પસંદ કરો (જેન્ડર કેટેગરી)",
+            "MaleProductsLabel": "પુરુષોના ઉત્પાદનો",
+            "FemaleProductsLabel": "સ્ત્રીઓના ઉત્પાદનો",
+            "AddNewProductPlaceholder": "નવું ઉત્પાદન ઉમેરો (દા.ત. કુર્તા, સૂટ, લેહેંગા)",
+            "Add": "ઉમેરો",
+            "MaleKeys": "પુરુષોની કી (Keys)",
+            "FemaleKeys": "સ્ત્રીઓની કી (Keys)"
+        }
+    },
+    "DeleteModalDetails": {
+        "DeleteMessage": "શું તમે ખરેખર ડિલીટ કરવા માંગો છો?",
+        "DeleteMessageSbTitle": "આ ક્રિયાને પૂર્વવત કરી શકાતી નથી.",
+        "CancelMessage": "ના",
+        "OkMessage": "ડિલીટ કરો"
+    },
+    "SettingWarningBackModal": {
+        "BackMessage": "અસુરક્ષિત ફેરફારો (Unsaved Changes)",
+        "BackMessageSbTitle": "તમારા ફેરફારો સાચવ્યા નથી. શું તમે ખરેખર પાછા જવા માંગો છો?",
+        "CancelMessage": "રદ કરો",
+        "OkMessage": "કાઢી નાખો"
+    }
+}

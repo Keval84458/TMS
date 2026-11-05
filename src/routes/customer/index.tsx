@@ -10,6 +10,7 @@ import PaymentDetails from './layouts/PaymentDetails'
 import CustomerDetails from './layouts/CustomerDetails'
 import { useGlobalToast } from '#/components/CustomeToast'
 import { sanitizeAmount } from '#/utils/reusableFunctions'
+import { useTranslation } from 'react-i18next'
 
 export const Route = createFileRoute('/customer/')({
     validateSearch: (search: Record<string, unknown>) => ({
@@ -42,6 +43,7 @@ function RouteComponent() {
     const [isFetching, setIsFetching] = useState(isUpdateMode)
     const [isLoading, setIsLoading] = useState(false)
     const [, setToastState] = useGlobalToast()
+    const { t, i18n } = useTranslation()
 
     const [formData, setFormData] = useState({
         customer_name: '',
@@ -258,7 +260,7 @@ function RouteComponent() {
     return (
         <div className="min-h-screen bg-slate-50 pb-12 mt-[3.4rem]">
             <PageHeader
-                title={isUpdateMode ? "ગ્રાહક વિગતો અપડેટ કરો" : "નવું માપ અને ગ્રાહક"}
+                title={isUpdateMode ? t('NewCustomer.UpdateCustomerPageHeader', 'Update Customer and Measurements') : t('NewCustomer.AddNewCustomerPageHeader', 'New Customer and Measurements')}
                 onBack={PAGE_PATH_KEYS.LIST || PAGE_PATH_KEYS.HOME}
                 visible
             />
@@ -267,10 +269,10 @@ function RouteComponent() {
                     <div className="border-b border-gray-100 pb-4">
                         <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-purple-600" />
-                            {isUpdateMode ? "ગ્રાહકની માહિતી સુધારો" : "ગ્રાહકની માહિતી અને માપ"}
+                            {isUpdateMode ? t('NewCustomer.UpdateCustomerTitle', 'Update Customer Details and Measurements') : t('NewCustomer.AddNewCustomerTitle', 'Customer Details and Measurements')}
                         </h2>
                         <p className="text-xs text-gray-500 mt-1">
-                            {isUpdateMode ? "ગ્રાહકની વિગતો અને માપ બદલો" : "ગ્રાહકની વિગતો ભરો અને જરૂરિયાત મુજબ માપના બોક્સનો ઉપયોગ કરો"}
+                            {isUpdateMode ? t('NewCustomer.UpdateCustomerSubTitle', 'Update the customer details and measurements as needed') : t('NewCustomer.AddNewCustomerSubTitle', 'Fill in the customer details and use the measurement boxes as needed')}
                         </p>
                     </div>
                     <CustomerDetails
@@ -302,12 +304,12 @@ function RouteComponent() {
                             {isLoading ? (
                                 <>
                                     <FaSpinner className="animate-spin text-lg" />
-                                    <span>{isUpdateMode ? "અપડેટ થઈ રહ્યું છે..." : "સેવ થઈ રહ્યું છે..."}</span>
+                                    <span>{isUpdateMode ? t('NewCustomer.UpdateButtonTextLoading', 'Updating...') : t('NewCustomer.SaveButtonTextLoading', 'Saving...')}</span>
                                 </>
                             ) : (
                                 <>
                                     <FaSave className="text-base" />
-                                    <span>{isUpdateMode ? "ફેરફાર સેવ કરો" : "સેવ કરો (Save Customer)"}</span>
+                                    <span>{isUpdateMode ? t('NewCustomer.UpdateButtonText', 'Update') : t('NewCustomer.SaveButtonText', 'Save')}</span>
                                 </>
                             )}
                         </button>

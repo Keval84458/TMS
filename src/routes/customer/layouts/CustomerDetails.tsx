@@ -1,18 +1,20 @@
 import { ThemeInput } from "#/utils"
 import { useGlobalSiteSettings } from "#/utils/site_settings";
+import { useTranslation } from "react-i18next";
 import { FaMapMarkerAlt, FaPhone, FaUser, FaVenusMars } from "react-icons/fa"
 
 const CustomerDetails = ({ formData, onCustomerChange }: any) => {
   const { siteSettings } = useGlobalSiteSettings();
+  const { t, i18n } = useTranslation()
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div>
         <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-          <FaUser className="text-purple-600" /> ગ્રાહકનું નામ *
+          <FaUser className="text-purple-600" /> {t('NewCustomer.CustomerName', 'Customer Name')} *
         </label>
         <ThemeInput
           type="text"
-          placeholder="દા.ત. કેવલ મકવાણા"
+          placeholder={t('NewCustomer.CustomerNamePlaceholder', 'Ex. John Doe')}
           className="w-full h-[44px] px-3.5 border-gray-200 focus:border-purple-600 rounded-xl"
           value={formData.customer_name}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCustomerChange('customer_name', e.target.value)}
@@ -20,11 +22,11 @@ const CustomerDetails = ({ formData, onCustomerChange }: any) => {
       </div>
       <div>
         <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-          <FaPhone className="text-purple-600" /> ફોન નંબર *
+          <FaPhone className="text-purple-600" /> {t('NewCustomer.MobileNumber', 'Mobile Number')} *
         </label>
         <ThemeInput
           type="tel"
-          placeholder="દા.ત. 1234567890"
+          placeholder={t('NewCustomer.MobileNumberPlaceholder', 'Ex. 1234567890')}
           className="w-full h-[44px] px-3.5 border-gray-200 focus:border-purple-600 rounded-xl"
           value={formData.phone}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCustomerChange('phone', e.target.value)}
@@ -32,11 +34,11 @@ const CustomerDetails = ({ formData, onCustomerChange }: any) => {
       </div>
       <div>
         <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-          <FaMapMarkerAlt className="text-purple-600" /> ગામ / શહેર *
+          <FaMapMarkerAlt className="text-purple-600" /> {t('NewCustomer.City', 'City')} *
         </label>
         <ThemeInput
           type="text"
-          placeholder="દા.ત. અમદાવાદ"
+          placeholder={t('NewCustomer.CityPlaceholder', 'Ex. Ahmedabad')}
           className="w-full h-[44px] px-3.5 border-gray-200 focus:border-purple-600 rounded-xl"
           value={formData.city}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onCustomerChange('city', e.target.value)}
@@ -45,7 +47,7 @@ const CustomerDetails = ({ formData, onCustomerChange }: any) => {
 
       <div>
         <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
-          <FaVenusMars className="text-purple-600" /> ગ્રાહકનો પ્રકાર (Gender) *
+          <FaVenusMars className="text-purple-600" /> {t('NewCustomer.CustomerGender', 'Gender')} *
         </label>
         <div className="flex gap-4 h-[44px] items-center px-2 border border-gray-200 rounded-xl bg-slate-50">
           {siteSettings.is_male_enabled && (
@@ -59,7 +61,7 @@ const CustomerDetails = ({ formData, onCustomerChange }: any) => {
                   onChange={(e) => onCustomerChange('gender', e.target.value)}
                   className="text-purple-600 focus:ring-purple-500"
                 />
-                પુરુષ (Male)
+                {t('NewCustomer.Male', 'Male')}
               </label>
             </div>
           )}
@@ -75,7 +77,7 @@ const CustomerDetails = ({ formData, onCustomerChange }: any) => {
                   onChange={(e) => onCustomerChange('gender', e.target.value)}
                   className="text-purple-600 focus:ring-purple-500"
                 />
-                સ્ત્રી (Female)
+                {t('NewCustomer.Female', 'Female')}
               </label>
             </div>
           )}

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { FaDownload } from 'react-icons/fa'
 import { useGlobalToast } from './CustomeToast'
 import { SITE_MESSAGES } from '#/utils/constant'
+import { useTranslation } from 'react-i18next'
 
 interface BeforeInstallPromptEvent extends Event {
     prompt: () => Promise<void>
@@ -15,6 +16,7 @@ interface BeforeInstallPromptEvent extends Event {
 const InstallApp = () => {
     const [installPrompt, setInstallPrompt] =
         useState<BeforeInstallPromptEvent | null>(null)
+    const { t } = useTranslation()
 
     const [isInstalled, setIsInstalled] = useState(false)
     const [, setToastState] = useGlobalToast()
@@ -94,9 +96,12 @@ const InstallApp = () => {
         <button
             type="button"
             onClick={handleInstall}
-            className="hidden md:inline-flex p-2.5 rounded-xl bg-purple-950/30 border border-purple-500/30 text-purple-300 hover:bg-purple-600 hover:text-white transition-all duration-200"
+            className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-purple-200 hover:bg-red-500/10 hover:text-red-300 rounded-xl transition-all text-left"
         >
-            <FaDownload />
+            <div className="p-1.5 rounded-lg bg-purple-950/60 border border-purple-500/30 text-purple-400 group-hover:text-purple-300 transition-colors">
+                <FaDownload size={16} />
+            </div>
+            <span>{t('MenuItems.InstallApp')}</span>
         </button>
     )
 }
