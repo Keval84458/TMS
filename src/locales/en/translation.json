@@ -1,0 +1,133 @@
+{
+    "OwnerDashboard": {
+        "Subtitle": "Tailor Management System",
+        "CustomerCountName": "Customers"
+    },
+    "QuickActions": {
+        "Title": "Quick Actions",
+        "NewCustomer": "New Customer",
+        "CustomerList": "Customer List",
+        "Settings": "Settings"
+    },
+    "Footer": {
+        "DataSecured": "Data is secure and cloud-backed",
+        "AppVersion": "Smart Tailoring Dashboard v2.0",
+        "DesignedBy": "Designed & Developed By",
+        "Copyright": "© 2026 Tailor Management System. All rights reserved."
+    },
+    "MenuItems": {
+        "Language": "Language",
+        "InstallApp": "Install App",
+        "Logout": "Logout"
+    },
+    "LanguageModal": {
+        "selectLanguage": "Select Language",
+        "chooseLanguage": "Choose your preferred language",
+        "english": "English",
+        "englishSub": "English",
+        "gujarati": "ગુજરાતી",
+        "gujaratiSub": "Gujarati",
+        "cancel": "Cancel"
+    },
+    "NewCustomer": {
+        "AddNewCustomerPageHeader": "New Customer",
+        "UpdateCustomerPageHeader": "Update Customer ",
+        "AddNewCustomerTitle": "Customer Details ",
+        "UpdateCustomerTitle": "Update Customer Details ",
+        "AddNewCustomerSubTitle": "Fill in the customer details and use the measurement boxes as needed",
+        "UpdateCustomerSubTitle": "Update the customer details and measurements as needed",
+        "CustomerName": "Customer Name",
+        "CustomerNamePlaceholder": "Ex. Keval Makvana",
+        "MobileNumber": "Mobile Number",
+        "MobileNumberPlaceholder": "Ex. 9876543210",
+        "City": "City",
+        "CityPlaceholder": "Ex. Ahmedabad",
+        "CustomerGender": "Gender",
+        "Male": "Male",
+        "Female": "Female",
+        "MeasurementsDetails": "Measurements Details",
+        "OtherDetailsAndNotes": "Other Details and Notes",
+        "OtherMeasurementsPlaceholder": "Ex. Any additional notes or other measurements",
+        "TotalAmount": "Total Amount",
+        "TotalAmountPlaceholder": "Ex. 1500",
+        "PaymentDetails": "Payment Details",
+        "AdvanceAmount": "Advance Amount",
+        "AdvanceAmountPlaceholder": "Ex. 500",
+        "PendingAmount": "Pending Amount",
+        "SaveButtonText": "Save",
+        "SaveButtonTextLoading": "Saving...",
+        "UpdateButtonText": "Update",
+        "UpdateButtonTextLoading": "Updating..."
+    },
+    "CustomerListDashboard": {
+        "PageHeader": "Customer List",
+        "SearchPlaceholder": "Search by name, mobile number, or city",
+        "NewestCustomers": "Newest",
+        "OldestCustomers": "Oldest",
+        "AtoZCustomers": "A to Z",
+        "PendingPayments": "Pending Payments",
+        "TotalCustomers": "Total Customers",
+        "TotalPendingPayments": "Total Pending",
+        "Results": "Results",
+        "LoadingCustomers": "Loading customers...",
+        "NoCustomersFound": "No customers found"
+    },
+    "CustomerGridDetails": {
+        "Total": "Total",
+        "Advance": "Advance",
+        "Pending": "Pending",
+        "DoCall": "Call",
+        "SeeMeasurements": "Measurements",
+        "PaymentComplete": "Payment Complete"
+    },
+    "Settings": {
+        "PageHeader": "Settings",
+        "SaveButtonText": "Save",
+        "SaveButtonLoading": "Submitting...",
+        "Loading": "Loading settings...",
+        "GeneralSettings": {
+            "GeneralSettingsTitle": "General Settings",
+            "GeneralSettingsSubTitle": "Manage your general settings",
+            "SiteTitleLabel": "Site Title",
+            "SiteTitlePlaceholder": "Ex. Tailor Management System",
+            "SiteSubTitleLabel": "Subtitle",
+            "SiteSubTitlePlaceholder": "Ex. Smart Tailoring Dashboard",
+            "OwnerNameLabel": "Owner Name",
+            "OwnerNamePlaceholder": "Ex. Keval Makvana",
+            "MobileNumberLabel": "Mobile Number",
+            "MobileNumberPlaceholder": "Ex. 9876543210",
+            "EmailLabel": "Email",
+            "EmailPlaceholder": "Ex. abc@example.com",
+            "CityLabel": "City",
+            "CityPlaceholder": "Ex. Ahmedabad",
+            "AddressLabel": "Address",
+            "AddressPlaceholder": "Ex. 123 Main Street, Ahmedabad",
+            "Male": "Male",
+            "Female": "Female"
+        },
+        "MeasurementsSettings": {
+            "MeasurementsSettingsTitle": "Measurements Settings",
+            "MeasurementsSettingsSubTitle": "Manage measurement options for male and female categories",
+            "GenderCategoryLabel": "Select Category (Gender Category)",
+            "MaleProductsLabel": "Male Products",
+            "FemaleProductsLabel": "Female Products",
+            "AddNewProductPlaceholder": "Add new product key (e.g. Kurta, Suit, Lehenga)",
+            "Add": "Add",
+            "MaleKeys": "Male Keys",
+            "FemaleKeys": "Female Keys",
+            "NoProducts": "Not Add any product keys"
+        }
+    },
+    "DeleteModalDetails": {
+        "DeleteMessage": "Are you sure you want to delete?",
+        "DeleteMessageSbTitle": "This action cannot be undone.",
+        "CancelMessage": "Cancel",
+        "OkMessage": "Delete"
+    },
+    "SettingWarningBackModal": {
+        "BackMessage": "Unsaved Changes",
+        "BackMessageSbTitle": "You have unsaved changes. Are you sure you want to go back?",
+        "CancelMessage": "Cancel",
+        "OkMessage": "Discard"
+    }
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { OTHER_KEY } from ".";
 
 type MeasurementMap = Record<string, unknown> | null | undefined
@@ -39,10 +40,3 @@ export const parseKeys = (value: unknown): string[] => {
 
 export const sanitizeAmount = (value: string) =>
     value.replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
-
-export const currentDate = new Date().toLocaleDateString('gu-IN', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-})

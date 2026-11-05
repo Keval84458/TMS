@@ -1,5 +1,6 @@
 
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     FaCalendarAlt,
     FaRupeeSign,
@@ -29,6 +30,8 @@ const AllSearchFilters = ({
     onlyPending,
     setOnlyPending,
 }: AllSearchFiltersProps) => {
+    const { t } = useTranslation()
+
     const totalPending = useMemo(
         () =>
             filteredCustomers.reduce(
@@ -55,7 +58,7 @@ const AllSearchFilters = ({
                         className={sortBtnClass(sortType === 'newest')}
                     >
                         <FaCalendarAlt size={11} />
-                        નવા ગ્રાહકો
+                        {t('CustomerListDashboard.NewestCustomers', 'New Customers')}
                     </button>
 
                     <button
@@ -64,7 +67,7 @@ const AllSearchFilters = ({
                         className={sortBtnClass(sortType === 'oldest')}
                     >
                         <FaCalendarAlt size={11} />
-                        જૂના ગ્રાહકો
+                        {t('CustomerListDashboard.OldestCustomers', 'Old Customers')}
                     </button>
 
                     <button
@@ -73,7 +76,7 @@ const AllSearchFilters = ({
                         className={sortBtnClass(sortType === 'az')}
                     >
                         <FaSortAlphaDown size={12} />
-                        નામ (A-Z)
+                        {t('CustomerListDashboard.AtoZCustomers', 'A to Z')}
                     </button>
 
                     <span className="w-px h-5 bg-gray-200 mx-0.5" />
@@ -87,18 +90,18 @@ const AllSearchFilters = ({
                             }`}
                     >
                         <FaRupeeSign size={11} />
-                        બાકી ચુકવણી ({pendingCustomersCount})
+                        {t('CustomerListDashboard.PendingPayments', 'Pending Payments')} ({pendingCustomersCount})
                     </button>
                 </div>
             </div>
 
             <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-gray-500 font-medium px-1 pt-1 border-t border-gray-50">
-                <span>કુલ ગ્રાહકો: {filteredCustomers.length}</span>
+                <span>{t('CustomerListDashboard.TotalCustomers', 'Total Customers')}: {filteredCustomers.length}</span>
 
                 <span className="flex items-center gap-3">
                     {searchQuery && (
                         <span className="text-purple-600 font-semibold">
-                            પરિણામો: {filteredCustomers.length}
+                            {t('CustomerListDashboard.Results', 'Results')}: {filteredCustomers.length}
                         </span>
                     )}
 
@@ -108,7 +111,7 @@ const AllSearchFilters = ({
                             : 'text-green-600'
                             }`}
                     >
-                        કુલ બાકી: {formatRupee(totalPending)}
+                        {t('CustomerListDashboard.TotalPendingPayments', 'Total Pending Payments')}: {formatRupee(totalPending)}
                     </span>
                 </span>
             </div>

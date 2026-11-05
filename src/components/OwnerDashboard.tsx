@@ -2,10 +2,12 @@ import { useGlobalSiteSettings } from "#/utils/site_settings"
 import { FaPhoneAlt, FaUsers } from "react-icons/fa"
 import { MdOutlineRefresh } from "react-icons/md"
 import { useCustomers } from "#/utils/useCustomers"
+import { useTranslation } from "react-i18next"
 
 const OwnerDashboard = () => {
     const { siteSettings } = useGlobalSiteSettings()
     const { customers, isLoading, refetch } = useCustomers()
+    const { t } = useTranslation()
 
     return (
         <div className="relative overflow-hidden rounded-2xl bg-slate-900 border-t-4 border-t-purple-500 border-x border-b border-slate-800 p-6 shadow-xl">
@@ -22,7 +24,7 @@ const OwnerDashboard = () => {
                             {siteSettings?.owner_name || 'Owner'}
                         </h2>
                         <p className="text-xs text-purple-400 font-medium">
-                            Tailoring Management System
+                            {t('OwnerDashboard.Subtitle', "Tailor Management System")}
                         </p>
                     </div>
                 </div>
@@ -37,7 +39,7 @@ const OwnerDashboard = () => {
 
                     <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-purple-950/60 border border-purple-800/50 text-xs font-bold text-purple-200">
                         <FaUsers size={12} className="text-purple-400" />
-                        <span>{isLoading ? "..." : customers.length.toLocaleString('en-IN')} Customers</span>
+                        <span>{isLoading ? "..." : customers.length.toLocaleString('en-IN')} {t('OwnerDashboard.CustomerCountName', "Customers")}</span>
                     </div>
 
                     <button

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaExclamationTriangle } from 'react-icons/fa'
 
 export interface ConfirmModalProps {
@@ -45,8 +46,9 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
     variant = 'D',
     isLoading = false,
 }) => {
-    if (!isOpen) return null
+    const { t } = useTranslation()
 
+    if (!isOpen) return null
     const styles = variantStyles[variant] || variantStyles.D
 
     return (
@@ -57,7 +59,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 </div>
                 <div>
                     <h3 className="text-base font-bold text-gray-900">{title}</h3>
-                    {message && <p className="mt-1 text-xs text-gray-500">{message}</p>}
+                    {/* {message && <p className="mt-1 text-xs text-gray-500">{message}</p>} */}
                 </div>
                 <div className="flex gap-3 pt-2">
                     <button

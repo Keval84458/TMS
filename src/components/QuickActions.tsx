@@ -1,5 +1,6 @@
 import { PAGE_PATH_KEYS } from "#/utils/constant"
 import { Link } from "@tanstack/react-router"
+import { useTranslation } from "react-i18next"
 import { FaClipboardList } from "react-icons/fa"
 import { GrServices } from "react-icons/gr"
 import { HiMiniUserGroup } from "react-icons/hi2"
@@ -16,11 +17,11 @@ interface GridMenuItem {
 }
 
 const QuickActions = () => {
+    const { t } = useTranslation()
 
     const gridItems: GridMenuItem[] = [
         {
-            title: 'નવા ગ્રાહક',
-            subtitle: 'Add New Customer',
+            title: t('QuickActions.NewCustomer', "New Customer"),
             img: 'cutomer.png',
             icon: <HiMiniUserGroup size={26} className="text-white" />,
             link: PAGE_PATH_KEYS.CUSTOMER,
@@ -28,8 +29,7 @@ const QuickActions = () => {
             badge: 'શરૂ કરો'
         },
         {
-            title: 'ગ્રાહકોની યાદી',
-            subtitle: 'List & Records',
+            title: t('QuickActions.CustomerList', "Customer List"),
             img: 'list.png',
             icon: <FaClipboardList size={26} className="text-white" />,
             link: PAGE_PATH_KEYS.LIST,
@@ -37,8 +37,7 @@ const QuickActions = () => {
             badge: 'બધા જુઓ'
         },
         {
-            title: 'સેટિંગ્સ',
-            subtitle: 'Settings',
+            title: t('QuickActions.Settings', "Settings"),
             icon: <IoSettings size={26} className="text-white" />,
             link: PAGE_PATH_KEYS.SETTINGS,
             gradient: 'from-slate-700 to-slate-900',
@@ -50,7 +49,7 @@ const QuickActions = () => {
             <div className="flex items-center justify-between mb-4 px-1">
                 <h2 className="text-xs font-bold text-purple-900 uppercase tracking-wider flex items-center gap-2">
                     <span className="animate-spin text-sm"><GrServices /></span>
-                    ઝડપી સેવાઓ (Quick Actions)
+                    {t('QuickActions.Title', "Quick Actions")}
                 </h2>
             </div>
 

@@ -1,6 +1,7 @@
 import { OTHER_KEY, ThemeTextarea } from '#/utils'
 import { parseKeys } from '#/utils/reusableFunctions'
 import { useGlobalSiteSettings } from '#/utils/site_settings'
+import { useTranslation } from 'react-i18next'
 import { FaChevronDown, FaRulerCombined, FaStickyNote } from 'react-icons/fa'
 
 const MeasurementsDetails = ({
@@ -11,6 +12,7 @@ const MeasurementsDetails = ({
     onMeasurementChange,
 }: any) => {
     const { siteSettings } = useGlobalSiteSettings()
+    const { t } = useTranslation()
 
     const keys = parseKeys(
         formData.gender === 'female'
@@ -25,7 +27,7 @@ const MeasurementsDetails = ({
                 className="w-full flex items-center justify-between text-left focus:outline-none group py-1"
             >
                 <h3 className="text-xs font-bold text-gray-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <FaRulerCombined className="text-purple-600" /> માપની વિગતો (Measurements)
+                    <FaRulerCombined className="text-purple-600" /> {t('NewCustomer.MeasurementsDetails', 'Measurements Details')}
                 </h3>
                 <FaChevronDown
                     className={`text-purple-600 transition-transform duration-300 ${isMeasurementOpen ? 'rotate-180' : ''
@@ -49,7 +51,7 @@ const MeasurementsDetails = ({
                                         <FaRulerCombined className="text-purple-600" /> {key}
                                     </label>
                                     <ThemeTextarea
-                                        placeholder={`${key} નું માપ લખો...`}
+                                        placeholder="Ex: 12 | 15 | 18"
                                         className="w-full h-[90px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
                                         value={measurements?.[key] ?? ''}
                                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -63,10 +65,10 @@ const MeasurementsDetails = ({
 
                     <div>
                         <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
-                            <FaStickyNote className="text-purple-600" /> અન્ય માપ અથવા નોંધ (Other / Notes)
+                            <FaStickyNote className="text-purple-600" /> {t('NewCustomer.OtherMeasurements', 'Other Measurements / Notes')}
                         </label>
                         <ThemeTextarea
-                            placeholder="કોઈપણ વધારાની નોંધ અથવા અન્ય કપડાંનું માપ અહીં લખો..."
+                            placeholder={t('NewCustomer.OtherMeasurementsPlaceholder', 'અન્ય માપ / નોંધો અહીં લખો...')}
                             className="w-full h-[80px] p-3 border-gray-200 focus:border-purple-600 rounded-xl text-sm resize-none"
                             value={measurements?.[OTHER_KEY] ?? ''}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
