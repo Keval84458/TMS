@@ -163,6 +163,6 @@
         "INVALID_CREDENTIALS": "Invalid email or password.",
         "LOGIN_SUCCESSFULLY": "Logged in successfully!",
         "SAVE_SETTINGS_DETAILS_SUCCESSFULLY": "Settings saved successfully.",
-        "INSTALL_PROPMT_NOT_AVAILABLE": "The browser install prompt is not available.",
+        "INSTALL_PROPMT_NOT_AVAILABLE": "The browser install prompt is not available."
     }
 }

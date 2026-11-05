@@ -162,6 +162,6 @@
         "INVALID_CREDENTIALS": "અમાન્ય ઇમેઇલ અથવા પાસવર્ડ.",
         "LOGIN_SUCCESSFULLY": "સફળતાપૂર્વક લોગિન થયું!",
         "SAVE_SETTINGS_DETAILS_SUCCESSFULLY": "સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ ગઈ છે.",
-        "INSTALL_PROPMT_NOT_AVAILABLE": "બ્રાઉઝર ઇન્સ્ટોલ પ્રોમ્પ્ટ ઉપલબ્ધ નથી.",
+        "INSTALL_PROPMT_NOT_AVAILABLE": "બ્રાઉઝર ઇન્સ્ટોલ પ્રોમ્પ્ટ ઉપલબ્ધ નથી."
     }
 }
