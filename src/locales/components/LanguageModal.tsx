@@ -8,6 +8,7 @@ interface LanguageModalProps {
 
 const LanguageModal = ({ isOpen, onClose }: LanguageModalProps) => {
     const { t, i18n } = useTranslation()
+    const savedLanguage = localStorage.getItem('i18nextLng')
 
     if (!isOpen) return null
 
@@ -27,24 +28,19 @@ const LanguageModal = ({ isOpen, onClose }: LanguageModalProps) => {
                     <h3 className="text-base font-bold text-gray-900">
                         {t('LanguageModal.selectLanguage', 'Select Language')}
                     </h3>
-                    <p className="mt-1 text-xs text-gray-500">
-                        {t('LanguageModal.chooseLanguage', 'Choose your preferred language')}
-                    </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 pt-1">
                     <button
                         type="button"
                         onClick={() => changeLanguage('en')}
-                        className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border transition-all ${i18n.language === 'en'
+                        className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border transition-all ${i18n.language === 'en' || savedLanguage === "en-US"
                             ? 'bg-purple-600 border-purple-600 text-white shadow-md shadow-purple-200'
                             : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300'
                             }`}
                     >
                         <span className="text-xs font-bold">{t('LanguageModal.english', 'English')}</span>
-                        <span className={`text-[10px] mt-0.5 ${i18n.language === 'en' ? 'text-purple-100' : 'text-gray-400'}`}>
-                            {t('LanguageModal.englishSub', 'English')}
-                        </span>
+
                     </button>
 
                     <button
@@ -56,9 +52,6 @@ const LanguageModal = ({ isOpen, onClose }: LanguageModalProps) => {
                             }`}
                     >
                         <span className="text-xs font-bold">{t('LanguageModal.gujarati', 'ગુજરાતી')}</span>
-                        <span className={`text-[10px] mt-0.5 ${i18n.language === 'gu' ? 'text-purple-100' : 'text-gray-400'}`}>
-                            {t('LanguageModal.gujaratiSub', 'Gujarati')}
-                        </span>
                     </button>
                 </div>
 
@@ -72,7 +65,7 @@ const LanguageModal = ({ isOpen, onClose }: LanguageModalProps) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

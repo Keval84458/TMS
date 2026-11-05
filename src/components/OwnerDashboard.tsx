@@ -29,7 +29,7 @@ const OwnerDashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between gap-3">
                     {siteSettings?.owner_phone && (
                         <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/60 text-xs text-slate-300">
                             <FaPhoneAlt size={10} className="text-purple-400" />
@@ -37,17 +37,21 @@ const OwnerDashboard = () => {
                         </div>
                     )}
 
-                    <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-purple-950/60 border border-purple-800/50 text-xs font-bold text-purple-200">
-                        <FaUsers size={12} className="text-purple-400" />
-                        <span>{isLoading ? "..." : customers.length.toLocaleString('en-IN')} {t('OwnerDashboard.CustomerCountName', "Customers")}</span>
+                    <div className="flex gap-2">
+                        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-purple-950/60 border border-purple-800/50 text-xs font-bold text-purple-200">
+                            <FaUsers size={12} className="text-purple-400" />
+                            <span>{isLoading ? "..." : customers.length.toLocaleString('en-IN')} {t('OwnerDashboard.CustomerCountName', "Customers")}</span>
+                        </div>
+
+                        <button
+                            onClick={refetch}
+                            className="p-1.5 rounded-lg bg-slate-800 hover:bg-purple-600 text-slate-400 hover:text-white transition-colors"
+                        >
+                            <MdOutlineRefresh size={18} className={isLoading ? "animate-spin" : ""} />
+                        </button>
                     </div>
 
-                    <button
-                        onClick={refetch}
-                        className="p-1.5 rounded-lg bg-slate-800 hover:bg-purple-600 text-slate-400 hover:text-white transition-colors"
-                    >
-                        <MdOutlineRefresh size={18} className={isLoading ? "animate-spin" : ""} />
-                    </button>
+
                 </div>
             </div>
         </div>

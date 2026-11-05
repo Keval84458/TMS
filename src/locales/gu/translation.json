@@ -1,4 +1,14 @@
 {
+    "Login": {
+        "LoginTitle": "લૉગ ઇન",
+        "SubTitle": "લૉગ ઇન કરવા માટે તમારો ઇમેઇલ અને પાસવર્ડ દાખલ કરો",
+        "EmailLabelName": "ઇમેઇલ",
+        "EmailPlaceholder": "તમારો ઇમેઇલ દાખલ કરો",
+        "PasswordLabelName": "પાસવર્ડ",
+        "PasswordLabelPlaceholder": "તમારો પાસવર્ડ દાખલ કરો",
+        "ButtonMessage": "લૉગ ઇન કરો",
+        "ButtonLoadingMessage": "લૉગ ઇન થઈ રહ્યું છે..."
+    },
     "OwnerDashboard": {
         "Subtitle": "ટેલર મેનેજમેન્ટ સિસ્ટમ",
         "CustomerCountName": "ગ્રાહકો"
@@ -22,11 +32,8 @@
     },
     "LanguageModal": {
         "selectLanguage": "ભાષા પસંદ કરો",
-        "chooseLanguage": "તમારી પસંદગીની ભાષા પસંદ કરો",
         "english": "English",
-        "englishSub": "English",
         "gujarati": "ગુજરાતી",
-        "gujaratiSub": "Gujarati",
         "cancel": "રદ કરો"
     },
     "NewCustomer": {
@@ -128,5 +135,33 @@
         "BackMessageSbTitle": "તમારા ફેરફારો સાચવ્યા નથી. શું તમે ખરેખર પાછા જવા માંગો છો?",
         "CancelMessage": "રદ કરો",
         "OkMessage": "કાઢી નાખો"
+    },
+    "SITE_MESSAGES_GU": {
+        "CUSTOMER_NAME": "કૃપા કરીને ગ્રાહકનું નામ ભરો.",
+        "PHONE": "કૃપા કરીને ફોન નંબર ભરો.",
+        "CITY": "કૃપા કરીને ગામનું નામ ભરો.",
+        "INVALID_AMOUNT": "રકમ 0 અથવા તેનાથી વધુ હોવી જોઈએ.",
+        "ADVANCE_TOO_HIGH": "અગાઉથી ચુકવણી કુલ રકમ કરતાં વધારે ન હોઈ શકે.",
+        "OWNER_NAME": "કૃપા કરીને માલિકનું નામ ભરો.",
+        "SITE_NAME": "કૃપા કરીને સાઈટનું નામ ભરો.",
+        "UNKNOWN_MISTAKE": "અણધારી ભૂલ આવી.",
+        "DO_NOT_LOAD_SETTING_MISTAKE": "સેટિંગ્સ લોડ કરવામાં ભૂલ થઈ.",
+        "RECORD_NOT_FOUND_FOR_CUSTOMER": "ગ્રાહકની માહિતી મળી શકી નથી.",
+        "CUSTOMER_DETAILS_UPDATE_SUCCESSFUL": "ગ્રાહકની વિગતો સફળતાપૂર્વક અપડેટ થઈ ગઈ છે.",
+        "CUSTOMER_DETAILS_SAVE_SUCCESSFUL": "ગ્રાહકની વિગતો સફળતાપૂર્વક સેવ થઈ ગઈ છે.",
+        "TRY_AGAIN": "કંઈક ખોટું થયું. ફરીથી પ્રયાસ કરો.",
+        "DO_NOT_REVERCE_ACTION": "આ ક્રિયા પાછી ખેંચી શકાતી નથી!",
+        "LOGIN_TO_VIEW_CUSTOMER": "ગ્રાહકો જોવા માટે કૃપા કરીને લોગિન કરો.",
+        "LOGIN_AGAIN": "અમાન્ય લોગિન સત્ર. કૃપા કરીને ફરીથી લોગિન કરો.",
+        "USER_ID_NOT_FOUND": "યુઝર આઈડી મળ્યો નથી. કૃપા કરીને ફરીથી લોગિન કરો.",
+        "UNEXPECTED_ERROR_FETCHING_CUSTOMER": "ગ્રાહકો મેળવતી વખતે અનપેક્ષિત ભૂલ:",
+        "ERROR_FETCHING_CUSTOMER": "ગ્રાહકો મેળવતી વખતે ભૂલ:",
+        "CUSTOMER_REMOVE_DETAILS_SUCCESS": "ગ્રાહકની માહિતી સફળતાપૂર્વક દૂર કરવામાં આવી છે.",
+        "FILL_EMAIL": "કૃપા કરીને ઇમેઇલ ભરો.",
+        "FILL_PASSWORD": "કૃપા કરીને પાસવર્ડ ભરો.",
+        "INVALID_CREDENTIALS": "અમાન્ય ઇમેઇલ અથવા પાસવર્ડ.",
+        "LOGIN_SUCCESSFULLY": "સફળતાપૂર્વક લોગિન થયું!",
+        "SAVE_SETTINGS_DETAILS_SUCCESSFULLY": "સેટિંગ્સ સફળતાપૂર્વક સેવ થઈ ગઈ છે.",
+        "INSTALL_PROPMT_NOT_AVAILABLE": "બ્રાઉઝર ઇન્સ્ટોલ પ્રોમ્પ્ટ ઉપલબ્ધ નથી.",
     }
 }

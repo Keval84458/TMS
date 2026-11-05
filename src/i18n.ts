@@ -13,13 +13,13 @@ i18n
             en: { translation: enTranslation },
             gu: { translation: guTranslation },
         },
-        fallbackLng: 'en', // Default language if browser language isn't available
+        fallbackLng: 'en',
         interpolation: {
-            escapeValue: false, // React already escapes values to prevent XSS
+            escapeValue: false,
         },
         detection: {
             order: ['localStorage', 'navigator'],
-            caches: ['localStorage'], // Caches selected language in localStorage
+            caches: ['localStorage'],
         },
     })
 

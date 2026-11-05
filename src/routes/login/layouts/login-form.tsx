@@ -1,4 +1,5 @@
 import { ThemeInput } from "#/utils"
+import { useTranslation } from "react-i18next"
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaSignInAlt, FaSpinner } from "react-icons/fa"
 
 interface LoginFormProps {
@@ -21,16 +22,17 @@ const LoginForm = ({
     HandleSubmit,
     isLoading,
 }: LoginFormProps) => {
+    const { t } = useTranslation()
     return (
         <div className="space-y-5">
             <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
                     <FaEnvelope className="text-purple-600" />
-                    ઇમેઇલ (Email) <span className='text-error'>*</span>
+                    {t('Login.EmailLabelName')} <span className='text-error'>*</span>
                 </label>
                 <ThemeInput
                     type="email"
-                    placeholder="દા.ત. Keval@gmail.com"
+                    placeholder={t('Login.EmailPlaceholder')}
                     className="w-full h-[48px] px-4 bg-slate-50 border-gray-200 focus:bg-white focus:border-purple-600 focus:ring-4 focus:ring-purple-100 rounded-xl transition-all text-sm"
                     value={formData.email}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -42,12 +44,12 @@ const LoginForm = ({
             <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
                     <FaLock className="text-purple-600" />
-                    પાસવર્ડ (Password) <span className='text-error'>*</span>
+                    {t('Login.PasswordLabelName')} <span className='text-error'>*</span>
                 </label>
                 <div className="relative">
                     <ThemeInput
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="તમારો પાસવર્ડ દાખલ કરો"
+                        placeholder={t('Login.PasswordLabelPlaceholder')}
                         className="w-full h-[48px] pl-4 pr-11 bg-slate-50 border-gray-200 focus:bg-white focus:border-purple-600 focus:ring-4 focus:ring-purple-100 rounded-xl transition-all text-sm"
                         value={formData.password}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -74,12 +76,12 @@ const LoginForm = ({
                     {isLoading ? (
                         <>
                             <FaSpinner className="animate-spin text-lg" />
-                            <span>ચકાસણી થઈ રહી છે...</span>
+                            <span>{t('Login.ButtonLoadingMessage')}</span>
                         </>
                     ) : (
                         <>
                             <FaSignInAlt className="text-base" />
-                            <span>પ્રવેશ કરો (Login)</span>
+                            <span>{t('Login.ButtonMessage')}</span>
                         </>
                     )}
                 </button>
