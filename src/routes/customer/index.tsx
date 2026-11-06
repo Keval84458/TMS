@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
-import { SITE_MESSAGES, PAGE_PATH_KEYS, API_KEY } from '#/utils/constant'
+import { PAGE_PATH_KEYS, API_KEY } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
 import { useAuth } from '#/utils/auth'
 import MeasurementsDetails from './layouts/MeasurementsDetails'
@@ -87,7 +87,7 @@ function RouteComponent() {
                     setToastState({
                         show: true,
                         type: 'E',
-                        msg: SITE_MESSAGES.RECORD_NOT_FOUND_FOR_CUSTOMER,
+                        msg: t('SiteMessageWithLanguages.RECORD_NOT_FOUND_FOR_CUSTOMER'),
                     })
                 } else if (data) {
                     setFormData({
@@ -111,7 +111,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.UNKNOWN_MISTAKE,
+                    msg: t('SiteMessageWithLanguages.UNKNOWN_MISTAKE'),
                 })
             } finally {
                 setIsFetching(false)
@@ -141,35 +141,35 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.CUSTOMER_NAME,
+                msg: t('SiteMessageWithLanguages.CUSTOMER_NAME')
             })
             return
         } else if (!formData.phone.trim()) {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.PHONE,
+                msg: t('SiteMessageWithLanguages.PHONE')
             })
             return
         } else if (!formData.city.trim()) {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.CITY,
+                msg: t('SiteMessageWithLanguages.CITY')
             })
             return
         } else if (totalNum < 0 || advanceNum < 0) {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.INVALID_AMOUNT
+                msg: t('SiteMessageWithLanguages.INVALID_AMOUNT')
             })
             return
         } else if (advanceTooHigh) {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.ADVANCE_TOO_HIGH,
+                msg: t('SiteMessageWithLanguages.ADVANCE_TOO_HIGH')
             })
             return
         }
@@ -214,7 +214,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'S',
-                    msg: SITE_MESSAGES.CUSTOMER_DETAILS_UPDATE_SUCCESSFUL,
+                    msg: t('SiteMessageWithLanguages.CUSTOMER_DETAILS_UPDATE_SUCCESSFUL')
                 })
             } else {
                 const { error } = await supabase
@@ -233,7 +233,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'S',
-                    msg: SITE_MESSAGES.CUSTOMER_DETAILS_SAVE_SUCCESSFUL,
+                    msg: t('SiteMessageWithLanguages.CUSTOMER_DETAILS_SAVE_SUCCESSFUL')
                 })
             }
             navigate({ to: PAGE_PATH_KEYS.LIST || '/customer-list' })
@@ -242,7 +242,7 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'E',
-                msg: SITE_MESSAGES.TRY_AGAIN,
+                msg: t('SiteMessageWithLanguages.TRY_AGAIN')
             })
         } finally {
             setIsLoading(false)

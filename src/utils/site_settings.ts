@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "./auth";
-import { SITE_MESSAGES } from "./constant";
 import { useGlobalToast } from "#/components/CustomeToast";
+import { useTranslation } from "react-i18next";
 
 const LS_PREFIX = "site_settings_v1:";
 
@@ -65,6 +65,7 @@ export const useGlobalSiteSettings = () => {
     const userId: string | undefined = auth.authData?.id;
     const key = userId ?? "default";
     const [, setToastState] = useGlobalToast()
+    const { t } = useTranslation()
 
     const [siteSettings, setSiteSettings] = useState<any>(() => getCached(key));
     const [isFetching, setIsFetching] = useState(() => getCached(key) === null);
@@ -77,7 +78,7 @@ export const useGlobalSiteSettings = () => {
             setToastState({
                 show: true,
                 type: 'E',
-                msg: SITE_MESSAGES.DO_NOT_LOAD_SETTING_MISTAKE,
+                msg: t('SiteMessageWithLanguages.DO_NOT_LOAD_SETTING_MISTAKE')
             })
         } finally {
             setIsFetching(false);

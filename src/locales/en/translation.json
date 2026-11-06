@@ -33,7 +33,8 @@
     "LanguageModal": {
         "selectLanguage": "Select Language",
         "english": "English",
-        "gujarati": "ગુજરાતી",
+        "gujarati": "Gujrati",
+        "hindi": "Hindi",
         "cancel": "Cancel"
     },
     "NewCustomer": {
@@ -137,7 +138,7 @@
         "CancelMessage": "Cancel",
         "OkMessage": "Discard"
     },
-    "SITE_MESSAGES_EN": {
+    "SiteMessageWithLanguages": {
         "CUSTOMER_NAME": "Please enter the customer name.",
         "PHONE": "Please enter the phone number.",
         "CITY": "Please enter the city name.",
