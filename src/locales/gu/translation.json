@@ -32,8 +32,9 @@
     },
     "LanguageModal": {
         "selectLanguage": "ભાષા પસંદ કરો",
-        "english": "English",
+        "english": "અંગ્રેજી",
         "gujarati": "ગુજરાતી",
+        "hindi": "હિન્દી",
         "cancel": "રદ કરો"
     },
     "NewCustomer": {
@@ -136,7 +137,7 @@
         "CancelMessage": "રદ કરો",
         "OkMessage": "કાઢી નાખો"
     },
-    "SITE_MESSAGES_GU": {
+    "SiteMessageWithLanguages": {
         "CUSTOMER_NAME": "કૃપા કરીને ગ્રાહકનું નામ ભરો.",
         "PHONE": "કૃપા કરીને ફોન નંબર ભરો.",
         "CITY": "કૃપા કરીને ગામનું નામ ભરો.",

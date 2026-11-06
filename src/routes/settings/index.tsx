@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { supabase } from '#/lib/supabaseClient'
 
-import { SITE_MESSAGES, PAGE_PATH_KEYS, defaultSiteData, API_KEY } from '#/utils/constant'
+import { PAGE_PATH_KEYS, defaultSiteData, API_KEY } from '#/utils/constant'
 import { FaSave, FaSpinner } from 'react-icons/fa'
 import { useAuth } from '#/utils/auth'
 import { refetchSiteSettings, useGlobalSiteSettings } from '#/utils/site_settings'
@@ -93,7 +93,7 @@ function RouteComponent() {
                     setToastState({
                         show: true,
                         type: 'E',
-                        msg: SITE_MESSAGES.DO_NOT_LOAD_SETTING_MISTAKE,
+                        msg: t('SiteMessageWithLanguages.DO_NOT_LOAD_SETTING_MISTAKE')
                     })
                 } else if (data) {
                     setExistingSettingId(data.id)
@@ -124,7 +124,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.UNKNOWN_MISTAKE,
+                    msg: t('SiteMessageWithLanguages.UNKNOWN_MISTAKE')
                 })
             } finally {
                 setIsFetching(false)
@@ -200,21 +200,21 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.SITE_NAME,
+                msg: t('SiteMessageWithLanguages.SITE_NAME')
             })
             return
         } else if (!formData.owner_name.trim()) {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.OWNER_NAME,
+                msg: t('SiteMessageWithLanguages.OWNER_NAME')
             })
             return
         } else if (!formData.owner_phone.trim()) {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.PHONE,
+                msg: t('SiteMessageWithLanguages.PHONE')
             })
             return
         }
@@ -276,7 +276,7 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'S',
-                msg: SITE_MESSAGES.SAVE_SETTINGS_DETAILS_SUCCESSFULLY,
+                msg: t('SiteMessageWithLanguages.SAVE_SETTINGS_DETAILS_SUCCESSFULLY')
             })
             navigate({ to: PAGE_PATH_KEYS.HOME })
 
@@ -284,7 +284,7 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'E',
-                msg: SITE_MESSAGES.TRY_AGAIN,
+                msg: t('SiteMessageWithLanguages.TRY_AGAIN')
             })
         } finally {
             setIsLoading(false)

@@ -30,7 +30,7 @@ const LanguageModal = ({ isOpen, onClose }: LanguageModalProps) => {
                     </h3>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 pt-1">
+                <div className="grid grid-cols-3 gap-3 pt-1">
                     <button
                         type="button"
                         onClick={() => changeLanguage('en')}
@@ -52,6 +52,16 @@ const LanguageModal = ({ isOpen, onClose }: LanguageModalProps) => {
                             }`}
                     >
                         <span className="text-xs font-bold">{t('LanguageModal.gujarati', 'ગુજરાતી')}</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => changeLanguage('hi')}
+                        className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border transition-all ${i18n.language === 'hi'
+                            ? 'bg-purple-600 border-purple-600 text-white shadow-md shadow-purple-200'
+                            : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300'
+                            }`}
+                    >
+                        <span className="text-xs font-bold">{t('LanguageModal.hindi', 'हिन्दी')}</span>
                     </button>
                 </div>
 

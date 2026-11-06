@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import PageHeader from '#/components/PageHeader'
 import { ThemeInput } from '#/utils'
-import { SITE_MESSAGES, PAGE_PATH_KEYS, API_KEY } from '#/utils/constant'
+import { PAGE_PATH_KEYS, API_KEY } from '#/utils/constant'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { FaUserPlus } from 'react-icons/fa'
 import { supabase } from '#/lib/supabaseClient'
@@ -70,7 +70,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.LOGIN_TO_VIEW_CUSTOMER,
+                    msg: t('SiteMessageWithLanguages.LOGIN_TO_VIEW_CUSTOMER')
                 })
                 return
             }
@@ -82,7 +82,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.USER_ID_NOT_FOUND,
+                    msg: t('SiteMessageWithLanguages.USER_ID_NOT_FOUND')
                 })
                 return
             }
@@ -115,7 +115,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.ERROR_FETCHING_CUSTOMER,
+                    msg: t('SiteMessageWithLanguages.ERROR_FETCHING_CUSTOMER')
                 })
                 return
             }
@@ -126,7 +126,7 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'E',
-                msg: SITE_MESSAGES.ERROR_FETCHING_CUSTOMER,
+                msg: t('SiteMessageWithLanguages.ERROR_FETCHING_CUSTOMER')
             })
         } finally {
             setIsLoading(false)
@@ -192,7 +192,7 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'S',
-                msg: SITE_MESSAGES.CUSTOMER_REMOVE_DETAILS_SUCCESS,
+                msg: t('SiteMessageWithLanguages.CUSTOMER_REMOVE_DETAILS_SUCCESS')
             })
             setDeleteModalConfig({ isOpen: false, id: null, name: '' })
         } catch (err) {

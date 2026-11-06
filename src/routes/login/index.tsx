@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { supabase } from '#/lib/supabaseClient'
-import { SITE_MESSAGES, PAGE_PATH_KEYS } from '#/utils/constant'
+import { PAGE_PATH_KEYS } from '#/utils/constant'
 import { useNavigate } from '@tanstack/react-router'
 import { FaCut, FaRuler } from 'react-icons/fa'
 import { IoShirtSharp } from "react-icons/io5";
@@ -37,14 +37,14 @@ function RouteComponent() {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.FILL_EMAIL,
+                msg: t('SiteMessageWithLanguages.FILL_EMAIL')
             })
             return
         } else if (!formData.password.trim()) {
             setToastState({
                 show: true,
                 type: 'W',
-                msg: SITE_MESSAGES.FILL_PASSWORD,
+                msg: t('SiteMessageWithLanguages.FILL_PASSWORD')
             })
             return
         }
@@ -60,7 +60,7 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: error.message || SITE_MESSAGES.INVALID_CREDENTIALS,
+                    msg: error.message || t('SiteMessageWithLanguages.INVALID_CREDENTIALS')
                 })
                 return
             }
@@ -75,22 +75,18 @@ function RouteComponent() {
                 setToastState({
                     show: true,
                     type: 'S',
-                    msg: SITE_MESSAGES.LOGIN_SUCCESSFULLY,
+                    msg: t('SiteMessageWithLanguages.LOGIN_SUCCESSFULLY')
                 })
 
                 setFormData(initialData)
 
-                // 1. Set flag in localStorage so the Home page knows to open the modal
-                localStorage.setItem('openLanguageModal', 'true')
-
-                // 2. Navigate to Home
                 navigate({ to: PAGE_PATH_KEYS.HOME })
             }
         } catch {
             setToastState({
                 show: true,
                 type: 'E',
-                msg: SITE_MESSAGES.TRY_AGAIN,
+                msg: t('SiteMessageWithLanguages.TRY_AGAIN')
             })
         } finally {
             setIsLoading(false)

@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '#/lib/supabaseClient'
 import { useGlobalToast } from '#/components/CustomeToast'
-import { API_KEY, SITE_MESSAGES } from '#/utils/constant'
+import { API_KEY } from '#/utils/constant'
 import { useAuth } from './auth'
+import { useTranslation } from 'react-i18next'
 
 export interface Customer {
     id: string
@@ -24,6 +25,7 @@ export const useCustomers = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [, setToastState] = useGlobalToast()
     const { auth } = useAuth()
+    const { t } = useTranslation()
 
     const fetchCustomers = useCallback(async () => {
         setIsLoading(true)
@@ -34,7 +36,7 @@ export const useCustomers = () => {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.LOGIN_TO_VIEW_CUSTOMER,
+                    msg: t('SiteMessageWithLanguages.LOGIN_TO_VIEW_CUSTOMER')
                 })
                 return
             }
@@ -45,7 +47,7 @@ export const useCustomers = () => {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.USER_ID_NOT_FOUND,
+                    msg: t('SiteMessageWithLanguages.USER_ID_NOT_FOUND')
                 })
                 return
             }
@@ -62,7 +64,7 @@ export const useCustomers = () => {
                 setToastState({
                     show: true,
                     type: 'E',
-                    msg: SITE_MESSAGES.ERROR_FETCHING_CUSTOMER,
+                    msg: t('SiteMessageWithLanguages.ERROR_FETCHING_CUSTOMER')
                 })
                 return
             }
@@ -73,7 +75,7 @@ export const useCustomers = () => {
             setToastState({
                 show: true,
                 type: 'E',
-                msg: SITE_MESSAGES.ERROR_FETCHING_CUSTOMER,
+                msg: t('SiteMessageWithLanguages.ERROR_FETCHING_CUSTOMER')
             })
         } finally {
             setIsLoading(false)

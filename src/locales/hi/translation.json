@@ -1,0 +1,168 @@
+{
+    "Login": {
+        "LoginTitle": "लॉग इन",
+        "SubTitle": "लॉग इन करने के लिए अपना ईमेल और पासवर्ड दर्ज करें",
+        "EmailLabelName": "ईमेल",
+        "EmailPlaceholder": "अपना ईमेल दर्ज करें",
+        "PasswordLabelName": "पासवर्ड",
+        "PasswordLabelPlaceholder": "अपना पासवर्ड दर्ज करें",
+        "ButtonMessage": "लॉग इन करें",
+        "ButtonLoadingMessage": "लॉग इन हो रहा है..."
+    },
+    "OwnerDashboard": {
+        "Subtitle": "टेलर मैनेजमेंट सिस्टम",
+        "CustomerCountName": "ग्राहक"
+    },
+    "QuickActions": {
+        "Title": "त्वरित कार्रवाइयां",
+        "NewCustomer": "ग्राहक जोड़ें",
+        "CustomerList": "ग्राहक सूची",
+        "Settings": "सेटिंग्स"
+    },
+    "Footer": {
+        "DataSecured": "डेटा सुरक्षित और क्लाउड-समर्थित है",
+        "AppVersion": "स्मार्ट टेलरिंग डैशबोर्ड v2.0",
+        "DesignedBy": "डिजाइन और डेवलप किया गया",
+        "Copyright": "© 2026 टेलर मैनेजमेंट सिस्टम। सर्वाधिकार सुरक्षित।"
+    },
+    "MenuItems": {
+        "Language": "भाषा",
+        "InstallApp": "एप्लिकेशन इंस्टॉल करें",
+        "Logout": "लॉगआउट"
+    },
+    "LanguageModal": {
+        "selectLanguage": "भाषा चुनें",
+        "english": "अंग्रेज़ी",
+        "gujarati": "गुजराती",
+        "hindi": "हिन्दी",
+        "cancel": "रद्द करें"
+    },
+    "NewCustomer": {
+        "AddNewCustomerPageHeader": "नया ग्राहक",
+        "UpdateCustomerPageHeader": "ग्राहक अपडेट करें",
+        "AddNewCustomerTitle": "ग्राहक का विवरण",
+        "UpdateCustomerTitle": "ग्राहक का विवरण अपडेट करें",
+        "AddNewCustomerSubTitle": "ग्राहक का विवरण भरें और आवश्यकतानुसार माप बॉक्स का उपयोग करें",
+        "UpdateCustomerSubTitle": "आवश्यकतानुसार ग्राहक का विवरण और माप अपडेट करें",
+        "CustomerName": "ग्राहक का नाम",
+        "CustomerNamePlaceholder": "उदा. केवल मकवाना",
+        "MobileNumber": "मोबाइल नंबर",
+        "MobileNumberPlaceholder": "उदा. 9876543210",
+        "City": "शहर",
+        "CityPlaceholder": "उदा. अहमदाबाद",
+        "CustomerGender": "लिंग",
+        "Male": "पुरुष",
+        "Female": "महिला",
+        "MeasurementsDetails": "माप का विवरण",
+        "OtherDetailsAndNotes": "अन्य विवरण और नोट्स",
+        "OtherMeasurementsPlaceholder": "उदा. कोई अतिरिक्त नोट या अन्य माप",
+        "PaymentDetails": "भुगतान का विवरण",
+        "TotalAmount": "कुल राशि",
+        "TotalAmountPlaceholder": "उदा. 1500",
+        "AdvanceAmount": "एडवांस राशि",
+        "AdvanceAmountPlaceholder": "उदा. 500",
+        "PendingAmount": "शेष राशि",
+        "SaveButtonText": "सहेजें",
+        "SaveButtonTextLoading": "सहेजा जा रहा है...",
+        "UpdateButtonText": "अपडेट करें",
+        "UpdateButtonTextLoading": "अपडेट हो रहा है..."
+    },
+    "CustomerListDashboard": {
+        "PageHeader": "ग्राहक सूची",
+        "SearchPlaceholder": "नाम, मोबाइल नंबर या शहर द्वारा खोजें",
+        "NewestCustomers": "सबसे नए",
+        "OldestCustomers": "सबसे पुराने",
+        "AtoZCustomers": "A से Z",
+        "PendingPayments": "लंबित भुगतान",
+        "TotalCustomers": "कुल ग्राहक",
+        "TotalPendingPayments": "कुल शेष राशि",
+        "Results": "परिणाम",
+        "LoadingCustomers": "ग्राहक लोड हो रहे हैं...",
+        "NoCustomersFound": "कोई ग्राहक नहीं मिला"
+    },
+    "CustomerGridDetails": {
+        "Total": "कुल",
+        "Advance": "एडवांस",
+        "Pending": "शेष",
+        "DoCall": "कॉल करें",
+        "SeeMeasurements": "माप देखें",
+        "PaymentComplete": "भुगतान पूर्ण"
+    },
+    "Settings": {
+        "PageHeader": "सेटिंग्स",
+        "SaveButtonText": "सहेजें",
+        "SaveButtonLoading": "सबमिट हो रहा है...",
+        "Loading": "सेटिंग्स लोड हो रही हैं...",
+        "GeneralSettings": {
+            "GeneralSettingsTitle": "सामान्य सेटिंग्स",
+            "GeneralSettingsSubTitle": "अपनी सामान्य सेटिंग्स प्रबंधित करें",
+            "SiteTitleLabel": "साइट शीर्षक",
+            "SiteTitlePlaceholder": "उदा. टेलर मैनेजमेंट सिस्टम",
+            "SiteSubTitleLabel": "बाहरी शीर्षक (सबटाइटल)",
+            "SiteSubTitlePlaceholder": "उदा. स्मार्ट टेलरिंग डैशबोर्ड",
+            "OwnerNameLabel": "मालिक का नाम",
+            "OwnerNamePlaceholder": "उदा. केवल मकवाना",
+            "MobileNumberLabel": "मोबाइल नंबर",
+            "MobileNumberPlaceholder": "उदा. 9876543210",
+            "EmailLabel": "ईमेल",
+            "EmailPlaceholder": "उदा. abc@example.com",
+            "CityLabel": "शहर",
+            "CityPlaceholder": "उदा. अहमदाबाद",
+            "AddressLabel": "पता",
+            "AddressPlaceholder": "उदा. 123 मेन स्ट्रीट, अहमदाबाद",
+            "Male": "पुरुष",
+            "Female": "महिला"
+        },
+        "MeasurementsSettings": {
+            "MeasurementsSettingsTitle": "माप सेटिंग्स",
+            "MeasurementsSettingsSubTitle": "पुरुष और महिला श्रेणी के लिए माप विकल्पों का प्रबंधन करें",
+            "GenderCategoryLabel": "श्रेणी चुनें (जेंडर कैटेगरी)",
+            "MaleProductsLabel": "पुरुषों के उत्पाद",
+            "FemaleProductsLabel": "महिलाओं के उत्पाद",
+            "AddNewProductPlaceholder": "नया उत्पाद जोड़ें (उदा. कुर्ता, सूट, लहँगा)",
+            "Add": "जोड़ें",
+            "MaleKeys": "पुरुषों की कुंजियाँ (Keys)",
+            "FemaleKeys": "महिलाओं की कुंजियाँ (Keys)"
+        }
+    },
+    "DeleteModalDetails": {
+        "DeleteMessage": "क्या आप वाकई हटाना चाहते हैं?",
+        "DeleteMessageSbTitle": "इस क्रिया को पूर्ववत नहीं किया जा सकता है।",
+        "CancelMessage": "नहीं",
+        "OkMessage": "हटाएं"
+    },
+    "SettingWarningBackModal": {
+        "BackMessage": "असुरक्षित परिवर्तन (Unsaved Changes)",
+        "BackMessageSbTitle": "आपके परिवर्तन सहेजे नहीं गए हैं। क्या आप वाकई वापस जाना चाहते हैं?",
+        "CancelMessage": "रद्द करें",
+        "OkMessage": "छोड़ें"
+    },
+    "SiteMessageWithLanguages": {
+        "CUSTOMER_NAME": "कृपया ग्राहक का नाम भरें।",
+        "PHONE": "कृपया फोन नंबर भरें।",
+        "CITY": "कृपया शहर का नाम भरें।",
+        "INVALID_AMOUNT": "राशि 0 या उससे अधिक होनी चाहिए।",
+        "ADVANCE_TOO_HIGH": "अग्रीम भुगतान कुल राशि से अधिक नहीं हो सकता।",
+        "OWNER_NAME": "कृपया मालिक का नाम भरें।",
+        "SITE_NAME": "कृपया साइट का नाम भरें।",
+        "UNKNOWN_MISTAKE": "एक अज्ञात त्रुटि आई।",
+        "DO_NOT_LOAD_SETTING_MISTAKE": "सेटिंग्स लोड करने में त्रुटि हुई।",
+        "RECORD_NOT_FOUND_FOR_CUSTOMER": "ग्राहक की जानकारी नहीं मिल सकी।",
+        "CUSTOMER_DETAILS_UPDATE_SUCCESSFUL": "ग्राहक का विवरण सफलतापूर्वक अपडेट हो गया है।",
+        "CUSTOMER_DETAILS_SAVE_SUCCESSFUL": "ग्राहक का विवरण सफलतापूर्वक सहेज लिया गया है।",
+        "TRY_AGAIN": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
+        "DO_NOT_REVERCE_ACTION": "इस क्रिया को पूर्ववत नहीं किया जा सकता!",
+        "LOGIN_TO_VIEW_CUSTOMER": "ग्राहक देखने के लिए कृपया लॉगिन करें।",
+        "LOGIN_AGAIN": "अमान्य लॉगिन सत्र। कृपया पुनः लॉगिन करें।",
+        "USER_ID_NOT_FOUND": "यूज़र आईडी नहीं मिला। कृपया पुनः लॉगिन करें।",
+        "UNEXPECTED_ERROR_FETCHING_CUSTOMER": "ग्राहक प्राप्त करते समय अप्रत्याशित त्रुटि:",
+        "ERROR_FETCHING_CUSTOMER": "ग्राहक प्राप्त करने में त्रुटि:",
+        "CUSTOMER_REMOVE_DETAILS_SUCCESS": "ग्राहक की जानकारी सफलतापूर्वक हटा दी गई है।",
+        "FILL_EMAIL": "कृपया ईमेल भरें।",
+        "FILL_PASSWORD": "कृपया पासवर्ड भरें।",
+        "INVALID_CREDENTIALS": "अमान्य ईमेल या पासवर्ड।",
+        "LOGIN_SUCCESSFULLY": "सफलतापूर्वक लॉगिन हो गया!",
+        "SAVE_SETTINGS_DETAILS_SUCCESSFULLY": "सेटिंग्स सफलतापूर्वक सहेज ली गई हैं।",
+        "INSTALL_PROPMT_NOT_AVAILABLE": "ब्राउज़र इंस्टॉल प्रॉम्प्ट उपलब्ध नहीं है।"
+    }
+}

@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import { FaDownload } from 'react-icons/fa'
 import { useGlobalToast } from './CustomeToast'
-import { SITE_MESSAGES } from '#/utils/constant'
 import { useTranslation } from 'react-i18next'
 
 interface BeforeInstallPromptEvent extends Event {
@@ -87,7 +86,7 @@ const InstallApp = () => {
         setToastState({
             show: true,
             type: 'E',
-            msg: SITE_MESSAGES.INSTALL_PROPMT_NOT_AVAILABLE,
+            msg: t('SiteMessageWithLanguages.INSTALL_PROPMT_NOT_AVAILABLE')
         })
     }
     if (isInstalled) return null

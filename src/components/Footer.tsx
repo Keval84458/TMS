@@ -5,7 +5,7 @@ import { FaChartLine, FaHeart, FaShieldAlt } from "react-icons/fa"
 const Footer = () => {
     const { t, i18n } = useTranslation()
 
-    const locale = i18n.language === 'gu' ? 'gu-IN' : 'en-IN'
+    const locale = i18n.language === 'gu' ? 'gu-IN' : i18n.language === 'hi' ? 'hi-IN' : 'en-IN'
 
     const currentDate = new Date().toLocaleDateString(locale, {
         weekday: 'long',
