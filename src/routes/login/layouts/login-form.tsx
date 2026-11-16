@@ -10,7 +10,7 @@ interface LoginFormProps {
     onChange: (key: string, value: string) => void
     showPassword: boolean
     setShowPassword: React.Dispatch<React.SetStateAction<boolean>>
-    HandleSubmit: () => void
+    HandleSubmit: (e?: React.FormEvent) => void
     isLoading?: boolean
 }
 
@@ -24,7 +24,8 @@ const LoginForm = ({
 }: LoginFormProps) => {
     const { t } = useTranslation()
     return (
-        <div className="space-y-5">
+        // noValidate: keep our own translated toasts instead of the browser's validation bubbles
+        <form className="space-y-5" onSubmit={HandleSubmit} noValidate>
             <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1.5 flex items-center gap-1.5">
                     <FaEnvelope className="text-purple-600" />
@@ -32,6 +33,11 @@ const LoginForm = ({
                 </label>
                 <ThemeInput
                     type="email"
+                    name="email"
+                    autoComplete="username"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
                     placeholder={t('Login.EmailPlaceholder')}
                     className="w-full h-[48px] px-4 bg-slate-50 border-gray-200 focus:bg-white focus:border-purple-600 focus:ring-4 focus:ring-purple-100 rounded-xl transition-all text-sm"
                     value={formData.email}
@@ -49,6 +55,8 @@ const LoginForm = ({
                 <div className="relative">
                     <ThemeInput
                         type={showPassword ? 'text' : 'password'}
+                        name="password"
+                        autoComplete="current-password"
                         placeholder={t('Login.PasswordLabelPlaceholder')}
                         className="w-full h-[48px] pl-4 pr-11 bg-slate-50 border-gray-200 focus:bg-white focus:border-purple-600 focus:ring-4 focus:ring-purple-100 rounded-xl transition-all text-sm"
                         value={formData.password}
@@ -58,7 +66,8 @@ const LoginForm = ({
                     />
                     <button
                         type="button"
-                        onClick={() => setShowPassword((prev: any) => !prev)}
+                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        onClick={() => setShowPassword((prev) => !prev)}
                         className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors p-1"
                     >
                         {showPassword ? <FaEyeSlash className="text-[1.5rem]" /> : <FaEye className="text-[1.5rem]" />}
@@ -68,9 +77,8 @@ const LoginForm = ({
 
             <div className="pt-3">
                 <button
-                    type="button"
+                    type="submit"
                     disabled={isLoading}
-                    onClick={HandleSubmit}
                     className="w-full h-[50px] bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-purple-600/25 active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none flex items-center justify-center gap-2.5 text-sm tracking-wide"
                 >
                     {isLoading ? (
@@ -86,7 +94,7 @@ const LoginForm = ({
                     )}
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 
