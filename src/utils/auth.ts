@@ -1,6 +1,7 @@
 
 import { useNavigate } from '@tanstack/react-router'
 import { useCallback, useState } from 'react'
+import { supabase } from '#/lib/supabaseClient'
 import { PAGE_PATH_KEYS } from './constant'
 
 type AuthCredentials = {
@@ -14,6 +15,7 @@ type AuthState = {
 }
 
 const COOKIE_NAME = 'authData'
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 
 const getAuthData = (): AuthCredentials | null => {
     if (typeof document === 'undefined') return null
@@ -60,7 +62,7 @@ export const useAuth = () => {
     const setAuthCred = useCallback(
         (authData: AuthCredentials) => {
             document.cookie =
-                `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(authData))}; Path=/; SameSite=Lax`
+                `${COOKIE_NAME}=${encodeURIComponent(JSON.stringify(authData))}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Lax`
 
             setAuth({
                 authData,
@@ -70,7 +72,7 @@ export const useAuth = () => {
         [],
     )
 
-    const logout = useCallback(() => {
+    const logout = useCallback(async () => {
         document.cookie =
             `${COOKIE_NAME}=; Max-Age=0; Path=/; SameSite=Lax`
 
@@ -78,6 +80,13 @@ export const useAuth = () => {
             authData: null,
             isLogin: false,
         })
+
+        // End the Supabase session too (it keeps its own copy in localStorage)
+        try {
+            await supabase.auth.signOut()
+        } catch (err) {
+            console.error('Sign out failed:', err)
+        }
 
         void navigate({
             to: PAGE_PATH_KEYS.LOGIN,
