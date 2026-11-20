@@ -163,6 +163,7 @@
         "INVALID_CREDENTIALS": "अमान्य ईमेल या पासवर्ड।",
         "LOGIN_SUCCESSFULLY": "सफलतापूर्वक लॉगिन हो गया!",
         "SAVE_SETTINGS_DETAILS_SUCCESSFULLY": "सेटिंग्स सफलतापूर्वक सहेज ली गई हैं।",
-        "INSTALL_PROPMT_NOT_AVAILABLE": "ब्राउज़र इंस्टॉल प्रॉम्प्ट उपलब्ध नहीं है।"
+        "INSTALL_PROPMT_NOT_AVAILABLE": "ब्राउज़र इंस्टॉल प्रॉम्प्ट उपलब्ध नहीं है।",
+        "LOADING_DATA": "सेटिंग्स लोड हो रही हैं..."
     }
 }

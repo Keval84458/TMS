@@ -160,14 +160,12 @@ function RouteComponent() {
         }
     }
 
-    // REPLACE THIS IN YOUR Index.tsx:
     const handleRemoveProduct = (itemToRemove: string) => {
         if (activeGenderTab === 'male') {
             const updated = maleProducts.filter((item) => item !== itemToRemove)
             setMaleProducts(updated)
             setFormData((prev) => ({ ...prev, male_measurements: updated.join(', ') }))
         } else {
-            // FIX: Correctly handle female products deletion here!
             const updated = femaleProducts.filter((item) => item !== itemToRemove)
             setFemaleProducts(updated)
             setFormData((prev) => ({ ...prev, female_measurements: updated.join(', ') }))
@@ -291,13 +289,13 @@ function RouteComponent() {
         }
     }
 
-    if (isFetching) {
-        return (
-            <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-                <p className="text-gray-500 text-sm font-medium">સેટિંગ્સ લોડ થઈ રહી છે...</p>
-            </div>
-        )
-    }
+    // if (isFetching) {
+    //     return (
+    //         <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+    //             <p className="text-gray-500 text-sm font-medium">{t('SiteMessageWithLanguages.LOADING_DATA')}</p>
+    //         </div>
+    //     )
+    // }
 
     return (
         <div className="min-h-screen bg-slate-50 pb-12 mt-[3.4rem]">
@@ -306,60 +304,65 @@ function RouteComponent() {
                 onBack={handleBackClick}
             />
 
-            <div className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
-                <GeneralSettings
-                    formData={formData}
-                    onChange={onChange}
-                    setIsMaleEnabled={(val: boolean | ((prev: boolean) => boolean)) => {
-                        const newVal = typeof val === 'function' ? val(formData.is_male_enabled) : val;
-                        onChange('is_male_enabled', newVal);
-                    }}
-                    setIsFemaleEnabled={(val: boolean | ((prev: boolean) => boolean)) => {
-                        const newVal = typeof val === 'function' ? val(formData.is_female_enabled) : val;
-                        onChange('is_female_enabled', newVal);
-                    }}
-                    isMaleEnabled={formData.is_male_enabled}
-                    isFemaleEnabled={formData.is_female_enabled}
-                />
-                <MeasurementSettings
-                    activeGenderTab={activeGenderTab}
-                    setActiveGenderTab={setActiveGenderTab}
-                    setMaleProductsInput={setMaleProductsInput}
-                    setFemaleProductsInput={setFemaleProductsInput}
-                    handleAddProduct={handleAddProduct}
-                    maleProductsInput={maleProductsInput}
-                    femaleProductsInput={femaleProductsInput}
-                    maleProducts={maleProducts}
-                    handleRemoveProduct={handleRemoveProduct}
-                    femaleProducts={femaleProducts}
-                    formData={formData}
-                />
+            {isFetching ?
+                <div className="h-[20vh] bg-slate-50 flex items-center justify-center">
+                    <p className="text-gray-500 text-sm font-medium">{t('SiteMessageWithLanguages.LOADING_DATA')}</p>
+                </div> :
+                <div className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
+                    <GeneralSettings
+                        formData={formData}
+                        onChange={onChange}
+                        setIsMaleEnabled={(val: boolean | ((prev: boolean) => boolean)) => {
+                            const newVal = typeof val === 'function' ? val(formData.is_male_enabled) : val;
+                            onChange('is_male_enabled', newVal);
+                        }}
+                        setIsFemaleEnabled={(val: boolean | ((prev: boolean) => boolean)) => {
+                            const newVal = typeof val === 'function' ? val(formData.is_female_enabled) : val;
+                            onChange('is_female_enabled', newVal);
+                        }}
+                        isMaleEnabled={formData.is_male_enabled}
+                        isFemaleEnabled={formData.is_female_enabled}
+                    />
+                    <MeasurementSettings
+                        activeGenderTab={activeGenderTab}
+                        setActiveGenderTab={setActiveGenderTab}
+                        setMaleProductsInput={setMaleProductsInput}
+                        setFemaleProductsInput={setFemaleProductsInput}
+                        handleAddProduct={handleAddProduct}
+                        maleProductsInput={maleProductsInput}
+                        femaleProductsInput={femaleProductsInput}
+                        maleProducts={maleProducts}
+                        handleRemoveProduct={handleRemoveProduct}
+                        femaleProducts={femaleProducts}
+                        formData={formData}
+                    />
 
-                {hasChanges && (
-                    <div className="pt-2 animate-fadeIn">
-                        <div className="fixed bottom-0 left-0 right-0 z-40 p-4 backdrop-blur-md border-t border-slate-800/80">
-                            <button
-                                type="button"
-                                disabled={isLoading}
-                                onClick={HandleSubmit}
-                                className="w-full h-12 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 text-white font-semibold rounded-2xl transition-all duration-200 shadow-lg shadow-purple-600/30 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none flex items-center justify-center gap-2 text-sm"
-                            >
-                                {isLoading ? (
-                                    <>
-                                        <FaSpinner className="animate-spin text-lg" />
-                                        <span>{t('Settings.SaveButtonLoading')}</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <FaSave className="text-base" />
-                                        <span>{t('Settings.SaveButtonText')}</span>
-                                    </>
-                                )}
-                            </button>
+                    {hasChanges && (
+                        <div className="pt-2 animate-fadeIn">
+                            <div className="fixed bottom-0 left-0 right-0 z-40 p-4 backdrop-blur-md border-t border-slate-800/80">
+                                <button
+                                    type="button"
+                                    disabled={isLoading}
+                                    onClick={HandleSubmit}
+                                    className="w-full h-12 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 text-white font-semibold rounded-2xl transition-all duration-200 shadow-lg shadow-purple-600/30 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none flex items-center justify-center gap-2 text-sm"
+                                >
+                                    {isLoading ? (
+                                        <>
+                                            <FaSpinner className="animate-spin text-lg" />
+                                            <span>{t('Settings.SaveButtonLoading')}</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FaSave className="text-base" />
+                                            <span>{t('Settings.SaveButtonText')}</span>
+                                        </>
+                                    )}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>}
+
             <ConfirmModal
                 isOpen={showUnsavedModal}
                 onClose={() => setShowUnsavedModal(false)}
